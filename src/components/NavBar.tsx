@@ -1,48 +1,147 @@
-import { FaCircleInfo, FaHouse, FaWaveSquare } from 'react-icons/fa6';
-import { NavLink } from 'react-router-dom';
+import {
+  FaBars,
+  FaCircleInfo,
+  FaHouse,
+  FaWaveSquare,
+  FaXmark,
+} from 'react-icons/fa6';
+import { useEffect, useId, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import brandLogo from '../assets/Logo_transparent_250px.png';
 
 const navItems = [
   { to: '/', label: 'Home', icon: FaHouse },
   { to: '/state', label: 'State', icon: FaWaveSquare },
   { to: '/about', label: 'About', icon: FaCircleInfo },
-];
+] as const;
+
+function navLinkShell(isActive: boolean) {
+  const shell =
+    'group relative isolate inline-flex items-center justify-center overflow-hidden rounded-lg ' +
+    'transition-[color,background-color,transform,box-shadow] duration-300 ease-out ' +
+    'hover:-translate-y-0.5 hover:shadow-[0_8px_24px_-6px_rgba(188,44,38,0.22)] ' +
+    'active:translate-y-0 active:scale-[0.98] active:shadow-none ' +
+    'motion-reduce:transform-none motion-reduce:shadow-none motion-reduce:transition-colors ' +
+    'before:pointer-events-none before:absolute before:inset-0 before:z-0 before:-translate-x-full ' +
+    'before:skew-x-[-12deg] before:bg-gradient-to-r before:from-transparent before:via-white/45 before:to-transparent ' +
+    'before:transition-transform before:duration-500 before:ease-out ' +
+    'hover:before:translate-x-full motion-reduce:before:hidden ' +
+    'after:pointer-events-none after:absolute after:inset-x-5 after:bottom-1.5 after:z-0 after:h-[3px] ' +
+    'after:rounded-full after:bg-npf-red after:transition-transform after:duration-300 ' +
+    'after:ease-[cubic-bezier(0.34,1.45,0.64,1)] after:origin-left after:scale-x-0 ' +
+    'hover:after:scale-x-100 motion-reduce:after:transition-none';
+  const tone = isActive
+    ? 'bg-npf-red-soft text-npf-red after:scale-x-100'
+    : 'text-npf-muted hover:bg-npf-surface hover:text-npf-charcoal';
+  return `${shell} ${tone}`;
+}
 
 export function NavBar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const menuId = useId();
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)');
+    const onChange = () => setMenuOpen(false);
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
+
   return (
-    <nav className="w-full border-b border-npf-border bg-white/95 shadow-sm backdrop-blur-sm">
-      <div className="flex w-full items-center justify-between gap-4 px-4 py-4 sm:px-8 lg:px-12 xl:px-16">
+    <nav
+      aria-label="Main navigation"
+      className="sticky top-0 z-50 w-full border-b border-npf-border bg-white/95 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-white/90"
+    >
+      {menuOpen ? (
+        <button
+          aria-label="Close menu"
+          className="fixed inset-0 z-[45] bg-npf-charcoal/35 backdrop-blur-[1px] md:hidden"
+          onClick={() => setMenuOpen(false)}
+          type="button"
+        />
+      ) : null}
+      <div className="relative z-50 flex w-full items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4 md:px-8 lg:px-12 xl:px-16">
         <NavLink
-          className="flex shrink-0 items-center gap-3 text-npf-charcoal no-underline"
+          className="flex min-w-0 shrink items-center gap-2 text-npf-charcoal no-underline sm:gap-3"
           to="/"
         >
           <img
             alt="North Point Foundations"
-            className="h-16 w-auto object-contain sm:h-20 md:h-24"
+            className="h-12 w-auto max-w-[min(48vw,10.5rem)] object-contain object-left sm:h-16 sm:max-w-none md:h-20 lg:h-24"
             height={120}
             src={brandLogo}
             width={300}
           />
         </NavLink>
-        <ul className="flex shrink-0 items-center gap-1 sm:gap-2 md:gap-3">
+
+        <ul className="hidden items-center gap-2 md:flex md:gap-3 lg:gap-4">
           {navItems.map(({ to, label, icon: Icon }) => (
             <li key={to}>
               <NavLink
-                to={to}
                 className={({ isActive }) =>
-                  `inline-flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition ${
-                    isActive
-                      ? 'bg-npf-red-soft text-npf-red'
-                      : 'text-npf-muted hover:bg-npf-surface hover:text-npf-charcoal'
-                  }`
+                  `${navLinkShell(isActive)} px-5 py-3 text-base font-semibold`
                 }
+                to={to}
               >
-                <Icon className="text-base" />
-                {label}
+                <span className="relative z-10 inline-flex items-center gap-2.5">
+                  <Icon className="text-lg transition-transform duration-300 ease-[cubic-bezier(0.34,1.45,0.64,1)] group-hover:scale-110 group-hover:-rotate-3 group-hover:text-npf-red motion-reduce:group-hover:scale-100 motion-reduce:group-hover:rotate-0" />
+                  {label}
+                </span>
               </NavLink>
             </li>
           ))}
         </ul>
+
+        {/* Mobile: menu opens in a panel directly under the hamburger */}
+        <div className="relative shrink-0 md:hidden">
+          <button
+            aria-controls={menuId}
+            aria-expanded={menuOpen}
+            className="flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm transition hover:border-npf-red/30 hover:bg-npf-surface hover:text-npf-red"
+            onClick={() => setMenuOpen((o) => !o)}
+            type="button"
+          >
+            <span className="sr-only">{menuOpen ? 'Close menu' : 'Open menu'}</span>
+            {menuOpen ? <FaXmark className="text-xl" /> : <FaBars className="text-xl" />}
+          </button>
+
+          <div
+            aria-hidden={!menuOpen}
+            className={`absolute right-0 top-[calc(100%+0.5rem)] z-50 w-[min(calc(100vw-2rem),22rem)] min-w-[16rem] origin-top-right rounded-xl border border-npf-border bg-white shadow-xl transition-[opacity,transform] duration-200 ease-out md:hidden ${
+              menuOpen
+                ? 'pointer-events-auto scale-100 opacity-100'
+                : 'pointer-events-none scale-95 opacity-0'
+            }`}
+            id={menuId}
+          >
+            <div className="border-b border-npf-border px-4 py-3">
+              <p className="text-xs font-semibold uppercase tracking-wide text-npf-muted">Menu</p>
+            </div>
+            <ul className="flex max-h-[min(24rem,70dvh)] flex-col gap-1 overflow-y-auto overscroll-contain p-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))]">
+              {navItems.map(({ to, label, icon: Icon }) => (
+                <li key={to}>
+                  <NavLink
+                    className={({ isActive }) =>
+                      `${navLinkShell(isActive)} w-full justify-start px-4 py-4 text-lg font-semibold sm:py-5`
+                    }
+                    onClick={() => setMenuOpen(false)}
+                    to={to}
+                  >
+                    <span className="relative z-10 inline-flex items-center gap-4">
+                      <Icon className="text-2xl text-current" />
+                      {label}
+                    </span>
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </nav>
   );
