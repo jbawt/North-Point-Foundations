@@ -7,29 +7,29 @@ export function StatePage() {
 
   return (
     <section className="space-y-6">
-      <h2 className="text-3xl font-semibold text-white">Redux State Demo</h2>
-      <p className="text-slate-300">
+      <h2 className="text-3xl font-semibold text-npf-charcoal">Redux State Demo</h2>
+      <p className="text-npf-muted">
         This page demonstrates connected global state with Redux Toolkit and React Redux.
       </p>
 
-      <div className="inline-flex items-center gap-4 rounded-lg border border-slate-800 bg-slate-900 p-5">
+      <div className="inline-flex items-center gap-4 rounded-lg border border-npf-border bg-npf-surface p-5 shadow-sm">
         <button
-          className="rounded-md bg-slate-800 px-3 py-2 text-slate-100 hover:bg-slate-700"
+          className="rounded-md border border-npf-border bg-white px-3 py-2 text-npf-charcoal hover:bg-npf-surface"
           onClick={() => dispatch(decrement())}
           type="button"
         >
           -
         </button>
-        <span className="w-8 text-center text-2xl font-bold text-cyan-300">{count}</span>
+        <span className="w-8 text-center text-2xl font-bold text-npf-red">{count}</span>
         <button
-          className="rounded-md bg-slate-800 px-3 py-2 text-slate-100 hover:bg-slate-700"
+          className="rounded-md border border-npf-border bg-white px-3 py-2 text-npf-charcoal hover:bg-npf-surface"
           onClick={() => dispatch(increment())}
           type="button"
         >
           +
         </button>
         <button
-          className="rounded-md bg-cyan-500/20 px-3 py-2 text-cyan-300 hover:bg-cyan-500/30"
+          className="rounded-md bg-npf-red px-3 py-2 font-medium text-white hover:bg-npf-red-dark"
           onClick={() => dispatch(reset())}
           type="button"
         >

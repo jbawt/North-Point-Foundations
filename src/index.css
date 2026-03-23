@@ -1,6 +1,21 @@
 @import "tailwindcss";
 
+/* North Point Foundations — palette from brand (charcoal, red, white) */
+@theme {
+  --color-npf-charcoal: #1a1a1a;
+  --color-npf-red: #bc2c26;
+  --color-npf-red-dark: #9e2620;
+  --color-npf-red-soft: color-mix(in srgb, #bc2c26 12%, white);
+  --color-npf-muted: #5a5a5a;
+  --color-npf-border: #e8e8e8;
+  --color-npf-surface: #f5f5f5;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
+  background-color: #ffffff;
+  color: var(--color-npf-charcoal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
