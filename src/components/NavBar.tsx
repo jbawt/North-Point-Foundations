@@ -11,17 +11,20 @@ const navItems = [
 export function NavBar() {
   return (
     <nav className="w-full border-b border-npf-border bg-white/95 shadow-sm backdrop-blur-sm">
-      <div className="mx-auto flex w-full max-w-5xl items-center justify-between gap-4 px-6 py-3">
-        <NavLink className="flex items-center gap-3 text-npf-charcoal no-underline" to="/">
+      <div className="flex w-full items-center justify-between gap-4 px-4 py-4 sm:px-8 lg:px-12 xl:px-16">
+        <NavLink
+          className="flex shrink-0 items-center gap-3 text-npf-charcoal no-underline"
+          to="/"
+        >
           <img
             alt="North Point Foundations"
-            className="h-11 w-auto object-contain"
-            height={44}
+            className="h-16 w-auto object-contain sm:h-20 md:h-24"
+            height={120}
             src={brandLogo}
-            width={180}
+            width={300}
           />
         </NavLink>
-        <ul className="flex shrink-0 items-center gap-1 sm:gap-2">
+        <ul className="flex shrink-0 items-center gap-1 sm:gap-2 md:gap-3">
           {navItems.map(({ to, label, icon: Icon }) => (
             <li key={to}>
               <NavLink
