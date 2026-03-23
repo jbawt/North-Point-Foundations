@@ -1,62 +1,125 @@
-import { useLayoutEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useLayoutEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { HomeHero } from '../components/HomeHero.tsx';
+import { SITE, serviceAreasSentence } from '../content/siteCopy.ts';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function HomePage() {
-  const headingRef = useRef<HTMLHeadingElement>(null);
+  const sectionRef = useRef<HTMLElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
 
   useLayoutEffect(() => {
-    const heading = headingRef.current;
+    const section = sectionRef.current;
     const card = cardRef.current;
 
-    if (!heading || !card) {
+    if (!section || !card) {
       return;
     }
 
-    const timeline = gsap.timeline();
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) {
+      return;
+    }
 
-    timeline
-      .fromTo(
-        heading,
-        { y: 24, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out' },
-      )
-      .fromTo(
-        card,
-        { scale: 0.92, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.6, ease: 'power2.out' },
-        '-=0.35',
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        section,
+        { y: 36, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.75,
+          ease: 'power2.out',
+          delay: 0.15,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 88%',
+            toggleActions: 'play none none none',
+          },
+        },
       );
+      gsap.fromTo(
+        card,
+        { y: 28, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.65,
+          ease: 'power2.out',
+          delay: 0.08,
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+        },
+      );
+    }, section);
 
     return () => {
-      timeline.kill();
+      ctx.revert();
     };
   }, []);
 
   return (
-    <section className="space-y-8">
-      <header className="space-y-3">
-        <p className="text-sm font-semibold uppercase tracking-wide text-npf-red">Welcome</p>
-        <h2 ref={headingRef} className="text-4xl font-bold tracking-tight text-npf-charcoal">
-          Building on a solid foundation
-        </h2>
-        <p className="max-w-2xl text-npf-muted">
-          North Point Foundations — professional, dependable service. This site uses the same
-          charcoal, red, and white palette as your brand.
-        </p>
-      </header>
-
-      <div
-        ref={cardRef}
-        className="rounded-xl border border-npf-border bg-npf-surface p-6 text-npf-charcoal shadow-md shadow-npf-charcoal/5"
+    <>
+      <HomeHero />
+      <section
+        ref={sectionRef}
+        className="mx-auto w-full max-w-5xl space-y-10 px-5 py-14 sm:px-8 md:px-10 md:py-16"
       >
-        <h3 className="mb-2 text-xl font-semibold text-npf-charcoal">Suggested next steps</h3>
-        <ul className="list-disc space-y-2 pl-5 text-npf-muted marker:text-npf-red">
-          <li>Add your app-specific routes to `src/router/index.tsx`.</li>
-          <li>Create feature slices under `src/features`.</li>
-          <li>Build reusable UI components in `src/components`.</li>
-        </ul>
-      </div>
-    </section>
+        <header className="space-y-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-npf-red sm:text-sm">
+            What we do
+          </p>
+          <h2 className="text-3xl font-bold tracking-tight text-npf-charcoal sm:text-4xl">
+            Full-service foundation & waterproofing
+          </h2>
+          <p className="max-w-2xl text-sm leading-relaxed text-npf-muted sm:text-base">
+            {SITE.lead} {SITE.values}
+          </p>
+        </header>
+
+        <div className="grid gap-4 sm:grid-cols-2">
+          {SITE.services.map((service) => (
+            <div
+              key={service}
+              className="flex items-start gap-3 rounded-xl border border-npf-border bg-white px-4 py-4 shadow-sm"
+            >
+              <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-npf-red" aria-hidden />
+              <p className="text-sm font-medium text-npf-charcoal sm:text-base">{service}</p>
+            </div>
+          ))}
+        </div>
+
+        <div
+          ref={cardRef}
+          className="rounded-xl border border-npf-border bg-npf-surface p-5 text-npf-charcoal shadow-md shadow-npf-charcoal/5 sm:p-6"
+        >
+          <h3 className="mb-2 text-lg font-semibold text-npf-charcoal sm:text-xl">Service area</h3>
+          <p className="max-w-2xl text-sm leading-relaxed text-npf-muted sm:text-base">
+            Proudly serving <strong className="font-medium text-npf-charcoal">{serviceAreasSentence()}</strong>.
+            Questions about your property? We&apos;re happy to help.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              className="inline-flex min-h-11 items-center justify-center rounded-lg bg-npf-red px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-npf-red-dark"
+              to="/services"
+            >
+              View all services
+            </Link>
+            <Link
+              className="inline-flex min-h-11 items-center justify-center rounded-lg border border-npf-border bg-white px-6 py-2.5 text-sm font-semibold text-npf-charcoal transition hover:bg-npf-surface"
+              to="/about"
+            >
+              About {SITE.name}
+            </Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

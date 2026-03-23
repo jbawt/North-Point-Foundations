@@ -2,16 +2,17 @@ import {
   FaBars,
   FaCircleInfo,
   FaHouse,
-  FaWaveSquare,
+  FaScrewdriverWrench,
   FaXmark,
 } from 'react-icons/fa6';
 import { useEffect, useId, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import brandLogo from '../assets/Logo_transparent_250px.png';
+import { SITE } from '../content/siteCopy.ts';
 
 const navItems = [
   { to: '/', label: 'Home', icon: FaHouse },
-  { to: '/state', label: 'State', icon: FaWaveSquare },
+  { to: '/services', label: 'Services', icon: FaScrewdriverWrench },
   { to: '/about', label: 'About', icon: FaCircleInfo },
 ] as const;
 
@@ -66,18 +67,28 @@ export function NavBar() {
         />
       ) : null}
       <div className="relative z-50 flex w-full items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4 md:px-8 lg:px-12 xl:px-16">
-        <NavLink
-          className="flex min-w-0 shrink items-center gap-2 text-npf-charcoal no-underline sm:gap-3"
-          to="/"
-        >
-          <img
-            alt="North Point Foundations"
-            className="h-12 w-auto max-w-[min(48vw,10.5rem)] object-contain object-left sm:h-16 sm:max-w-none md:h-20 lg:h-24"
-            height={120}
-            src={brandLogo}
-            width={300}
-          />
-        </NavLink>
+        <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-4">
+          <NavLink
+            className="flex shrink-0 items-center gap-2 text-npf-charcoal no-underline sm:gap-3"
+            to="/"
+          >
+            <img
+              alt={SITE.name}
+              className="h-12 w-auto max-w-[min(48vw,10.5rem)] object-contain object-left sm:h-16 sm:max-w-none md:h-20 lg:h-24"
+              height={120}
+              src={brandLogo}
+              width={300}
+            />
+          </NavLink>
+          <div className="hidden min-h-[2.5rem] min-[400px]:flex min-[400px]:flex-col min-[400px]:justify-center border-l border-npf-border pl-3 sm:min-h-0 sm:pl-4">
+            <span className="text-[10px] font-semibold uppercase leading-tight tracking-wide text-npf-red sm:text-xs">
+              {SITE.region}
+            </span>
+            <span className="mt-0.5 hidden text-[11px] leading-snug text-npf-muted sm:block sm:text-xs">
+              {SITE.shortTagline}
+            </span>
+          </div>
+        </div>
 
         <ul className="hidden items-center gap-2 md:flex md:gap-3 lg:gap-4">
           {navItems.map(({ to, label, icon: Icon }) => (
@@ -97,7 +108,6 @@ export function NavBar() {
           ))}
         </ul>
 
-        {/* Mobile: menu opens in a panel directly under the hamburger */}
         <div className="relative shrink-0 md:hidden">
           <button
             aria-controls={menuId}
@@ -120,7 +130,10 @@ export function NavBar() {
             id={menuId}
           >
             <div className="border-b border-npf-border px-4 py-3">
-              <p className="text-xs font-semibold uppercase tracking-wide text-npf-muted">Menu</p>
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-npf-red">{SITE.name}</p>
+              <p className="mt-1 text-xs leading-snug text-npf-muted">
+                {SITE.shortTagline} · {SITE.region}
+              </p>
             </div>
             <ul className="flex max-h-[min(24rem,70dvh)] flex-col gap-1 overflow-y-auto overscroll-contain p-3 pb-[max(0.75rem,env(safe-area-inset-bottom,0px))]">
               {navItems.map(({ to, label, icon: Icon }) => (

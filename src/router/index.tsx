@@ -3,7 +3,7 @@ import { MainLayout } from '../layouts/MainLayout.tsx';
 import { AboutPage } from '../pages/AboutPage.tsx';
 import { HomePage } from '../pages/HomePage.tsx';
 import { NotFoundPage } from '../pages/NotFoundPage.tsx';
-import { StatePage } from '../pages/StatePage.tsx';
+import { ServicesPage } from '../pages/ServicesPage.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -15,8 +15,8 @@ export const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: 'state',
-        element: <StatePage />,
+        path: 'services',
+        element: <ServicesPage />,
       },
       {
         path: 'about',
