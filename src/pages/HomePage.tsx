@@ -92,22 +92,22 @@ export function HomePage() {
 
         <div
           ref={cardRef}
-          className="rounded-xl border border-npf-border bg-npf-surface p-5 text-npf-charcoal shadow-md shadow-npf-charcoal/5 transition hover:border-npf-red/30 hover:shadow-lg hover:shadow-npf-charcoal/10 sm:p-6"
+          className="group relative overflow-hidden rounded-xl border border-npf-border bg-npf-surface p-5 text-npf-charcoal shadow-md shadow-npf-charcoal/5 transition hover:border-npf-red/30 hover:shadow-lg hover:shadow-npf-charcoal/10 sm:p-6 sm:flex sm:flex-col sm:items-center sm:text-center before:pointer-events-none before:absolute before:inset-0 before:opacity-0 before:transition-opacity before:duration-300 before:ease-out before:bg-[radial-gradient(120%_120%_at_50%_0%,rgba(188,44,38,0.22),transparent_55%)] group-hover:before:opacity-100"
         >
-          <h3 className="mb-2 text-lg font-semibold text-npf-charcoal sm:text-xl">Service area</h3>
-          <p className="max-w-2xl text-sm leading-relaxed text-npf-muted sm:text-base">
+          <h3 className="mb-2 text-lg font-semibold tracking-tight text-npf-charcoal sm:text-xl">Service area</h3>
+          <p className="max-w-2xl text-sm leading-relaxed text-npf-muted sm:text-base sm:mx-auto">
             Proudly serving <strong className="font-medium text-npf-charcoal">{serviceAreasSentence()}</strong>.
             Questions about your property? We&apos;re happy to help.
           </p>
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Link
-              className="inline-flex min-h-11 items-center justify-center rounded-lg bg-npf-red px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-npf-red-dark"
+              className="inline-flex min-h-11 items-center justify-center rounded-lg bg-npf-red px-6 py-2.5 text-sm font-semibold text-white shadow-sm shadow-npf-red/20 transition hover:bg-npf-red-dark hover:shadow-npf-red/30 active:translate-y-px focus:outline-none"
               to="/services"
             >
               View all services
             </Link>
             <Link
-              className="inline-flex min-h-11 items-center justify-center rounded-lg border border-npf-border bg-white px-6 py-2.5 text-sm font-semibold text-npf-charcoal transition hover:bg-npf-surface"
+              className="inline-flex min-h-11 items-center justify-center rounded-lg border border-npf-border bg-white px-6 py-2.5 text-sm font-semibold text-npf-charcoal transition hover:bg-npf-surface active:translate-y-px focus:outline-none"
               to="/about"
             >
               About {SITE.name}
