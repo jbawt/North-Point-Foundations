@@ -1,4 +1,5 @@
 import { SITE, serviceAreasSentence } from '../content/siteCopy.ts';
+import { ServiceTile } from '../components/ServiceTile.tsx';
 
 export function ServicesPage() {
   return (
@@ -16,14 +17,10 @@ export function ServicesPage() {
 
       <div className="rounded-xl border border-npf-border bg-npf-surface p-6 sm:p-8">
         <h2 className="mb-6 text-lg font-semibold text-npf-charcoal sm:text-xl">Our services</h2>
-        <ul className="grid gap-4 sm:grid-cols-2">
+        <ul className="grid gap-4 sm:grid-cols-2" aria-label="Service list">
           {SITE.services.map((service) => (
-            <li
-              key={service}
-              className="flex items-start gap-3 rounded-lg border border-npf-border bg-white px-4 py-3 text-sm text-npf-charcoal shadow-sm sm:text-base"
-            >
-              <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-npf-red" aria-hidden />
-              {service}
+            <li key={service.name}>
+              <ServiceTile service={service} />
             </li>
           ))}
         </ul>

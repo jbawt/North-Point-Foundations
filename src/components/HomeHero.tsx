@@ -3,7 +3,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SITE } from '../content/siteCopy.ts';
-import heroImageTransparent from '../assets/Hero_image_transparent.png';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -69,8 +68,8 @@ export function HomeHero() {
         duration: 3.4,
         ease: 'sine.inOut',
         yoyo: true,
-        repeat: -1,
-        delay: 1.2,
+        repeat: 2,
+        delay: 1.1,
       });
 
       gsap.to(gridRef.current, {
@@ -78,7 +77,7 @@ export function HomeHero() {
         duration: 5.5,
         ease: 'sine.inOut',
         yoyo: true,
-        repeat: -1,
+        repeat: 2,
       });
 
       ScrollTrigger.create({
@@ -169,26 +168,18 @@ export function HomeHero() {
           </p>
           <div ref={ctaRef} className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:items-center sm:gap-4">
             <a
-              className="inline-flex min-h-12 items-center justify-center rounded-lg bg-npf-red px-8 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-npf-red/30 transition hover:bg-npf-red-dark hover:shadow-npf-red/40"
+              className="inline-flex min-h-12 items-center justify-center rounded-lg bg-npf-red px-8 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-npf-red/30 transition hover:bg-npf-red-dark hover:shadow-npf-red/40 transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0"
               href="tel:+15555550100"
             >
               Get a quote
             </a>
             <Link
-              className="inline-flex min-h-12 items-center justify-center rounded-lg border border-white/22 bg-white/5 px-8 py-3 text-center text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/40 hover:bg-white/12"
+              className="inline-flex min-h-12 items-center justify-center rounded-lg border border-white/22 bg-white/5 px-8 py-3 text-center text-sm font-semibold text-white backdrop-blur-sm transition hover:border-white/40 hover:bg-white/12 transition-transform duration-200 hover:-translate-y-0.5 active:translate-y-0"
               to="/services"
             >
               View services
             </Link>
           </div>
-        </div>
-
-        <div className="relative mx-auto w-full max-w-xl lg:mx-0 lg:ml-auto lg:max-w-none">
-          <img
-            src={heroImageTransparent}
-            alt="North Point Foundations service truck"
-            className="h-auto w-full drop-shadow-[0_30px_75px_rgba(0,0,0,0.55)] lg:w-[112%]"
-          />
         </div>
       </div>
 

@@ -3,6 +3,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { HomeHero } from '../components/HomeHero.tsx';
+import { ServiceTile } from '../components/ServiceTile.tsx';
 import { SITE, serviceAreasSentence } from '../content/siteCopy.ts';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -85,19 +86,13 @@ export function HomePage() {
 
         <div className="grid gap-4 sm:grid-cols-2">
           {SITE.services.map((service) => (
-            <div
-              key={service}
-              className="flex items-start gap-3 rounded-xl border border-npf-border bg-white px-4 py-4 shadow-sm"
-            >
-              <span className="mt-1.5 h-2 w-2 shrink-0 rounded-full bg-npf-red" aria-hidden />
-              <p className="text-sm font-medium text-npf-charcoal sm:text-base">{service}</p>
-            </div>
+            <ServiceTile key={service.name} service={service} />
           ))}
         </div>
 
         <div
           ref={cardRef}
-          className="rounded-xl border border-npf-border bg-npf-surface p-5 text-npf-charcoal shadow-md shadow-npf-charcoal/5 sm:p-6"
+          className="rounded-xl border border-npf-border bg-npf-surface p-5 text-npf-charcoal shadow-md shadow-npf-charcoal/5 transition hover:border-npf-red/30 hover:shadow-lg hover:shadow-npf-charcoal/10 sm:p-6"
         >
           <h3 className="mb-2 text-lg font-semibold text-npf-charcoal sm:text-xl">Service area</h3>
           <p className="max-w-2xl text-sm leading-relaxed text-npf-muted sm:text-base">
