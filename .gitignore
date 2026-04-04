@@ -9,6 +9,11 @@ lerna-debug.log*
 
 node_modules
 dist
+
+# Local env (Mapbox token, etc.)
+.env
+.env.*
+!.env.example
 dist-ssr
 *.local
 
