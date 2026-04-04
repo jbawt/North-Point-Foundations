@@ -1,31 +1,24 @@
 /**
- * Schematic "Repair Plan Example" floor outline derived from the reference plan.
- * Padded viewBox so enlarged labels stay inside the SVG (no clipping at edges).
+ * Residential floor-plan schematic (~40' × 28' proportions) for the Services blueprint panel.
+ * Exterior = animated red stroke; no interior partition graphics.
  */
-export const REPAIR_PLAN_VIEWBOX = '-14 -22 452 342';
+export const REPAIR_PLAN_VIEWBOX = '-28 -38 496 384';
 
-/** Single closed perimeter for one continuous pathLength draw. */
+/** Single closed loop — outer shell + porch notch (bottom center). */
 export const REPAIR_PLAN_OUTLINE_D =
-  'M 42 235 L 42 78 L 58 60 L 98 48 L 128 48 L 128 70 L 192 70 L 192 48 L 272 48 L 272 40 L 318 40 L 318 88 L 300 88 L 300 178 L 318 178 L 318 238 L 205 238 L 205 252 L 168 252 L 168 238 L 108 238 L 108 272 L 52 272 L 52 238 L 42 235 Z';
+  'M 52 52 L 372 52 L 372 248 L 272 248 L 272 276 L 152 276 L 152 248 L 52 248 Z';
 
-/** Light grey repair / emphasis zones (filled), same as reference intent. */
-export const REPAIR_PLAN_SHADES: { d: string; key: string }[] = [
-  { key: 'top-inset', d: 'M 128 48 L 192 48 L 192 70 L 128 70 Z' },
-  { key: 'bottom-left', d: 'M 52 238 L 108 238 L 108 272 L 52 272 Z' },
-  { key: 'bottom-right', d: 'M 300 218 L 318 218 L 318 238 L 300 238 Z' },
-];
-
-/** Survey nodes (blue) — key corners only. */
+/** Perimeter survey nodes (blue rings like the reference). */
 export const REPAIR_PLAN_MARKERS: { cx: number; cy: number }[] = [
-  { cx: 160, cy: 70 },
-  { cx: 295, cy: 40 },
-  { cx: 300, cy: 130 },
-  { cx: 187, cy: 252 },
-  { cx: 80, cy: 272 },
-  { cx: 318, cy: 228 },
+  { cx: 212, cy: 52 },
+  { cx: 372, cy: 52 },
+  { cx: 372, cy: 248 },
+  /** Porch center — above weeping-tile label; replaces (152,276) + (272,276). */
+  { cx: 212, cy: 276 },
+  { cx: 52, cy: 248 },
+  { cx: 52, cy: 150 },
 ];
 
-/** Callouts aligned to plan regions → service scope (blueprint-style labels). */
 export const REPAIR_PLAN_ANNOTATIONS: {
   key: string;
   x: number;
@@ -35,43 +28,47 @@ export const REPAIR_PLAN_ANNOTATIONS: {
 }[] = [
   {
     key: 'ext-wp',
-    x: 295,
+    x: 212,
     y: 18,
     lines: ['EXT. WATERPROOFING', 'membrane + grade'],
     textAnchor: 'middle',
   },
   {
     key: 'window-well',
-    x: 160,
-    y: 84,
+    /** Vertically aligned with left-wall marker (52, 150). */
+    x: 104,
+    y: 146,
     lines: ['WINDOW WELL', 'rebuild / seal'],
     textAnchor: 'middle',
   },
   {
     key: 'crack',
-    x: 308,
-    y: 118,
+    /** Above top-right perimeter dot (372, 52). */
+    x: 372,
+    y: 26,
     lines: ['CRACK REPAIR', 'inject + monitor'],
-    textAnchor: 'start',
+    textAnchor: 'middle',
   },
   {
     key: 'weeping',
-    x: 187,
-    y: 266,
+    x: 212,
+    y: 296,
     lines: ['WEEPING TILE', 'perimeter drain'],
     textAnchor: 'middle',
   },
   {
     key: 'sump',
-    x: 326,
-    y: 222,
+    /** Below the (372, 248) marker; left-aligned block shifted right. */
+    x: 360,
+    y: 268,
     lines: ['SUMP SYSTEM', 'basin + discharge'],
     textAnchor: 'start',
   },
   {
     key: 'excavation',
-    x: 80,
-    y: 286,
+    /** Snug under bottom-left marker (52, 248). */
+    x: 52,
+    y: 266,
     lines: ['EXCAVATION', 'exterior access'],
     textAnchor: 'middle',
   },

@@ -4,7 +4,6 @@ import {
   REPAIR_PLAN_ANNOTATIONS,
   REPAIR_PLAN_MARKERS,
   REPAIR_PLAN_OUTLINE_D,
-  REPAIR_PLAN_SHADES,
   REPAIR_PLAN_VIEWBOX,
 } from '../content/repairPlanBlueprint.ts';
 import { SITE } from '../content/siteCopy.ts';
@@ -151,23 +150,10 @@ export function ServicesSection() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               role="img"
-              aria-label="Floor outline schematic with repair zones"
+              aria-label="Residential floor plan schematic with repair scope callouts"
               style={{ filter: STROKE_GLOW }}
             >
-              <title>Floor outline schematic</title>
-
-              {REPAIR_PLAN_SHADES.map(({ d, key }) => (
-                <motion.path
-                  key={key}
-                  d={d}
-                  fill="rgba(26,26,26,0.14)"
-                  stroke="none"
-                  initial={{ opacity: reduceMotion ? 1 : 0 }}
-                  whileInView={{ opacity: 1 }}
-                  transition={revealTransition(0)}
-                  viewport={VIEWPORT}
-                />
-              ))}
+              <title>Floor plan schematic — repair scope</title>
 
               <motion.path
                 d={REPAIR_PLAN_OUTLINE_D}
