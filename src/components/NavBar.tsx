@@ -69,12 +69,12 @@ export function NavBar() {
       <div className="relative z-50 flex w-full items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4 md:px-8 lg:px-12 xl:px-16">
         <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-4">
           <NavLink
-            className="flex shrink-0 items-center gap-2 text-npf-charcoal no-underline sm:gap-3"
+            className="flex shrink-0 items-center gap-2 text-npf-charcoal no-underline transition-[opacity,transform] duration-300 ease-out hover:opacity-95 hover:scale-[1.02] motion-reduce:hover:scale-100 sm:gap-3"
             to="/"
           >
             <img
               alt={SITE.name}
-              className="h-12 w-auto max-w-[min(48vw,10.5rem)] object-contain object-left sm:h-16 sm:max-w-none md:h-20 lg:h-24"
+              className="h-14 w-auto max-w-[min(54vw,13rem)] object-contain object-left sm:h-20 sm:max-w-none md:h-24 lg:h-28"
               height={120}
               src={brandLogo}
               width={300}
@@ -112,7 +112,7 @@ export function NavBar() {
           <button
             aria-controls={menuId}
             aria-expanded={menuOpen}
-            className="flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm transition hover:border-npf-red/30 hover:bg-npf-surface hover:text-npf-red"
+            className="npf-sleek-lift-subtle flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-npf-red/40 hover:bg-white hover:text-npf-red active:scale-95"
             onClick={() => setMenuOpen((o) => !o)}
             type="button"
           >

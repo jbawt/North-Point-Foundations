@@ -15,7 +15,6 @@ const NORTH_POINT_RED = '#BE1E2D';
 const STROKE_GLOW = 'drop-shadow(0 0 5px rgba(190, 30, 45, 0.5))';
 
 const DRAW_DURATION_S = 2;
-const REVEAL_DELAY_S = DRAW_DURATION_S;
 
 const LEFT_SERVICES = SITE.services.slice(0, 3);
 const RIGHT_SERVICES = SITE.services.slice(3, 6);
@@ -65,12 +64,38 @@ const listItemReduced = {
 
 function ServiceCard({ service }: { service: ServiceDetail }) {
   return (
-    <div className="flex min-h-[9.5rem] flex-col rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 transition hover:border-[#BE1E2D]/25 hover:shadow-md sm:min-h-[10.5rem] lg:min-h-0 lg:h-full">
-      <div className="flex items-center gap-3 border-b border-npf-border/80 bg-npf-surface/35 px-4 py-3 sm:gap-3.5 sm:px-5 sm:py-3.5">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-npf-border/90 bg-white text-[#BE1E2D] shadow-sm sm:h-11 sm:w-11 lg:h-10 lg:w-10 xl:h-11 xl:w-11">
-          <ServiceIcon icon={service.icon} className="h-5 w-5 xl:h-6 xl:w-6" />
+    <div
+      className={
+        `group flex min-h-[9.5rem] flex-col cursor-default overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 ` +
+        `[&_*]:cursor-default ` +
+        `transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ` +
+        `hover:border-[#BE1E2D]/35 hover:shadow-[0_26px_58px_-28px_rgba(26,26,26,0.22),0_0_0_1px_rgba(190,30,45,0.07)] ` +
+        `hover:[transform:translate3d(0,-6px,0)_scale(1.045)] ` +
+        `motion-reduce:transition-[border-color,box-shadow] motion-reduce:hover:[transform:none] ` +
+        `sm:min-h-[10.5rem] lg:min-h-0 lg:h-full`
+      }
+    >
+      <div className="flex items-center gap-3 border-b border-npf-border/80 bg-npf-surface/35 px-4 pt-3.5 pb-3 transition-[background-color] duration-300 group-hover:bg-npf-surface/55 sm:gap-3.5 sm:px-5 sm:pt-4 sm:pb-3.5">
+        <div
+          className={
+            `flex h-10 w-10 shrink-0 origin-center items-center justify-center rounded-lg border border-npf-border/90 ` +
+            `bg-white text-[#BE1E2D] shadow-sm will-change-transform ` +
+            `transition-[transform,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ` +
+            `group-hover:border-[#BE1E2D]/35 group-hover:shadow-md ` +
+            `group-hover:[transform:translate3d(0,-4px,0)_scale(1.1)_rotate(5deg)] ` +
+            `motion-reduce:duration-200 motion-reduce:ease-out motion-reduce:group-hover:[transform:translate3d(0,-1px,0)_scale(1.05)_rotate(0deg)] ` +
+            `sm:h-11 sm:w-11 lg:h-10 lg:w-10 xl:h-11 xl:w-11`
+          }
+        >
+          <ServiceIcon
+            icon={service.icon}
+            className={
+              `h-5 w-5 origin-center transition-transform duration-500 ease-[cubic-bezier(0.38,1.65,0.55,1)] ` +
+              `group-hover:scale-[1.08] motion-reduce:group-hover:scale-105 xl:h-6 xl:w-6`
+            }
+          />
         </div>
-        <p className="min-w-0 flex-1 text-sm font-semibold leading-snug text-npf-charcoal xl:text-base">
+        <p className="min-w-0 flex-1 text-sm font-semibold leading-snug text-npf-charcoal transition-colors duration-300 group-hover:text-[#BE1E2D] xl:text-base">
           {service.name}
         </p>
       </div>
@@ -93,10 +118,11 @@ export function ServicesSection() {
     ? { duration: 0 }
     : { duration: DRAW_DURATION_S, ease: 'easeInOut' as const };
 
-  const revealTransition = (extraDelay = 0) =>
+  /** Dots + labels — short stagger only (no wait for path finish) so they track with the line draw. */
+  const blueprintOverlayTransition = (extraDelay = 0) =>
     reduceMotion
       ? { duration: 0 }
-      : { delay: REVEAL_DELAY_S + extraDelay, duration: 0.5, ease: 'easeOut' as const };
+      : { delay: extraDelay, duration: 0.42, ease: 'easeOut' as const };
 
   const leftItemVariants = reduceMotion ? listItemReduced : listItemAnimatedLeft;
   const rightItemVariants = reduceMotion ? listItemReduced : listItemAnimatedRight;
@@ -145,7 +171,7 @@ export function ServicesSection() {
         </motion.ul>
 
         <div className="order-2 flex w-full justify-center lg:order-none">
-          <div className="relative aspect-[4/3] w-full max-w-[min(100%,640px)] min-h-[20rem] overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 sm:min-h-[26rem] lg:max-w-none lg:min-h-[30rem] xl:min-h-[36rem] 2xl:min-h-[40rem]">
+          <div className="group npf-sleek-lift relative aspect-[4/3] w-full max-w-[min(100%,640px)] min-h-[20rem] overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 sm:min-h-[26rem] lg:max-w-none lg:min-h-[30rem] xl:min-h-[36rem] 2xl:min-h-[40rem]">
             <div
               className="pointer-events-none absolute inset-0 z-[1]"
               style={{
@@ -158,9 +184,9 @@ export function ServicesSection() {
               aria-hidden
             />
 
-            <div className="relative z-10 flex h-full min-h-[14rem] w-full items-center justify-center px-3 py-3 sm:min-h-0 sm:px-5 sm:py-5 lg:px-6 lg:py-6">
+            <div className="relative z-10 flex h-full min-h-[14rem] w-full items-center justify-center px-3 py-3 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02] sm:min-h-0 sm:px-5 sm:py-5 lg:px-6 lg:py-6 motion-reduce:transition-none motion-reduce:group-hover:scale-100">
               <svg
-                className="h-full w-full max-h-[min(100%,720px)] max-w-full"
+                className="h-full w-full max-h-[min(100%,720px)] max-w-full transition-[filter] duration-500 group-hover:drop-shadow-[0_0_14px_rgba(190,30,45,0.35)] motion-reduce:transition-none motion-reduce:group-hover:drop-shadow-none"
                 viewBox={REPAIR_PLAN_VIEWBOX}
                 preserveAspectRatio="xMidYMid meet"
                 fill="none"
@@ -196,7 +222,7 @@ export function ServicesSection() {
                     strokeWidth={0.95}
                     initial={{ opacity: reduceMotion ? 1 : 0, scale: reduceMotion ? 1 : 0.6 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    transition={revealTransition(0.04 + i * 0.02)}
+                    transition={blueprintOverlayTransition(0.05 + i * 0.035)}
                     viewport={VIEWPORT}
                   />
                 ))}
@@ -213,7 +239,7 @@ export function ServicesSection() {
                     className="select-none [text-rendering:geometricPrecision]"
                     initial={{ opacity: reduceMotion ? 1 : 0 }}
                     whileInView={{ opacity: 1 }}
-                    transition={revealTransition(0.22 + i * 0.04)}
+                    transition={blueprintOverlayTransition(0.08 + i * 0.04)}
                     viewport={VIEWPORT}
                   >
                     {ann.lines.map((line, li) => (
@@ -253,13 +279,13 @@ export function ServicesSection() {
 
         <div className="order-5 flex flex-wrap justify-center gap-3 pt-2 lg:order-none lg:col-span-3">
           <Link
-            className="inline-flex min-h-11 items-center justify-center rounded-lg bg-npf-red px-6 py-2.5 text-sm font-semibold text-white shadow-sm shadow-npf-red/20 transition hover:bg-npf-red-dark hover:shadow-npf-red/30 active:translate-y-px focus:outline-none"
+            className="npf-sleek-lift-subtle inline-flex min-h-11 items-center justify-center rounded-lg bg-npf-red px-6 py-2.5 text-sm font-semibold text-white shadow-sm shadow-npf-red/20 hover:bg-npf-red-dark hover:shadow-[0_16px_36px_-14px_rgba(188,44,38,0.55)] active:translate-y-px focus:outline-none"
             to="/services"
           >
             View all services
           </Link>
           <a
-            className="inline-flex min-h-11 items-center justify-center rounded-lg border border-npf-border bg-white px-6 py-2.5 text-sm font-semibold text-npf-charcoal shadow-sm transition hover:bg-white hover:shadow-md active:translate-y-px focus:outline-none"
+            className="npf-sleek-lift-subtle inline-flex min-h-11 items-center justify-center rounded-lg border border-npf-border bg-white px-6 py-2.5 text-sm font-semibold text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/25 hover:bg-white active:translate-y-px focus:outline-none"
             href={SITE.quotePhoneTel}
           >
             Get a quote

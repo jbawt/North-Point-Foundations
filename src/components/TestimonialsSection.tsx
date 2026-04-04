@@ -60,7 +60,7 @@ export function TestimonialsSection() {
           <div className="flex gap-2 md:pb-1">
             <button
               type="button"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm transition hover:border-[#BE1E2D]/35 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/40"
+              className="npf-sleek-lift-subtle inline-flex h-11 w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/40 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/40 active:scale-95"
               aria-label="Previous testimonial"
               onClick={() => go(-1)}
             >
@@ -68,7 +68,7 @@ export function TestimonialsSection() {
             </button>
             <button
               type="button"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm transition hover:border-[#BE1E2D]/35 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/40"
+              className="npf-sleek-lift-subtle inline-flex h-11 w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/40 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/40 active:scale-95"
               aria-label="Next testimonial"
               onClick={() => go(1)}
             >
@@ -77,7 +77,7 @@ export function TestimonialsSection() {
           </div>
         </div>
 
-        <div className="relative overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5">
+        <div className="npf-sleek-lift relative overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 hover:border-[#BE1E2D]/20">
           <div className="relative min-h-[18rem] sm:min-h-[19rem] md:min-h-[17rem]">
             <AnimatePresence initial={false} mode="wait">
               <motion.article
@@ -120,8 +120,10 @@ export function TestimonialsSection() {
               type="button"
               aria-label={`Show testimonial ${i + 1} of ${n}`}
               aria-current={i === index ? 'true' : undefined}
-              className={`h-2.5 rounded-full transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/40 ${
-                i === index ? 'w-8 bg-[#BE1E2D]' : 'w-2.5 bg-npf-border hover:bg-npf-muted/40'
+              className={`h-2.5 rounded-full transition-[width,transform,background-color,box-shadow] duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/40 ${
+                i === index
+                  ? 'w-8 bg-[#BE1E2D] shadow-[0_0_12px_rgba(190,30,45,0.4)]'
+                  : 'w-2.5 bg-npf-border hover:w-3 hover:scale-125 hover:bg-[#BE1E2D]/35 hover:shadow-sm motion-reduce:hover:scale-100'
               }`}
               onClick={() => setIndex(i)}
             />

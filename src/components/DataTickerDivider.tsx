@@ -19,7 +19,7 @@ function GlitchChip({ children }: { children: ReactNode }) {
         transition: { duration: 0.22, ease: 'easeInOut' },
       }}
     >
-      <span className="transition-[text-shadow,filter,color] duration-150 ease-out group-hover:[text-shadow:1px_0_0_#BE1E2D,-1px_0_0_rgba(0,220,255,0.35)] group-hover:[filter:hue-rotate(8deg)_saturate(1.2)_contrast(1.05)]">
+      <span className="inline-block transition-[text-shadow,filter,color,transform] duration-200 ease-out group-hover:[text-shadow:1px_0_0_#BE1E2D,-1px_0_0_rgba(0,220,255,0.35)] group-hover:[filter:hue-rotate(8deg)_saturate(1.2)_contrast(1.05)] group-hover:scale-[1.02] motion-reduce:group-hover:scale-100">
         {children}
       </span>
     </motion.span>

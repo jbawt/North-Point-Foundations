@@ -63,12 +63,13 @@ export function ServiceAreaDivider() {
             {SITE.serviceAreas.map((area, i) => (
               <motion.li
                 key={area}
+                className="cursor-default"
                 initial={reduceMotion ? false : { opacity: 0, y: 6 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={VIEWPORT}
                 transition={{ delay: 0.04 * i, duration: 0.4, ease: 'easeOut' }}
               >
-                <span className="inline-flex items-center rounded-md border border-npf-border bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-npf-charcoal shadow-sm sm:px-3 sm:text-[11px]">
+                <span className="npf-sleek-lift-subtle inline-flex cursor-default select-none items-center rounded-md border border-npf-border bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/35 hover:text-[#BE1E2D] sm:px-3 sm:text-[11px] [&_*]:cursor-default">
                   {area}
                 </span>
               </motion.li>

@@ -3,9 +3,10 @@ import { SITE } from '../content/siteCopy.ts';
 
 const ITEM_SHELL =
   'group flex h-12 max-w-12 items-center overflow-hidden rounded-full shadow-lg ' +
-  'transition-[max-width,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ' +
-  'hover:max-w-[min(18rem,calc(100vw-2rem))] hover:shadow-xl ' +
-  'focus-within:max-w-[min(18rem,calc(100vw-2rem))] focus-within:shadow-xl ' +
+  'transition-[max-width,box-shadow,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ' +
+  'hover:max-w-[min(18rem,calc(100vw-2rem))] hover:shadow-xl hover:-translate-y-1 ' +
+  'focus-within:max-w-[min(18rem,calc(100vw-2rem))] focus-within:shadow-xl focus-within:-translate-y-1 ' +
+  'motion-reduce:hover:translate-y-0 motion-reduce:focus-within:translate-y-0 ' +
   'focus:outline-none focus-visible:ring-2 focus-visible:ring-white/60 focus-visible:ring-offset-2 focus-visible:ring-offset-white ' +
   'motion-reduce:transition-none';
 

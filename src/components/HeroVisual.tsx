@@ -25,9 +25,9 @@ export function HeroVisual() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none relative z-[1] mx-auto flex w-full max-w-[15rem] justify-center sm:max-w-[18rem] md:max-w-[21rem] lg:max-w-[24rem]"
+      className="group relative z-[1] mx-auto flex w-full max-w-[15rem] cursor-default justify-center sm:max-w-[18rem] md:max-w-[21rem] lg:max-w-[24rem]"
     >
-      <div className="relative aspect-[400/340] w-full">
+      <div className="relative aspect-[400/340] w-full transition-[transform,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.04] group-hover:drop-shadow-[0_0_24px_rgba(190,30,45,0.45)] motion-reduce:transition-none motion-reduce:group-hover:scale-100 motion-reduce:group-hover:drop-shadow-none">
         <ScanLine
           className="absolute right-[8%] top-[8%] h-3 w-3 text-[#F4D58D]/40 sm:h-3.5 sm:w-3.5"
           strokeWidth={1.25}

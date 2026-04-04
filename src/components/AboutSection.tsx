@@ -133,7 +133,7 @@ export function AboutSection() {
             >
               <motion.div
                 id={`${carouselId}-panel-0`}
-                className={`absolute left-0 right-0 top-0 mx-auto w-full max-w-full origin-center rounded-2xl border border-npf-border/90 bg-white/95 p-6 shadow-[0_20px_50px_-24px_rgba(26,26,26,0.18)] backdrop-blur-sm sm:p-8 md:p-10 ${ABOUT_CARD_PANEL}`}
+                className={`absolute left-0 right-0 top-0 mx-auto w-full max-w-full origin-center rounded-2xl border border-npf-border/90 bg-white/95 p-6 shadow-[0_20px_50px_-24px_rgba(26,26,26,0.18)] backdrop-blur-sm transition-[box-shadow,filter] duration-500 ease-out hover:shadow-[0_28px_70px_-32px_rgba(26,26,26,0.24)] hover:brightness-[1.01] sm:p-8 md:p-10 ${ABOUT_CARD_PANEL}`}
                 initial={false}
                 animate={cardState(0)}
                 transition={transition}
@@ -181,7 +181,7 @@ export function AboutSection() {
 
               <motion.div
                 id={`${carouselId}-panel-1`}
-                className={`absolute left-0 right-0 top-0 mx-auto w-full max-w-full origin-center rounded-2xl border border-npf-border/90 bg-white/95 p-6 shadow-[0_20px_50px_-24px_rgba(26,26,26,0.18)] backdrop-blur-sm sm:p-8 md:p-10 ${ABOUT_CARD_PANEL}`}
+                className={`absolute left-0 right-0 top-0 mx-auto w-full max-w-full origin-center rounded-2xl border border-npf-border/90 bg-white/95 p-6 shadow-[0_20px_50px_-24px_rgba(26,26,26,0.18)] backdrop-blur-sm transition-[box-shadow,filter] duration-500 ease-out hover:shadow-[0_28px_70px_-32px_rgba(26,26,26,0.24)] hover:brightness-[1.01] sm:p-8 md:p-10 ${ABOUT_CARD_PANEL}`}
                 initial={false}
                 animate={cardState(1)}
                 transition={transition}
@@ -228,7 +228,7 @@ export function AboutSection() {
                     </div>
                   </div>
                   <Link
-                    className="inline-flex min-h-11 w-full items-center justify-center rounded-xl border-2 border-[#BE1E2D] bg-[#BE1E2D] px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#BE1E2D]/25 transition hover:bg-[#a01824] hover:shadow-lg hover:shadow-[#BE1E2D]/30 active:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/40 focus-visible:ring-offset-2 sm:w-auto"
+                    className="npf-sleek-lift-subtle inline-flex min-h-11 w-full items-center justify-center rounded-xl border-2 border-[#BE1E2D] bg-[#BE1E2D] px-6 py-2.5 text-sm font-semibold text-white shadow-md shadow-[#BE1E2D]/25 hover:bg-[#a01824] hover:shadow-[0_20px_44px_-16px_rgba(190,30,45,0.45)] active:translate-y-px focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/40 focus-visible:ring-offset-2 sm:w-auto"
                     to="/about"
                     tabIndex={active === 1 ? 0 : -1}
                   >
@@ -242,7 +242,7 @@ export function AboutSection() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             <button
               type="button"
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-npf-border bg-white text-npf-charcoal shadow-sm transition hover:border-npf-charcoal/25 hover:bg-npf-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 focus-visible:ring-offset-2"
+              className="npf-sleek-lift-subtle inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/30 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 focus-visible:ring-offset-2 active:scale-95"
               onClick={goPrev}
               aria-label="Show the other card"
             >
@@ -252,7 +252,7 @@ export function AboutSection() {
             <div
               role="tablist"
               aria-label="Choose which card is in front"
-              className="flex items-center gap-2 rounded-full border border-npf-border bg-white/95 p-1 shadow-sm"
+              className="flex items-center gap-2 rounded-full border border-npf-border bg-white/95 p-1 shadow-sm transition-shadow duration-300 hover:shadow-md"
             >
               <button
                 type="button"
@@ -261,10 +261,10 @@ export function AboutSection() {
                 onClick={() => go(0)}
                 aria-selected={active === 0}
                 aria-controls={`${carouselId}-panel-0`}
-                className={`rounded-full px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition sm:px-4 ${
+                className={`rounded-full px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition-[transform,background-color,color,box-shadow] duration-300 sm:px-4 ${
                   active === 0
                     ? 'bg-npf-charcoal text-white shadow-sm'
-                    : 'text-npf-muted hover:bg-npf-surface hover:text-npf-charcoal'
+                    : 'text-npf-muted hover:scale-[1.03] hover:bg-npf-surface hover:text-npf-charcoal motion-reduce:hover:scale-100'
                 }`}
               >
                 About us
@@ -276,10 +276,10 @@ export function AboutSection() {
                 onClick={() => go(1)}
                 aria-selected={active === 1}
                 aria-controls={`${carouselId}-panel-1`}
-                className={`rounded-full px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition sm:px-4 ${
+                className={`rounded-full px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition-[transform,background-color,color,box-shadow] duration-300 sm:px-4 ${
                   active === 1
                     ? 'bg-[#BE1E2D] text-white shadow-sm shadow-[#BE1E2D]/20'
-                    : 'text-npf-muted hover:bg-npf-surface hover:text-npf-charcoal'
+                    : 'text-npf-muted hover:scale-[1.03] hover:bg-npf-surface hover:text-npf-charcoal motion-reduce:hover:scale-100'
                 }`}
               >
                 Why choose us
@@ -288,7 +288,7 @@ export function AboutSection() {
 
             <button
               type="button"
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-npf-border bg-white text-npf-charcoal shadow-sm transition hover:border-npf-charcoal/25 hover:bg-npf-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 focus-visible:ring-offset-2"
+              className="npf-sleek-lift-subtle inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/30 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 focus-visible:ring-offset-2 active:scale-95"
               onClick={goNext}
               aria-label="Show the other card"
             >

@@ -38,15 +38,6 @@ body {
   animation: npf-fiber-dash 10s linear infinite;
 }
 
-/* Phase offsets as fractions of one loop (10s) so motion stays seamless */
-.npf-fiber-path-delay {
-  animation-delay: -3.333s;
-}
-
-.npf-fiber-path-delay-2 {
-  animation-delay: -6.666s;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .npf-fiber-path {
     animation: none;
@@ -114,5 +105,58 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .npf-map-node-pulse {
     animation: none;
+  }
+}
+
+/**
+ * Shared hover polish — lift + shadow + border cross-fade.
+ * Skips transform on touch / no-hover; disables motion when prefers-reduced-motion.
+ */
+@media (hover: hover) and (pointer: fine) {
+  .npf-sleek-lift {
+    transition:
+      transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.38s ease,
+      border-color 0.28s ease,
+      background-color 0.28s ease,
+      filter 0.4s ease;
+  }
+
+  .npf-sleek-lift:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 24px 56px -28px rgba(26, 26, 26, 0.22),
+      0 0 0 1px color-mix(in srgb, #bc2c26 14%, transparent);
+  }
+
+  .npf-sleek-lift-subtle {
+    transition:
+      transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.34s ease,
+      border-color 0.24s ease,
+      background-color 0.24s ease,
+      color 0.2s ease;
+  }
+
+  .npf-sleek-lift-subtle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px -20px rgba(26, 26, 26, 0.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .npf-sleek-lift,
+  .npf-sleek-lift-subtle {
+    transition:
+      box-shadow 0.22s ease,
+      border-color 0.22s ease,
+      background-color 0.22s ease,
+      color 0.2s ease,
+      filter 0.22s ease;
+  }
+
+  .npf-sleek-lift:hover,
+  .npf-sleek-lift-subtle:hover {
+    transform: none;
   }
 }

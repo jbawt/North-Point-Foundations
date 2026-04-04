@@ -15,7 +15,7 @@ export function ServicesPage() {
         <p className="max-w-3xl text-sm font-medium text-npf-charcoal sm:text-base">{SITE.values}</p>
       </header>
 
-      <div className="rounded-xl border border-npf-border bg-npf-surface p-6 sm:p-8">
+      <div className="npf-sleek-lift rounded-xl border border-npf-border bg-npf-surface p-6 sm:p-8">
         <h2 className="mb-6 text-lg font-semibold text-npf-charcoal sm:text-xl">Our services</h2>
         <ul className="grid gap-5 sm:grid-cols-2 sm:gap-6" aria-label="Service list">
           {SITE.services.map((service) => (
@@ -26,7 +26,7 @@ export function ServicesPage() {
         </ul>
       </div>
 
-      <div className="rounded-xl border border-npf-border bg-white p-6 sm:p-8">
+      <div className="npf-sleek-lift rounded-xl border border-npf-border bg-white p-6 sm:p-8">
         <h2 className="mb-3 text-lg font-semibold text-npf-charcoal">Service area</h2>
         <p className="text-sm leading-relaxed text-npf-muted sm:text-base">
           We serve <span className="font-medium text-npf-charcoal">{serviceAreasSentence()}</span>.

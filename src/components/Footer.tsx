@@ -16,7 +16,10 @@ export function Footer() {
       <div className="mx-auto max-w-[88rem] px-5 py-12 sm:px-8 sm:py-14 md:py-16">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.15fr_1fr_1fr] lg:gap-12">
           <div className="space-y-4 sm:col-span-2 lg:col-span-1 lg:max-w-md">
-            <Link className="inline-block" to="/">
+            <Link
+              className="inline-block transition-[transform,opacity] duration-300 ease-out hover:opacity-95 hover:scale-[1.02] motion-reduce:hover:scale-100"
+              to="/"
+            >
               <img
                 alt={SITE.name}
                 className="h-14 w-auto max-w-[14rem] object-contain object-left brightness-0 invert sm:h-16 md:h-[4.5rem]"
@@ -51,7 +54,7 @@ export function Footer() {
             <ul className="mt-4 space-y-3 text-sm">
               <li>
                 <a
-                  className="inline-flex font-semibold text-white transition hover:text-white/90 focus:outline-none focus-visible:underline"
+                  className="inline-flex font-semibold text-white transition-[transform,color,filter] duration-300 ease-out hover:translate-x-1 hover:text-white hover:brightness-110 focus:outline-none focus-visible:underline motion-reduce:hover:translate-x-0"
                   href={SITE.quotePhoneTel}
                 >
                   Get a quote — call now

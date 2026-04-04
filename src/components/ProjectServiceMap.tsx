@@ -240,7 +240,7 @@ export function ProjectServiceMap() {
           >
             <button
               type="button"
-              className="npf-map-node relative flex h-4 w-4 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-charcoal/50"
+              className="npf-map-node relative flex h-4 w-4 cursor-pointer items-center justify-center rounded-full border-0 bg-transparent p-0 transition-[transform,filter] duration-200 ease-out hover:scale-[1.65] hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-npf-charcoal/50 motion-reduce:transition-none motion-reduce:hover:scale-100"
               aria-label={`${p.city}, ${p.type}. Tap for details.`}
               onMouseEnter={() => onMarkerEnter(p)}
               onMouseLeave={onMarkerLeave}
