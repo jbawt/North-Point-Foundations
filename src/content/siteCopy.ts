@@ -29,31 +29,43 @@ export const SITE = {
     {
       name: 'Exterior foundation waterproofing',
       blurb: 'Seal the exterior and direct water away before it causes damage.',
+      detail:
+        'Membranes, drainage board, and grading so water sheds away from the wall — a solid fix when you are seeing damp walls, efflorescence, or seepage after rain or snowmelt.',
       icon: 'waterproofing',
     },
     {
       name: 'Crack repair',
       blurb: 'Stabilize cracks to help protect against future water intrusion.',
+      detail:
+        'We check movement and water paths, then recommend injection, routing, or exterior repair — fixes meant for real freeze–thaw cycles, not a cosmetic patch.',
       icon: 'crack-repair',
     },
     {
       name: 'Weeping tile installation',
       blurb: 'A drainage system that captures groundwater and routes it safely.',
+      detail:
+        'Perimeter drain relieves pressure and routes water to your sump or a daylight exit, with cleanouts where they help long-term maintenance.',
       icon: 'weeping-tile',
     },
     {
       name: 'Sump pump systems',
       blurb: 'Reliable pumping to keep basements drier during heavy rain.',
+      detail:
+        'Basin size, discharge routing, and backup options matched to your layout — including check valves and freeze-savvy exterior lines when you need them.',
       icon: 'sump-pump',
     },
     {
       name: 'Window well repair',
       blurb: 'Rebuild and waterproof window wells to help prevent leaks.',
+      detail:
+        'Rebuild or replace wells, improve drainage and gravel, and seal the wall joint — the usual fixes when rust, pooling, or flashing failures are letting water in.',
       icon: 'window-well',
     },
     {
       name: 'Excavation work',
       blurb: 'Careful excavation and prep for repairs, drainage, and waterproofing.',
+      detail:
+        'A clean dig along the wall for exterior waterproofing and drainage work — we protect what we can above grade and leave backfill and compaction done right.',
       icon: 'excavation',
     },
   ] as const,
