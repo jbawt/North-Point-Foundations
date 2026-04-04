@@ -1,6 +1,26 @@
 /**
  * North Point Foundations — single source of truth for marketing / UI copy.
  */
+
+/** Larger Central Alberta centres + catch-all; drives pills, footer sentence, and lead copy. */
+const SERVICE_AREAS = [
+  'Lacombe',
+  'Red Deer',
+  'Blackfalds',
+  'Sylvan Lake',
+  'Innisfail',
+  'Olds',
+  'Ponoka',
+  'surrounding areas',
+] as const;
+
+function serviceAreasSentenceFrom(areas: readonly string[]): string {
+  if (areas.length === 0) return '';
+  if (areas.length === 1) return areas[0] ?? '';
+  const last = areas[areas.length - 1]!;
+  return `${areas.slice(0, -1).join(', ')}, and ${last}`;
+}
+
 export const SITE = {
   name: 'North Point Foundations',
   /** Primary CTA — dial link for “Get a quote” (replace with production number). */
@@ -13,10 +33,9 @@ export const SITE = {
   /** Short line for header / meta */
   shortTagline: 'Foundation repair & waterproofing',
   region: 'Central Alberta',
-  serviceAreas: ['Lacombe', 'Red Deer', 'Blackfalds', 'Ponoka', 'surrounding areas'] as const,
+  serviceAreas: SERVICE_AREAS,
   /** Opening paragraph — use across hero, about, SEO */
-  lead:
-    'North Point Foundations is a locally owned foundation repair and waterproofing company based in Central Alberta, serving Lacombe, Red Deer, Blackfalds, Ponoka, and surrounding areas.',
+  lead: `North Point Foundations is a locally owned foundation repair and waterproofing company based in Central Alberta, serving ${serviceAreasSentenceFrom(SERVICE_AREAS)}.`,
   /** Extra body copy for the home page About section (shown below `lead`). */
   aboutHomeExtraParagraphs: [
     'Prairie seasons put real stress on foundations — freeze–thaw cycles, spring runoff, and clay-heavy soils are part of life here. We design and execute repairs with those conditions in mind, not generic one-size-fits-all fixes.',
@@ -71,7 +90,7 @@ export const SITE = {
   ] as const,
   values: 'We focus on honest pricing and reliable service.',
   /** Hero supporting line (hero + meta) */
-  heroSub: `Locally owned foundation repair and waterproofing in Central Alberta — serving Lacombe, Red Deer, Blackfalds, Ponoka, and surrounding areas. Exterior waterproofing, crack repair, weeping tile, sump systems, window wells, and excavation. Honest pricing and reliable service.`,
+  heroSub: `Locally owned foundation repair and waterproofing in Central Alberta — serving ${serviceAreasSentenceFrom(SERVICE_AREAS)}. Exterior waterproofing, crack repair, weeping tile, sump systems, window wells, and excavation. Honest pricing and reliable service.`,
 } as const;
 
 /** Home testimonials carousel — placeholder-style quotes for local marketing. */
@@ -113,6 +132,5 @@ export type ServiceIconId =
 export type ServiceDetail = (typeof SITE.services)[number];
 
 export function serviceAreasSentence(): string {
-  const [a, b, c, d, rest] = SITE.serviceAreas;
-  return `${a}, ${b}, ${c}, ${d}, and ${rest}`;
+  return serviceAreasSentenceFrom(SITE.serviceAreas);
 }
