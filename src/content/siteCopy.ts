@@ -5,6 +5,9 @@ export const SITE = {
   name: 'North Point Foundations',
   /** Primary CTA — dial link for “Get a quote” (replace with production number). */
   quotePhoneTel: 'tel:+15555550100',
+  /** Sticky rail & footer — replace with your real profile URLs. */
+  facebookUrl: 'https://www.facebook.com/',
+  instagramUrl: 'https://www.instagram.com/',
   /** Home page testimonial carousel — set `true` when you have reviews to show. */
   showTestimonialsOnHome: false,
   /** Short line for header / meta */

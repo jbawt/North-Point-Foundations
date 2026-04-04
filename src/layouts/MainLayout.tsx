@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Footer } from '../components/Footer.tsx';
 import { NavBar } from '../components/NavBar.tsx';
+import { StickyContactRail } from '../components/StickyContactRail.tsx';
 
 export function MainLayout() {
   return (
@@ -10,6 +11,7 @@ export function MainLayout() {
         <Outlet />
       </main>
       <Footer />
+      <StickyContactRail />
     </div>
   );
 }

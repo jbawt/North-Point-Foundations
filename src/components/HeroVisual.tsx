@@ -25,7 +25,7 @@ export function HeroVisual() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none relative z-[1] mx-auto flex w-full max-w-[12rem] justify-center sm:max-w-[14rem] md:max-w-[16rem] lg:max-w-[17.5rem]"
+      className="pointer-events-none relative z-[1] mx-auto flex w-full max-w-[15rem] justify-center sm:max-w-[18rem] md:max-w-[21rem] lg:max-w-[24rem]"
     >
       <div className="relative aspect-[400/340] w-full">
         <ScanLine
