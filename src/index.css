@@ -20,6 +20,17 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ServiceShowcase deck — scrollbar hidden; wheel/touch/trackpad scroll unchanged */
+.npf-deck-scroll {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.npf-deck-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 /* HeroVisual — fiber-optic stroke flow
    Dash period = 40 + 60 = 100. Offset must move a whole multiple of 100 each loop
    or the stroke visibly “jumps” when the animation repeats. */
