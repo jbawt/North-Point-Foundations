@@ -82,10 +82,10 @@ export function NavBar() {
           </NavLink>
           <div className="hidden min-h-[2.5rem] min-[400px]:flex min-[400px]:flex-col min-[400px]:justify-center border-l border-npf-border pl-3 sm:min-h-0 sm:pl-4">
             <span className="text-[10px] font-semibold uppercase leading-tight tracking-wide text-npf-red sm:text-xs">
-              {SITE.region}
+              {SITE.shortTagline}
             </span>
             <span className="mt-0.5 hidden text-[11px] leading-snug text-npf-muted sm:block sm:text-xs">
-              {SITE.shortTagline}
+              {SITE.region}
             </span>
           </div>
         </div>

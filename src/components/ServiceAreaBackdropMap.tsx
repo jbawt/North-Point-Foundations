@@ -1,7 +1,10 @@
 import { useEffect, useRef } from 'react';
-import Map, { type MapRef } from 'react-map-gl/mapbox';
+import Map, { Marker, type MapRef } from 'react-map-gl/mapbox';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import { RECENT_PROJECT_PINS } from '../content/recentProjectPins.ts';
 import { SITE } from '../content/siteCopy.ts';
+
+const NPF_SIGNAL = '#BE1E2D';
 
 /** Matches `ProjectServiceMap` — Central Alberta service corridor */
 const SERVICE_AREA_VIEW = {
@@ -12,12 +15,14 @@ const SERVICE_AREA_VIEW = {
 
 type Props = {
   className?: string;
+  /** When true, draws the same red project pins as the home proof-of-service map (decorative only). */
+  showPins?: boolean;
 };
 
 /**
  * Read-only Mapbox basemap for decorative backgrounds (no pan/zoom; pointer-events none).
  */
-export function ServiceAreaBackdropMap({ className = '' }: Props) {
+export function ServiceAreaBackdropMap({ className = '', showPins = false }: Props) {
   const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
   const mapStyle =
     import.meta.env.VITE_MAPBOX_STYLE_URL ?? 'mapbox://styles/mapbox/light-v11';
@@ -72,7 +77,25 @@ export function ServiceAreaBackdropMap({ className = '' }: Props) {
         touchZoomRotate={false}
         doubleClickZoom={false}
         keyboard={false}
-      />
+      >
+        {showPins
+          ? RECENT_PROJECT_PINS.map((p) => (
+              <Marker
+                key={p.id}
+                longitude={p.coords[0]}
+                latitude={p.coords[1]}
+                anchor="center"
+              >
+                <div className="pointer-events-none flex h-4 w-4 items-center justify-center" aria-hidden>
+                  <span
+                    className="npf-map-node-core npf-map-node-pulse"
+                    style={{ backgroundColor: NPF_SIGNAL }}
+                  />
+                </div>
+              </Marker>
+            ))
+          : null}
+      </Map>
     </div>
   );
 }

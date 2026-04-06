@@ -4,6 +4,7 @@ import {
   useReducedMotion,
 } from 'framer-motion';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { FaChevronDown } from 'react-icons/fa6';
 import { SITE } from '../content/siteCopy.ts';
 import { ServiceAreaBackdropMap } from './ServiceAreaBackdropMap.tsx';
 import { ServiceIcon } from './ServiceIcon.tsx';
@@ -257,6 +258,41 @@ function SlideMapBackdrop() {
   );
 }
 
+function ScrollForMoreCue({ inView, reduceMotion }: { inView: boolean; reduceMotion: boolean }) {
+  return (
+    <div
+      className="pointer-events-none absolute bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 z-20 -translate-x-1/2 md:bottom-8"
+      aria-hidden
+    >
+      <motion.div
+        className="flex flex-col items-center gap-1"
+        initial={false}
+        animate={{ opacity: inView ? 1 : 0 }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <motion.div
+          className="flex flex-col items-center gap-0.5 text-npf-muted"
+          animate={
+            reduceMotion || !inView
+              ? { y: 0 }
+              : { y: [0, 8, 0] }
+          }
+          transition={
+            reduceMotion || !inView
+              ? { duration: 0 }
+              : { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }
+          }
+        >
+          <span className="font-mono text-[9px] uppercase tracking-[0.32em] text-npf-muted/85 sm:text-[10px]">
+            Scroll for more
+          </span>
+          <FaChevronDown className="h-3 w-3 opacity-65 sm:h-3.5 sm:w-3.5" aria-hidden />
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+}
+
 function DeckIntroSlide({
   titleId,
   reduceMotion,
@@ -302,6 +338,7 @@ function DeckIntroSlide({
           </div>
         </div>
       </div>
+      <ScrollForMoreCue inView={inView} reduceMotion={reduceMotion} />
     </section>
   );
 }

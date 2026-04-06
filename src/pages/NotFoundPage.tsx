@@ -1,6 +1,11 @@
+import { useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 export function NotFoundPage() {
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, []);
+
   return (
     <section className="mx-auto flex min-h-screen max-w-xl flex-col items-center justify-center gap-4 bg-white px-6 text-center text-npf-charcoal">
       <p className="text-sm font-semibold uppercase tracking-wide text-npf-red">404</p>
