@@ -45,7 +45,7 @@ export function ServiceAreaDivider() {
                 className="text-[11px] font-semibold uppercase tracking-[0.28em] text-[#BE1E2D] sm:text-xs"
                 style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace" }}
               >
-                Proof of service · Operational map
+                Service Area Map
               </p>
             </div>
             <p className="text-sm leading-relaxed text-npf-muted sm:text-base">

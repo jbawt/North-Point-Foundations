@@ -51,6 +51,12 @@ export const SITE = {
       detail:
         'Membranes, drainage board, and grading so water sheds away from the wall — a solid fix when you are seeing damp walls, efflorescence, or seepage after rain or snowmelt.',
       icon: 'waterproofing',
+      highlights: [
+        'Exterior membranes and drainage board tied into grade and discharge',
+        'Addresses bulk water and capillary moisture before it reaches your interior finish',
+        'Strong option when seepage tracks with rain, snowmelt, or spring runoff',
+        'Often paired with excavation when exterior access along the wall is practical',
+      ],
     },
     {
       name: 'Crack repair',
@@ -58,6 +64,12 @@ export const SITE = {
       detail:
         'We check movement and water paths, then recommend injection, routing, or exterior repair — fixes meant for real freeze–thaw cycles, not a cosmetic patch.',
       icon: 'crack-repair',
+      highlights: [
+        'Crack width, pattern, and history reviewed before we commit to a method',
+        'Injection, routing, or exterior repair chosen for your wall and exposure',
+        'Built for Central Alberta freeze–thaw — not a quick surface filler',
+        'Straight talk on what to fix now versus what we can monitor over time',
+      ],
     },
     {
       name: 'Weeping tile installation',
@@ -65,6 +77,12 @@ export const SITE = {
       detail:
         'Perimeter drain relieves pressure and routes water to your sump or a daylight exit, with cleanouts where they help long-term maintenance.',
       icon: 'weeping-tile',
+      highlights: [
+        'Footing-level perimeter drain to relieve hydrostatic pressure',
+        'Routing to sump or daylight with slope and access for future service',
+        'New runs, targeted extensions, or replacement scoped to your layout',
+        'Helps when the basement stays damp after heavy rain or snowmelt',
+      ],
     },
     {
       name: 'Sump pump systems',
@@ -72,6 +90,12 @@ export const SITE = {
       detail:
         'Basin size, discharge routing, and backup options matched to your layout — including check valves and freeze-savvy exterior lines when you need them.',
       icon: 'sump-pump',
+      highlights: [
+        'Basin size and pit depth matched to inflow and your floor structure',
+        'Discharge line routing with check valve and freeze-conscious exits',
+        'Primary and backup options discussed for storms and power loss',
+        'Keeps the low point moving water during peak spring and summer events',
+      ],
     },
     {
       name: 'Window well repair',
@@ -79,6 +103,12 @@ export const SITE = {
       detail:
         'Rebuild or replace wells, improve drainage and gravel, and seal the wall joint — the usual fixes when rust, pooling, or flashing failures are letting water in.',
       icon: 'window-well',
+      highlights: [
+        'Rebuild or replace rusted, bent, or failed window well shells',
+        'Drainage rock, drain ties, and wall joint sealing where leaks track',
+        'Addresses pooling, debris buildup, and failed flashing at the opening',
+        'Restores a clean barrier at egress and standard basement windows',
+      ],
     },
     {
       name: 'Excavation work',
@@ -86,6 +116,12 @@ export const SITE = {
       detail:
         'A clean dig along the wall for exterior waterproofing and drainage work — we protect what we can above grade and leave backfill and compaction done right.',
       icon: 'excavation',
+      highlights: [
+        'Controlled trench along the foundation for membrane and drain work',
+        'Landscaping, walks, and utilities protected within practical limits',
+        'Backfill and compaction completed to spec after the repair scope',
+        'Site kept as tidy as the job allows from open trench to wrap-up',
+      ],
     },
   ] as const,
   values: 'We focus on honest pricing and reliable service.',
