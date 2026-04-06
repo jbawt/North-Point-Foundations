@@ -52,7 +52,7 @@ const SHOWCASE_SECTIONS: ShowcaseSection[] = [
   },
   {
     id: 'weeping-tile',
-    title: 'Weeping Tile Installation',
+    title: 'Weeping Tile Install',
     technicalDescription:
       'Footing-level perimeter collector with continuous slope, cleanouts, and discharge to sump or daylight. Relieves hydrostatic head while preserving long-term service access.',
     specs: [
@@ -169,7 +169,7 @@ function TerminalTypingTitle({
   return (
     <Tag
       id={id}
-      className="font-mono text-2xl font-semibold tracking-tight text-npf-charcoal sm:text-3xl md:text-4xl lg:text-[2.75rem] lg:leading-tight"
+      className="max-w-full overflow-x-auto font-mono text-2xl font-semibold tracking-tight text-npf-charcoal [scrollbar-width:none] [-ms-overflow-style:none] sm:text-3xl md:text-4xl lg:text-[2.75rem] lg:leading-tight [&::-webkit-scrollbar]:hidden whitespace-nowrap"
     >
       <span className="text-[#BE1E2D]" aria-hidden>
         &gt;{' '}
@@ -285,7 +285,7 @@ function DeckIntroSlide({
       <SlideMapBackdrop />
       <div className="relative z-10 flex min-h-0 w-full flex-1 flex-col justify-center">
         <div className="mx-auto w-full max-w-7xl">
-          <div className="mx-auto max-w-3xl space-y-6 text-center md:mx-0 md:text-left">
+          <div className="mx-auto min-w-0 max-w-3xl space-y-6 text-center md:mx-0 md:text-left">
             <TerminalTypingTitle
               as="h1"
               id={titleId}
@@ -323,9 +323,6 @@ function ServiceShowcaseSection({
     margin: '-12% 0px -12% 0px',
   });
 
-  const specContainerRef = useRef<HTMLDivElement>(null);
-  const specsInView = useInView(specContainerRef, { amount: 0.2, once: false });
-
   return (
     <section
       ref={ref}
@@ -339,8 +336,8 @@ function ServiceShowcaseSection({
     >
       <SlideMapBackdrop />
       <div className="relative z-10 flex min-h-0 w-full flex-1 flex-col justify-center gap-10 md:gap-0">
-        <div className="mx-auto grid w-full max-w-7xl items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
-          <div className="flex flex-col justify-center space-y-6 md:space-y-8 md:pr-4">
+        <div className="mx-auto grid w-full max-w-7xl items-center gap-10 md:grid-cols-2 md:items-stretch md:gap-12 lg:gap-16">
+          <div className="flex min-h-0 min-w-0 flex-col justify-center space-y-6 overflow-y-auto overscroll-y-contain md:space-y-8 md:pr-4">
             <div className="space-y-2">
               <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#BE1E2D] sm:text-xs">
                 {`NPF // SVC_${String(index + 1).padStart(2, '0')}`}
@@ -354,7 +351,7 @@ function ServiceShowcaseSection({
             <p className="max-w-xl text-sm leading-relaxed text-npf-muted sm:text-base">
               {section.technicalDescription}
             </p>
-            <div ref={specContainerRef}>
+            <div>
               <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.25em] text-npf-muted sm:text-xs">
                 Spec sheet
               </p>
@@ -367,7 +364,7 @@ function ServiceShowcaseSection({
                     animate={
                       reduceMotion
                         ? { opacity: 1, y: 0 }
-                        : specsInView
+                        : inView
                           ? { opacity: 1, y: 0 }
                           : { opacity: 0, y: 18 }
                     }
@@ -386,7 +383,7 @@ function ServiceShowcaseSection({
               </div>
             </div>
           </div>
-          <div className="flex items-center justify-center md:justify-end">
+          <div className="flex min-h-0 items-center justify-center md:justify-end">
             <ShowcaseVisualPanel icon={section.icon} label={section.visualLabel} reduceMotion={reduceMotion} />
           </div>
         </div>
