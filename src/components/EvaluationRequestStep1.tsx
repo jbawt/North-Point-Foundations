@@ -51,6 +51,11 @@ const CATEGORIES: CategoryConfig[] = [
   },
 ];
 
+export function getEvaluationCategoryLabel(id: EvaluationCategoryId): string {
+  const row = CATEGORIES.find((c) => c.id === id);
+  return row?.label ?? id;
+}
+
 export type EvaluationRequestStep1Props = {
   /** Called when the user completes step 1 with a valid selection. */
   onContinue?: (data: EvaluationRequestStep1Values) => void;

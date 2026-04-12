@@ -53,12 +53,12 @@ export function Footer() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/50">Contact</p>
             <ul className="mt-4 space-y-3 text-sm">
               <li>
-                <a
+                <Link
                   className="inline-flex font-semibold text-white transition-[transform,color,filter] duration-300 ease-out hover:translate-x-1 hover:text-white hover:brightness-110 focus:outline-none focus-visible:underline motion-reduce:hover:translate-x-0"
-                  href={SITE.quotePhoneTel}
+                  to="/contact"
                 >
-                  Get a quote — call now
-                </a>
+                  Get a quote
+                </Link>
               </li>
               <li className="text-white/65">
                 <span className="font-medium text-white/80">Service area:</span>{' '}

@@ -174,12 +174,12 @@ export function HomeHero() {
             {SITE.heroSub}
           </p>
           <div ref={ctaRef} className="relative z-20 mt-8 flex flex-col items-center gap-3 sm:mt-10 sm:flex-row sm:justify-center sm:gap-4">
-            <a
+            <Link
               className="npf-sleek-lift-subtle inline-flex min-h-12 items-center justify-center rounded-lg bg-npf-red px-8 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-npf-red/30 hover:bg-npf-red-dark hover:shadow-[0_20px_44px_-16px_rgba(188,44,38,0.6)] active:translate-y-0"
-              href={SITE.quotePhoneTel}
+              to="/contact"
             >
               Get a quote
-            </a>
+            </Link>
             <Link
               className="npf-sleek-lift-subtle inline-flex min-h-12 items-center justify-center rounded-lg border border-white/22 bg-white/5 px-8 py-3 text-center text-sm font-semibold text-white backdrop-blur-sm hover:border-white/45 hover:bg-white/14 hover:shadow-[0_16px_40px_-18px_rgba(0,0,0,0.35)] active:translate-y-0"
               to="/services"

@@ -4,6 +4,7 @@ import {
   useReducedMotion,
 } from 'framer-motion';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa6';
 import { SITE } from '../content/siteCopy.ts';
 import { ServiceAreaBackdropMap } from './ServiceAreaBackdropMap.tsx';
@@ -455,12 +456,12 @@ function DeckOutroSlide() {
           <p className="mt-4 max-w-xl text-sm leading-relaxed text-npf-muted sm:text-base">
             Serving {SITE.region}. Call for scope verification and on-site assessment.
           </p>
-          <a
-            href={SITE.quotePhoneTel}
+          <Link
+            to="/contact"
             className="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-[#BE1E2D] px-6 py-2.5 font-mono text-sm font-semibold text-white shadow-sm shadow-[#BE1E2D]/30 transition-[background-color,box-shadow,transform] duration-300 hover:bg-npf-red-dark hover:shadow-[0_16px_40px_-12px_rgba(190,30,45,0.45)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
           >
-            Request quote — tel
-          </a>
+            Get a quote
+          </Link>
         </div>
       </div>
     </section>

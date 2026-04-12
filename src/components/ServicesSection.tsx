@@ -284,12 +284,12 @@ export function ServicesSection() {
           >
             View all services
           </Link>
-          <a
+          <Link
             className="npf-sleek-lift-subtle inline-flex min-h-11 items-center justify-center rounded-lg border border-npf-border bg-white px-6 py-2.5 text-sm font-semibold text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/25 hover:bg-white active:translate-y-px focus:outline-none"
-            href={SITE.quotePhoneTel}
+            to="/contact"
           >
             Get a quote
-          </a>
+          </Link>
         </div>
       </div>
     </section>

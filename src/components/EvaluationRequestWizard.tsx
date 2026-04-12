@@ -13,6 +13,7 @@ import {
   EvaluationRequestFinalStep,
   type EvaluationRequestFinalStepValues,
 } from './EvaluationRequestFinalStep.tsx';
+import { sendQuoteRequestViaEmailJs } from '../lib/emailjsQuoteRequest.ts';
 
 type SlideDirection = 'forward' | 'back';
 
@@ -118,13 +119,25 @@ export function EvaluationRequestWizard({ className = '' }: { className?: string
               <EvaluationRequestFinalStep
                 defaultValues={step3Values}
                 onBack={goBack}
-                onSubmitted={(data) => {
+                onSubmitted={async (data) => {
+                  const categoryId = step1Values.evaluationCategory;
+                  const propertyAddress = step2Values.propertyAddress?.trim();
+                  if (!categoryId || !propertyAddress) {
+                    throw new Error(
+                      'Something went wrong: go back and confirm your project type and property location.',
+                    );
+                  }
                   setStep3Values({
                     workTimeline: data.workTimeline,
                     projectSummary: data.projectSummary,
                     fullName: data.fullName,
                     email: data.email,
                     phone: data.phone,
+                  });
+                  await sendQuoteRequestViaEmailJs({
+                    evaluationCategoryId: categoryId,
+                    propertyAddress,
+                    finalStep: data,
                   });
                 }}
               />

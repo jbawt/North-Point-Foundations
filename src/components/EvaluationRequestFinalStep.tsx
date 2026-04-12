@@ -9,7 +9,7 @@ import { EvaluationRequestProgress } from './EvaluationRequestProgress.tsx';
 const WORK_TIMELINE_VALUES = ['immediately', 'within_1_3_months', 'just_researching'] as const;
 export type WorkTimelineValue = (typeof WORK_TIMELINE_VALUES)[number];
 
-const TIMELINE_LABELS: Record<WorkTimelineValue, string> = {
+export const TIMELINE_LABELS: Record<WorkTimelineValue, string> = {
   immediately: 'Immediately',
   within_1_3_months: 'Within 1-3 months',
   just_researching: 'Just researching',
@@ -29,8 +29,8 @@ type FinalStepFormValues = Omit<EvaluationRequestFinalStepValues, 'workTimeline'
 
 export type EvaluationRequestFinalStepProps = {
   onBack?: () => void;
-  /** Optional — e.g. analytics or server handoff after the user acknowledges the completion modal. */
-  onSubmitted?: (data: EvaluationRequestFinalStepValues) => void;
+  /** Called before the confirmation modal; await to delay the modal until async work (e.g. EmailJS) finishes. */
+  onSubmitted?: (data: EvaluationRequestFinalStepValues) => void | Promise<void>;
   defaultValues?: Partial<EvaluationRequestFinalStepValues>;
   className?: string;
 };
@@ -205,11 +205,12 @@ export function EvaluationRequestFinalStep({
   const headingId = useId();
   const inputId = useId();
   const [completeOpen, setCompleteOpen] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<FinalStepFormValues>({
     defaultValues: {
       workTimeline: defaultValues?.workTimeline ?? '',
@@ -221,16 +222,25 @@ export function EvaluationRequestFinalStep({
     mode: 'onSubmit',
   });
 
-  const onSubmit = (data: FinalStepFormValues) => {
+  const onSubmit = handleSubmit(async (data: FinalStepFormValues) => {
     const timeline = data.workTimeline;
     if (!timeline) return;
     const payload: EvaluationRequestFinalStepValues = {
       ...data,
       workTimeline: timeline,
     };
-    onSubmitted?.(payload);
-    setCompleteOpen(true);
-  };
+    setSubmitError(null);
+    try {
+      await onSubmitted?.(payload);
+      setCompleteOpen(true);
+    } catch (e) {
+      const msg =
+        e instanceof Error
+          ? e.message
+          : 'Could not send your request. Please try again or phone the office.';
+      setSubmitError(msg);
+    }
+  });
 
   return (
     <div
@@ -261,7 +271,7 @@ export function EvaluationRequestFinalStep({
 
         <form
           noValidate
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={onSubmit}
           aria-labelledby={headingId}
           className="space-y-8 sm:space-y-10"
         >
@@ -390,31 +400,44 @@ export function EvaluationRequestFinalStep({
             </div>
           </section>
 
+          {submitError ? (
+            <p
+              className="rounded-lg border border-npf-classic-red/25 bg-npf-classic-red/[0.06] px-4 py-3 text-sm font-medium text-npf-classic-red"
+              role="alert"
+            >
+              {submitError}
+            </p>
+          ) : null}
+
           <div className="flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
             <motion.button
               type="button"
               onClick={() => onBack?.()}
+              disabled={isSubmitting}
               className={
                 'w-full rounded-md border-2 border-npf-navy bg-transparent px-6 py-3.5 text-center text-[12px] font-bold uppercase tracking-[0.12em] text-npf-navy ' +
-                'transition-[background-color,box-shadow] duration-200 ease-out hover:bg-npf-navy/[0.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-npf-navy/25 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f7fa] sm:w-auto sm:min-w-[10rem]'
+                'transition-[background-color,box-shadow] duration-200 ease-out hover:bg-npf-navy/[0.04] focus:outline-none focus-visible:ring-2 focus-visible:ring-npf-navy/25 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f7fa] sm:w-auto sm:min-w-[10rem] ' +
+                'disabled:pointer-events-none disabled:opacity-45'
               }
-              whileHover={reduceMotion ? undefined : { scale: 1.02 }}
-              whileTap={reduceMotion ? undefined : { scale: 0.99 }}
+              whileHover={reduceMotion || isSubmitting ? undefined : { scale: 1.02 }}
+              whileTap={reduceMotion || isSubmitting ? undefined : { scale: 0.99 }}
               transition={{ type: 'spring', stiffness: 420, damping: 24 }}
             >
               Back
             </motion.button>
             <motion.button
               type="submit"
+              disabled={isSubmitting}
               className={
                 'w-full rounded-md border border-npf-classic-red/90 bg-npf-classic-red px-6 py-3.5 text-center text-[11px] font-bold uppercase leading-snug tracking-[0.08em] text-white shadow-[0_2px_0_rgba(0,0,0,0.06)] ' +
-                'transition-[box-shadow,filter] duration-200 ease-out hover:shadow-[0_6px_24px_-6px_rgba(190,30,45,0.45)] focus:outline-none focus-visible:ring-2 focus-visible:ring-npf-classic-red focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f7fa] sm:w-auto sm:min-w-[18rem] sm:text-[12px] sm:tracking-[0.1em]'
+                'transition-[box-shadow,filter] duration-200 ease-out hover:shadow-[0_6px_24px_-6px_rgba(190,30,45,0.45)] focus:outline-none focus-visible:ring-2 focus-visible:ring-npf-classic-red focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5f7fa] sm:w-auto sm:min-w-[18rem] sm:text-[12px] sm:tracking-[0.1em] ' +
+                'disabled:pointer-events-none disabled:opacity-70'
               }
-              whileHover={reduceMotion ? undefined : { scale: 1.02 }}
-              whileTap={reduceMotion ? undefined : { scale: 0.99 }}
+              whileHover={reduceMotion || isSubmitting ? undefined : { scale: 1.02 }}
+              whileTap={reduceMotion || isSubmitting ? undefined : { scale: 0.99 }}
               transition={{ type: 'spring', stiffness: 420, damping: 24 }}
             >
-              Submit quote request
+              {isSubmitting ? 'Sending…' : 'Submit quote request'}
             </motion.button>
           </div>
         </form>

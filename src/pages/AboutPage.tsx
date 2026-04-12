@@ -81,7 +81,7 @@ export function AboutPage() {
       <div className="relative z-[12] flex min-h-0 min-w-0 flex-1 flex-col gap-4 md:flex-row md:items-stretch md:justify-between md:gap-0">
         <aside
           className={
-            `relative flex min-h-0 w-full flex-col overflow-y-auto overscroll-y-contain py-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:shrink-0 ${SIDEBAR_MAX_H} ${PANEL_EASE} ` +
+            `relative flex min-h-0 w-full flex-col overflow-hidden py-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:shrink-0 ${SIDEBAR_MAX_H} ${PANEL_EASE} ` +
             'pl-[max(1.25rem,env(safe-area-inset-left))] pr-3 sm:py-5 md:py-6 md:pr-4 ' +
             (anyExpanded ? (aboutExpanded ? 'z-[25]' : 'z-[20]') : 'z-10') +
             ' ' +
@@ -90,7 +90,9 @@ export function AboutPage() {
               : 'max-w-[min(22.5rem,calc(100vw-1.25rem))] sm:max-w-[24rem] md:max-w-[26rem] md:shadow-[6px_0_32px_-12px_rgba(0,0,0,0.22)] ')
           }
         >
-          <div className={SHEET}>
+          <div className={`${SHEET} flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden`}>
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-npf-border [&::-webkit-scrollbar-track]:bg-transparent">
+            <div className="flex min-h-full flex-col">
             <article className={SEGMENT}>
               <div className="flex items-start justify-between gap-3">
                 <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#BE1E2D] sm:text-xs">
@@ -133,6 +135,7 @@ export function AboutPage() {
               </div>
             </article>
 
+            <div className="mt-6 flex min-h-0 flex-1 flex-col justify-start gap-4 sm:mt-8 sm:gap-5">
             <article className={SEGMENT_DIVIDE}>
               <h2 className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-npf-charcoal/80 sm:text-xs">
                 Who we are
@@ -206,6 +209,10 @@ export function AboutPage() {
                 View services
               </Link>
             </article>
+            <div className="min-h-0 flex-1" aria-hidden />
+            </div>
+            </div>
+            </div>
           </div>
         </aside>
 

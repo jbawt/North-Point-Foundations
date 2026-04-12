@@ -1,4 +1,5 @@
-import { FaFacebookF, FaInstagram, FaPhone } from 'react-icons/fa6';
+import { FaEnvelope, FaFacebookF, FaInstagram } from 'react-icons/fa6';
+import { Link } from 'react-router-dom';
 import { SITE } from '../content/siteCopy.ts';
 
 const ITEM_SHELL =
@@ -23,16 +24,16 @@ export function StickyContactRail() {
       aria-label="Quick contact and social links"
     >
       <div className="pointer-events-auto flex flex-col items-end gap-3">
-        <a
-          href={SITE.quotePhoneTel}
+        <Link
+          to="/contact"
           className={`${ITEM_SHELL} w-max shrink-0 self-end bg-[#BE1E2D] text-white`}
-          aria-label="Get a quote — call us"
+          aria-label="Get a quote — go to contact form"
         >
           <span className="flex h-12 w-12 shrink-0 items-center justify-center" aria-hidden>
-            <FaPhone className="h-[1.15rem] w-[1.15rem]" />
+            <FaEnvelope className="h-[1.15rem] w-[1.15rem]" />
           </span>
           <span className={LABEL_CLASS}>Get a quote</span>
-        </a>
+        </Link>
 
         <a
           href={SITE.facebookUrl}

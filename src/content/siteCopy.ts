@@ -23,7 +23,7 @@ function serviceAreasSentenceFrom(areas: readonly string[]): string {
 
 export const SITE = {
   name: 'North Point Foundations',
-  /** Primary CTA — dial link for “Get a quote” (replace with production number). */
+  /** Optional `tel:` link (e.g. Contact page “call us”); primary quote flow is `/contact`. */
   quotePhoneTel: 'tel:+15555550100',
   /** Sticky rail & footer — replace with your real profile URLs. */
   facebookUrl: 'https://www.facebook.com/',
