@@ -85,17 +85,17 @@ export function EvaluationRequestStep1({
 
   return (
     <div
-      className={`npf-consult-surface text-npf-navy ${className}`}
+      className={`bg-npf-surface text-npf-navy ${className}`}
       style={{ fontFamily: 'var(--font-npf-consult-body)' }}
     >
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
         <header className="mb-8 sm:mb-10">
-          <p
+          {/* <p
             className="text-[11px] font-semibold uppercase tracking-[0.22em] text-npf-navy/70 sm:text-xs"
             style={{ fontFamily: 'var(--font-npf-consult-body)' }}
           >
             Request a quote
-          </p>
+          </p> */}
           <h2
             className="mt-2 text-2xl font-semibold leading-tight tracking-tight text-npf-navy sm:text-3xl"
             style={{ fontFamily: 'var(--font-npf-consult-heading)' }}
@@ -141,10 +141,10 @@ export function EvaluationRequestStep1({
                     <label
                       htmlFor={inputId}
                       className={
-                        'group relative flex h-full cursor-pointer flex-col rounded-lg border bg-white/90 p-5 shadow-[0_1px_2px_rgba(26,54,93,0.06),0_6px_20px_-8px_rgba(26,54,93,0.12)] transition-[border-color,box-shadow,background-color] duration-200 ease-out ' +
+                        'group relative flex h-full cursor-pointer flex-col rounded-lg border bg-white/90 p-5 shadow-[0_1px_2px_rgba(26,54,93,0.06),0_6px_20px_-8px_rgba(26,54,93,0.12)] transition-[border-color,box-shadow,background-color] duration-200 ease-out dark:bg-zinc-900/95 dark:shadow-black/30 ' +
                         (isSelected
-                          ? 'border-2 border-npf-classic-red bg-white shadow-[0_2px_8px_rgba(190,30,45,0.12)]'
-                          : 'border border-npf-navy/35 hover:border-npf-navy/55 hover:bg-white hover:shadow-[0_4px_24px_-10px_rgba(26,54,93,0.18)]')
+                          ? 'border-2 border-npf-classic-red bg-white shadow-[0_2px_8px_rgba(190,30,45,0.12)] dark:bg-zinc-900'
+                          : 'border border-npf-navy/35 hover:border-npf-navy/55 hover:bg-white hover:shadow-[0_4px_24px_-10px_rgba(26,54,93,0.18)] dark:hover:bg-zinc-800/95')
                       }
                     >
                       <input

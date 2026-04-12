@@ -23,7 +23,7 @@ export function ServicePageCard({ service, index }: ServicePageCardProps) {
   return (
     <motion.article
       className={
-        `group relative overflow-hidden rounded-2xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/[0.06] ` +
+        `group relative overflow-hidden rounded-2xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/[0.06] dark:bg-zinc-900 dark:shadow-black/25 ` +
         `transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ` +
         `hover:border-npf-red/35 hover:shadow-[0_28px_70px_-32px_rgba(26,26,26,0.28),0_0_0_1px_color-mix(in_srgb,var(--color-npf-red)_10%,transparent)] ` +
         `hover:[transform:translate3d(0,-8px,0)] ` +
@@ -55,7 +55,7 @@ export function ServicePageCard({ service, index }: ServicePageCardProps) {
             className={
               `flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-npf-border/90 bg-npf-surface/50 text-npf-red shadow-sm ` +
               `transition-[transform,box-shadow,border-color,background-color] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ` +
-              `group-hover:border-npf-red/30 group-hover:bg-white group-hover:shadow-md ` +
+              `group-hover:border-npf-red/30 group-hover:bg-white group-hover:shadow-md dark:group-hover:bg-zinc-800 ` +
               `group-hover:[transform:translate3d(0,-4px,0)_scale(1.06)_rotate(-4deg)] ` +
               `motion-reduce:duration-200 motion-reduce:group-hover:[transform:translate3d(0,-1px,0)_scale(1.03)_rotate(0deg)] ` +
               `sm:h-[4.75rem] sm:w-[4.75rem]`
@@ -73,10 +73,12 @@ export function ServicePageCard({ service, index }: ServicePageCardProps) {
 
         <div className="min-w-0 flex-1 space-y-4">
           <div>
-            <h2 className="text-xl font-bold tracking-tight text-npf-charcoal transition-colors duration-300 group-hover:text-npf-red sm:text-2xl">
+            <h2 className="text-xl font-bold tracking-tight text-npf-charcoal transition-colors duration-300 group-hover:text-npf-red dark:text-zinc-100 sm:text-2xl">
               {service.name}
             </h2>
-            <p className="mt-2 text-sm font-medium leading-relaxed text-npf-charcoal/90 sm:text-base">{service.blurb}</p>
+            <p className="mt-2 text-sm font-medium leading-relaxed text-npf-charcoal/90 dark:text-zinc-200 sm:text-base">
+              {service.blurb}
+            </p>
             <p className="mt-3 text-sm leading-relaxed text-npf-muted sm:text-[15px] sm:leading-relaxed">{service.detail}</p>
           </div>
 

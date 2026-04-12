@@ -72,11 +72,11 @@ export function AboutSection() {
 
   return (
     <section
-      className="relative overflow-x-clip overflow-y-visible border-b border-npf-border py-16 text-npf-charcoal sm:py-20 md:py-24"
+      className="relative overflow-x-clip overflow-y-visible border-b border-npf-border py-16 text-npf-charcoal dark:text-zinc-100 sm:py-20 md:py-24"
       aria-labelledby="about-section-heading"
     >
       <div
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-npf-surface to-[color-mix(in_srgb,var(--color-npf-border)_35%,var(--color-npf-surface))]"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white via-npf-surface to-[color-mix(in_srgb,var(--color-npf-border)_35%,var(--color-npf-surface))] dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950"
         aria-hidden
       />
       <div
@@ -133,7 +133,7 @@ export function AboutSection() {
             >
               <motion.div
                 id={`${carouselId}-panel-0`}
-                className={`absolute left-0 right-0 top-0 mx-auto w-full max-w-full origin-center rounded-2xl border border-npf-border/90 bg-white/95 p-6 shadow-[0_20px_50px_-24px_rgba(26,26,26,0.18)] backdrop-blur-sm transition-[box-shadow,filter] duration-500 ease-out hover:shadow-[0_28px_70px_-32px_rgba(26,26,26,0.24)] hover:brightness-[1.01] sm:p-8 md:p-10 ${ABOUT_CARD_PANEL}`}
+                className={`absolute left-0 right-0 top-0 mx-auto w-full max-w-full origin-center rounded-2xl border border-npf-border/90 bg-white/95 p-6 shadow-[0_20px_50px_-24px_rgba(26,26,26,0.18)] backdrop-blur-sm transition-[box-shadow,filter] duration-500 ease-out hover:shadow-[0_28px_70px_-32px_rgba(26,26,26,0.24)] hover:brightness-[1.01] dark:border-zinc-700/90 dark:bg-zinc-900/95 dark:shadow-black/40 dark:hover:shadow-[0_28px_70px_-32px_rgba(0,0,0,0.45)] sm:p-8 md:p-10 ${ABOUT_CARD_PANEL}`}
                 initial={false}
                 animate={cardState(0)}
                 transition={transition}
@@ -157,7 +157,7 @@ export function AboutSection() {
                   </p>
                   <h2
                     id="about-section-heading"
-                    className="text-balance text-3xl font-bold tracking-tight text-npf-charcoal sm:text-4xl lg:text-[2.35rem] lg:leading-[1.15]"
+                    className="text-balance text-3xl font-bold tracking-tight text-npf-charcoal dark:text-zinc-100 sm:text-4xl lg:text-[2.35rem] lg:leading-[1.15]"
                   >
                     Locally owned.{' '}
                     <span className="relative inline-block text-[#BE1E2D]">
@@ -181,7 +181,7 @@ export function AboutSection() {
 
               <motion.div
                 id={`${carouselId}-panel-1`}
-                className={`absolute left-0 right-0 top-0 mx-auto w-full max-w-full origin-center rounded-2xl border border-npf-border/90 bg-white/95 p-6 shadow-[0_20px_50px_-24px_rgba(26,26,26,0.18)] backdrop-blur-sm transition-[box-shadow,filter] duration-500 ease-out hover:shadow-[0_28px_70px_-32px_rgba(26,26,26,0.24)] hover:brightness-[1.01] sm:p-8 md:p-10 ${ABOUT_CARD_PANEL}`}
+                className={`absolute left-0 right-0 top-0 mx-auto w-full max-w-full origin-center rounded-2xl border border-npf-border/90 bg-white/95 p-6 shadow-[0_20px_50px_-24px_rgba(26,26,26,0.18)] backdrop-blur-sm transition-[box-shadow,filter] duration-500 ease-out hover:shadow-[0_28px_70px_-32px_rgba(26,26,26,0.24)] hover:brightness-[1.01] dark:border-zinc-700/90 dark:bg-zinc-900/95 dark:shadow-black/40 dark:hover:shadow-[0_28px_70px_-32px_rgba(0,0,0,0.45)] sm:p-8 md:p-10 ${ABOUT_CARD_PANEL}`}
                 initial={false}
                 animate={cardState(1)}
                 transition={transition}
@@ -204,7 +204,7 @@ export function AboutSection() {
                         Why choose us
                       </span>
                     </p>
-                    <h2 className="text-balance text-3xl font-bold tracking-tight text-npf-charcoal sm:text-4xl lg:text-[2.35rem] lg:leading-[1.15]">
+                    <h2 className="text-balance text-3xl font-bold tracking-tight text-npf-charcoal dark:text-zinc-100 sm:text-4xl lg:text-[2.35rem] lg:leading-[1.15]">
                       Honest pricing.{' '}
                       <span className="relative inline-block text-[#BE1E2D]">
                         <span className="relative z-10">Reliable service.</span>
@@ -215,7 +215,7 @@ export function AboutSection() {
                       </span>
                     </h2>
                     <div className="space-y-3.5 border-t border-npf-border/80 pt-5">
-                      <p className="text-sm font-medium leading-relaxed text-npf-charcoal sm:text-base">
+                      <p className="text-sm font-medium leading-relaxed text-npf-charcoal dark:text-zinc-200 sm:text-base">
                         {SITE.values}
                       </p>
                       <p className="text-sm leading-relaxed text-npf-muted sm:text-base">
@@ -242,7 +242,7 @@ export function AboutSection() {
           <div className="mt-10 flex flex-wrap items-center justify-center gap-2 sm:gap-3">
             <button
               type="button"
-              className="npf-sleek-lift-subtle inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/30 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 focus-visible:ring-offset-2 active:scale-95"
+              className="npf-sleek-lift-subtle inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/30 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 focus-visible:ring-offset-2 active:scale-95 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800 dark:focus-visible:ring-offset-zinc-950"
               onClick={goPrev}
               aria-label="Show the other card"
             >
@@ -252,7 +252,7 @@ export function AboutSection() {
             <div
               role="tablist"
               aria-label="Choose which card is in front"
-              className="flex items-center gap-2 rounded-full border border-npf-border bg-white/95 p-1 shadow-sm transition-shadow duration-300 hover:shadow-md"
+              className="flex items-center gap-2 rounded-full border border-npf-border bg-white/95 p-1 shadow-sm transition-shadow duration-300 hover:shadow-md dark:border-zinc-600 dark:bg-zinc-900/95"
             >
               <button
                 type="button"
@@ -288,7 +288,7 @@ export function AboutSection() {
 
             <button
               type="button"
-              className="npf-sleek-lift-subtle inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/30 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 focus-visible:ring-offset-2 active:scale-95"
+              className="npf-sleek-lift-subtle inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/30 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 focus-visible:ring-offset-2 active:scale-95 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800 dark:focus-visible:ring-offset-zinc-950"
               onClick={goNext}
               aria-label="Show the other card"
             >

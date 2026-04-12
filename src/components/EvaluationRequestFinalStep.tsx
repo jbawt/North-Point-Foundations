@@ -37,7 +37,7 @@ export type EvaluationRequestFinalStepProps = {
 
 const inputShell =
   'w-full rounded-md border-2 border-npf-navy bg-white px-4 py-3 text-sm text-npf-navy shadow-inner placeholder:text-npf-navy/35 ' +
-  'transition-[box-shadow,border-color] duration-200 ease-out focus:border-npf-navy focus:outline-none focus:ring-2 focus:ring-npf-navy/15 sm:text-[15px]';
+  'transition-[box-shadow,border-color] duration-200 ease-out focus:border-npf-navy focus:outline-none focus:ring-2 focus:ring-npf-navy/15 dark:border-zinc-500 dark:bg-zinc-900/90 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-zinc-400 dark:focus:ring-zinc-600/30 sm:text-[15px]';
 
 const labelClass =
   'block text-[11px] font-bold uppercase tracking-[0.14em] text-npf-navy sm:text-xs';
@@ -123,7 +123,7 @@ function QuoteConfirmationModal({
               aria-modal="true"
               aria-labelledby={titleId}
               aria-describedby={descId}
-              className="relative z-10 w-full max-w-md overflow-hidden rounded-xl border-2 border-npf-navy/20 bg-white shadow-[0_24px_64px_-24px_rgba(26,54,93,0.35)]"
+              className="relative z-10 w-full max-w-md overflow-hidden rounded-xl border-2 border-npf-navy/20 bg-white shadow-[0_24px_64px_-24px_rgba(26,54,93,0.35)] dark:border-zinc-600 dark:bg-zinc-900 dark:shadow-black/50"
               variants={panelVariants}
               initial="hidden"
               animate="visible"
@@ -244,7 +244,7 @@ export function EvaluationRequestFinalStep({
 
   return (
     <div
-      className={`npf-consult-surface text-npf-navy ${className}`}
+      className={`bg-npf-surface text-npf-navy ${className}`}
       style={{ fontFamily: 'var(--font-npf-consult-body)' }}
     >
       <QuoteConfirmationModal open={completeOpen} onDismiss={() => setCompleteOpen(false)} />
@@ -275,7 +275,7 @@ export function EvaluationRequestFinalStep({
           aria-labelledby={headingId}
           className="space-y-8 sm:space-y-10"
         >
-          <section className="rounded-xl border border-npf-navy/15 bg-white/95 p-5 shadow-sm sm:p-6">
+          <section className="rounded-xl border border-npf-navy/15 bg-white/95 p-5 shadow-sm dark:border-zinc-600/80 dark:bg-zinc-900/90 sm:p-6">
             <h3 className="border-b border-npf-navy/10 pb-3 text-[12px] font-bold uppercase tracking-[0.16em] text-npf-navy">
               Project scope & timeline
             </h3>
@@ -332,7 +332,7 @@ export function EvaluationRequestFinalStep({
             </div>
           </section>
 
-          <section className="rounded-xl border border-npf-navy/15 bg-white/95 p-5 shadow-sm sm:p-6">
+          <section className="rounded-xl border border-npf-navy/15 bg-white/95 p-5 shadow-sm dark:border-zinc-600/80 dark:bg-zinc-900/90 sm:p-6">
             <h3 className="border-b border-npf-navy/10 pb-3 text-[12px] font-bold uppercase tracking-[0.16em] text-npf-navy">
               Contact information
             </h3>

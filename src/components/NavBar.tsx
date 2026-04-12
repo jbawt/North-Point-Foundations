@@ -10,6 +10,7 @@ import { useEffect, useId, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import brandLogo from '../assets/Logo_transparent_250px.png';
 import { SITE } from '../content/siteCopy.ts';
+import { ThemeToggle } from './ThemeToggle.tsx';
 
 const navItems = [
   { to: '/', label: 'Home', icon: FaHouse },
@@ -26,7 +27,7 @@ function navLinkShell(isActive: boolean) {
     'active:translate-y-0 active:scale-[0.98] active:shadow-none ' +
     'motion-reduce:transform-none motion-reduce:shadow-none motion-reduce:transition-colors ' +
     'before:pointer-events-none before:absolute before:inset-0 before:z-0 before:-translate-x-full ' +
-    'before:skew-x-[-12deg] before:bg-gradient-to-r before:from-transparent before:via-white/45 before:to-transparent ' +
+    'before:skew-x-[-12deg] before:bg-gradient-to-r before:from-transparent before:via-white/45 before:to-transparent dark:before:via-white/12 ' +
     'before:transition-transform before:duration-500 before:ease-out ' +
     'hover:before:translate-x-full motion-reduce:before:hidden ' +
     'after:pointer-events-none after:absolute after:inset-x-5 after:bottom-1.5 after:z-0 after:h-[3px] ' +
@@ -34,8 +35,8 @@ function navLinkShell(isActive: boolean) {
     'after:ease-[cubic-bezier(0.34,1.45,0.64,1)] after:origin-left after:scale-x-0 ' +
     'hover:after:scale-x-100 motion-reduce:after:transition-none';
   const tone = isActive
-    ? 'bg-npf-red-soft text-npf-red after:scale-x-100'
-    : 'text-npf-muted hover:bg-npf-surface hover:text-npf-charcoal';
+    ? 'bg-npf-red-soft text-npf-red after:scale-x-100 dark:bg-npf-red/15 dark:text-red-300'
+    : 'text-npf-muted hover:bg-npf-surface hover:text-npf-charcoal dark:text-zinc-400 dark:hover:bg-zinc-800/90 dark:hover:text-zinc-100';
   return `${shell} ${tone}`;
 }
 
@@ -58,7 +59,7 @@ export function NavBar() {
   return (
     <nav
       aria-label="Main navigation"
-      className="sticky top-0 z-50 w-full border-b border-npf-border bg-white/95 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-white/90"
+      className="sticky top-0 z-50 w-full border-b border-npf-border bg-white/95 shadow-sm backdrop-blur-md supports-[backdrop-filter]:bg-white/90 dark:border-zinc-800 dark:bg-zinc-950/95 dark:supports-[backdrop-filter]:bg-zinc-950/90"
     >
       {menuOpen ? (
         <button
@@ -71,7 +72,7 @@ export function NavBar() {
       <div className="relative z-50 flex w-full items-center justify-between gap-3 px-4 py-3 sm:gap-4 sm:px-6 sm:py-4 md:px-8 lg:px-12 xl:px-16">
         <div className="flex min-w-0 flex-1 items-center gap-2 sm:gap-4">
           <NavLink
-            className="flex shrink-0 items-center gap-2 text-npf-charcoal no-underline transition-[opacity,transform] duration-300 ease-out hover:opacity-95 hover:scale-[1.02] motion-reduce:hover:scale-100 sm:gap-3"
+            className="flex shrink-0 items-center gap-2 text-npf-charcoal no-underline transition-[opacity,transform] duration-300 ease-out hover:opacity-95 hover:scale-[1.02] motion-reduce:hover:scale-100 dark:text-zinc-100 sm:gap-3"
             to="/"
           >
             <img
@@ -82,7 +83,7 @@ export function NavBar() {
               width={300}
             />
           </NavLink>
-          <div className="hidden min-h-[2.5rem] min-[400px]:flex min-[400px]:flex-col min-[400px]:justify-center border-l border-npf-border pl-3 sm:min-h-0 sm:pl-4">
+          <div className="hidden min-h-[2.5rem] min-[400px]:flex min-[400px]:flex-col min-[400px]:justify-center border-l border-npf-border pl-3 dark:border-zinc-700 sm:min-h-0 sm:pl-4">
             <span className="text-[10px] font-semibold uppercase leading-tight tracking-wide text-npf-red sm:text-xs">
               {SITE.shortTagline}
             </span>
@@ -110,11 +111,13 @@ export function NavBar() {
           ))}
         </ul>
 
-        <div className="relative shrink-0 md:hidden">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <ThemeToggle />
+          <div className="relative md:hidden">
           <button
             aria-controls={menuId}
             aria-expanded={menuOpen}
-            className="npf-sleek-lift-subtle flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-npf-red/40 hover:bg-white hover:text-npf-red active:scale-95"
+            className="npf-sleek-lift-subtle flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-npf-red/40 hover:bg-white hover:text-npf-red active:scale-95 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-npf-red/45 dark:hover:bg-zinc-800"
             onClick={() => setMenuOpen((o) => !o)}
             type="button"
           >
@@ -124,16 +127,16 @@ export function NavBar() {
 
           <div
             aria-hidden={!menuOpen}
-            className={`absolute right-0 top-[calc(100%+0.5rem)] z-50 w-[min(calc(100vw-2rem),22rem)] min-w-[16rem] origin-top-right rounded-xl border border-npf-border bg-white shadow-xl transition-[opacity,transform] duration-200 ease-out md:hidden ${
+            className={`absolute right-0 top-[calc(100%+0.5rem)] z-50 w-[min(calc(100vw-2rem),22rem)] min-w-[16rem] origin-top-right rounded-xl border border-npf-border bg-white shadow-xl transition-[opacity,transform] duration-200 ease-out dark:border-zinc-700 dark:bg-zinc-900 md:hidden ${
               menuOpen
                 ? 'pointer-events-auto scale-100 opacity-100'
                 : 'pointer-events-none scale-95 opacity-0'
             }`}
             id={menuId}
           >
-            <div className="border-b border-npf-border px-4 py-3">
+            <div className="border-b border-npf-border px-4 py-3 dark:border-zinc-700">
               <p className="text-[10px] font-semibold uppercase tracking-wide text-npf-red">{SITE.name}</p>
-              <p className="mt-1 text-xs leading-snug text-npf-muted">
+              <p className="mt-1 text-xs leading-snug text-npf-muted dark:text-zinc-400">
                 {SITE.shortTagline} · {SITE.region}
               </p>
             </div>
@@ -156,6 +159,7 @@ export function NavBar() {
               ))}
             </ul>
           </div>
+        </div>
         </div>
       </div>
     </nav>

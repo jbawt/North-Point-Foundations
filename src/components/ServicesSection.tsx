@@ -66,7 +66,7 @@ function ServiceCard({ service }: { service: ServiceDetail }) {
   return (
     <div
       className={
-        `group flex min-h-[9.5rem] flex-col cursor-default overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 ` +
+        `group flex min-h-[9.5rem] flex-col cursor-default overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 dark:bg-zinc-900 dark:shadow-black/20 ` +
         `[&_*]:cursor-default ` +
         `transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ` +
         `hover:border-[#BE1E2D]/35 hover:shadow-[0_26px_58px_-28px_rgba(26,26,26,0.22),0_0_0_1px_rgba(190,30,45,0.07)] ` +
@@ -79,7 +79,7 @@ function ServiceCard({ service }: { service: ServiceDetail }) {
         <div
           className={
             `flex h-10 w-10 shrink-0 origin-center items-center justify-center rounded-lg border border-npf-border/90 ` +
-            `bg-white text-[#BE1E2D] shadow-sm will-change-transform ` +
+            `bg-white text-[#BE1E2D] shadow-sm will-change-transform dark:bg-zinc-800 ` +
             `transition-[transform,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ` +
             `group-hover:border-[#BE1E2D]/35 group-hover:shadow-md ` +
             `group-hover:[transform:translate3d(0,-4px,0)_scale(1.1)_rotate(5deg)] ` +
@@ -95,12 +95,14 @@ function ServiceCard({ service }: { service: ServiceDetail }) {
             }
           />
         </div>
-        <p className="min-w-0 flex-1 text-sm font-semibold leading-snug text-npf-charcoal transition-colors duration-300 group-hover:text-[#BE1E2D] xl:text-base">
+        <p className="min-w-0 flex-1 text-sm font-semibold leading-snug text-npf-charcoal transition-colors duration-300 group-hover:text-[#BE1E2D] dark:text-zinc-100 xl:text-base">
           {service.name}
         </p>
       </div>
       <div className="flex min-h-0 flex-1 flex-col justify-center px-4 py-3 sm:px-5 sm:py-4 lg:py-3 xl:py-4">
-        <p className="text-xs font-medium leading-relaxed text-npf-charcoal/90 sm:text-sm">{service.blurb}</p>
+        <p className="text-xs font-medium leading-relaxed text-npf-charcoal/90 dark:text-zinc-200 sm:text-sm">
+          {service.blurb}
+        </p>
         <p className="mt-2 text-xs leading-relaxed text-npf-muted sm:mt-2.5 sm:text-[13px] sm:leading-relaxed">
           {service.detail}
         </p>
@@ -129,7 +131,7 @@ export function ServicesSection() {
 
   return (
     <section
-      className="border-b border-npf-border bg-npf-surface py-16 text-npf-charcoal sm:py-20 md:py-24"
+      className="border-b border-npf-border bg-npf-surface py-16 text-npf-charcoal dark:text-zinc-100 sm:py-20 md:py-24"
       aria-labelledby="services-section-heading"
     >
       <div
@@ -140,7 +142,7 @@ export function ServicesSection() {
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#BE1E2D]">What we do</p>
             <h2
               id="services-section-heading"
-              className="text-3xl font-bold tracking-tight text-npf-charcoal sm:text-4xl"
+              className="text-3xl font-bold tracking-tight text-npf-charcoal dark:text-zinc-100 sm:text-4xl"
             >
               Professional Solutions
             </h2>
@@ -171,7 +173,7 @@ export function ServicesSection() {
         </motion.ul>
 
         <div className="order-2 flex w-full justify-center lg:order-none">
-          <div className="group npf-sleek-lift relative aspect-[4/3] w-full max-w-[min(100%,640px)] min-h-[20rem] overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 sm:min-h-[26rem] lg:max-w-none lg:min-h-[30rem] xl:min-h-[36rem] 2xl:min-h-[40rem]">
+          <div className="group npf-sleek-lift relative aspect-[4/3] w-full max-w-[min(100%,640px)] min-h-[20rem] overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 dark:bg-zinc-900 dark:shadow-black/25 sm:min-h-[26rem] lg:max-w-none lg:min-h-[30rem] xl:min-h-[36rem] 2xl:min-h-[40rem]">
             <div
               className="pointer-events-none absolute inset-0 z-[1]"
               style={{
@@ -285,7 +287,7 @@ export function ServicesSection() {
             View all services
           </Link>
           <Link
-            className="npf-sleek-lift-subtle inline-flex min-h-11 items-center justify-center rounded-lg border border-npf-border bg-white px-6 py-2.5 text-sm font-semibold text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/25 hover:bg-white active:translate-y-px focus:outline-none"
+            className="npf-sleek-lift-subtle inline-flex min-h-11 items-center justify-center rounded-lg border border-npf-border bg-white px-6 py-2.5 text-sm font-semibold text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/25 hover:bg-white active:translate-y-px focus:outline-none dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
             to="/contact"
           >
             Get a quote

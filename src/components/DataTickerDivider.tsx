@@ -121,7 +121,7 @@ export function DataTickerDivider() {
 
   return (
     <div
-      className="relative m-0 w-full border-y border-npf-border bg-white py-2.5 sm:min-h-[4.5rem] sm:py-3 md:min-h-[4.75rem]"
+      className="relative m-0 w-full border-y border-npf-border bg-white py-2.5 dark:bg-zinc-950 sm:min-h-[4.5rem] sm:py-3 md:min-h-[4.75rem]"
       style={{
         boxShadow: `inset 0 1px 0 rgba(26,26,26,0.06), inset 0 -1px 0 rgba(26,26,26,0.06)`,
         fontFamily: "'JetBrains Mono', ui-monospace, monospace",

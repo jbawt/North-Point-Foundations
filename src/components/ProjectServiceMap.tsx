@@ -148,7 +148,7 @@ export function ProjectServiceMap() {
     return (
       <div
         ref={wrapRef}
-        className="relative flex min-h-[min(55vh,420px)] w-full flex-col items-center justify-center gap-3 bg-white px-6 py-14 text-center text-npf-charcoal"
+        className="relative flex min-h-[min(55vh,420px)] w-full flex-col items-center justify-center gap-3 bg-white px-6 py-14 text-center text-npf-charcoal dark:bg-zinc-950 dark:text-zinc-100"
         aria-labelledby={labelId}
       >
         <p id={labelId} className="max-w-md text-sm leading-relaxed text-npf-muted">
@@ -194,7 +194,7 @@ export function ProjectServiceMap() {
       </span>
 
       <div
-        className="pointer-events-none absolute right-3 top-3 z-30 max-w-[calc(100%-1.5rem)] rounded-md border border-npf-border bg-white/90 px-2.5 py-1.5 shadow-lg backdrop-blur-md sm:right-4 sm:top-4 sm:px-3"
+        className="pointer-events-none absolute right-3 top-3 z-30 max-w-[calc(100%-1.5rem)] rounded-md border border-npf-border bg-white/90 px-2.5 py-1.5 shadow-lg backdrop-blur-md dark:border-zinc-600 dark:bg-zinc-900/92 sm:right-4 sm:top-4 sm:px-3"
         style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace" }}
       >
         <p className="text-[9px] font-semibold uppercase tracking-[0.18em] text-npf-muted sm:text-[10px]">
@@ -300,7 +300,7 @@ export function ProjectServiceMap() {
           </svg>
 
           <motion.div
-            className="absolute z-30 w-[min(calc(100vw-2rem),16rem)] max-w-[16rem] rounded-xl border border-npf-border bg-white/92 px-3 py-2.5 shadow-xl backdrop-blur-xl sm:w-64 sm:px-3.5 sm:py-3"
+            className="absolute z-30 w-[min(calc(100vw-2rem),16rem)] max-w-[16rem] rounded-xl border border-npf-border bg-white/92 px-3 py-2.5 shadow-xl backdrop-blur-xl dark:border-zinc-600 dark:bg-zinc-900/95 sm:w-64 sm:px-3.5 sm:py-3"
             style={{
               left: pixel.x,
               ...(flipUp

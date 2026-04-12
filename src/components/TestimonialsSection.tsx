@@ -41,7 +41,7 @@ export function TestimonialsSection() {
 
   return (
     <section
-      className="border-b border-npf-border bg-npf-surface py-16 text-npf-charcoal sm:py-20 md:py-24"
+      className="border-b border-npf-border bg-npf-surface py-16 text-npf-charcoal dark:text-zinc-100 sm:py-20 md:py-24"
       aria-labelledby={headingId}
       role="region"
       aria-roledescription="carousel"
@@ -50,7 +50,10 @@ export function TestimonialsSection() {
         <div className="mb-10 flex flex-col gap-3 sm:mb-12 md:flex-row md:items-end md:justify-between">
           <div className="space-y-2">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#BE1E2D]">Testimonials</p>
-            <h2 id={headingId} className="text-3xl font-bold tracking-tight text-npf-charcoal sm:text-4xl">
+            <h2
+              id={headingId}
+              className="text-3xl font-bold tracking-tight text-npf-charcoal dark:text-zinc-100 sm:text-4xl"
+            >
               What homeowners say
             </h2>
             <p className="max-w-xl text-sm text-npf-muted sm:text-base">
@@ -60,7 +63,7 @@ export function TestimonialsSection() {
           <div className="flex gap-2 md:pb-1">
             <button
               type="button"
-              className="npf-sleek-lift-subtle inline-flex h-11 w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/40 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/40 active:scale-95"
+              className="npf-sleek-lift-subtle inline-flex h-11 w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/40 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/40 active:scale-95 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
               aria-label="Previous testimonial"
               onClick={() => go(-1)}
             >
@@ -68,7 +71,7 @@ export function TestimonialsSection() {
             </button>
             <button
               type="button"
-              className="npf-sleek-lift-subtle inline-flex h-11 w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/40 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/40 active:scale-95"
+              className="npf-sleek-lift-subtle inline-flex h-11 w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/40 hover:bg-white hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/40 active:scale-95 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
               aria-label="Next testimonial"
               onClick={() => go(1)}
             >
@@ -77,7 +80,7 @@ export function TestimonialsSection() {
           </div>
         </div>
 
-        <div className="npf-sleek-lift relative overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 hover:border-[#BE1E2D]/20">
+        <div className="npf-sleek-lift relative overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 hover:border-[#BE1E2D]/20 dark:bg-zinc-900 dark:shadow-black/30">
           <div className="relative min-h-[18rem] sm:min-h-[19rem] md:min-h-[17rem]">
             <AnimatePresence initial={false} mode="wait">
               <motion.article
@@ -95,13 +98,13 @@ export function TestimonialsSection() {
                 />
                 <blockquote className="space-y-6">
                   <p
-                    className="text-lg font-medium leading-relaxed text-npf-charcoal sm:text-xl md:text-2xl md:leading-snug"
+                    className="text-lg font-medium leading-relaxed text-npf-charcoal dark:text-zinc-100 sm:text-xl md:text-2xl md:leading-snug"
                     aria-live="polite"
                   >
                     “{t.quote}”
                   </p>
                   <footer className="flex flex-col gap-0.5 border-t border-npf-border pt-5 sm:flex-row sm:items-baseline sm:gap-2">
-                    <cite className="not-italic font-semibold text-npf-charcoal">{t.author}</cite>
+                    <cite className="not-italic font-semibold text-npf-charcoal dark:text-zinc-100">{t.author}</cite>
                     <span className="hidden text-npf-muted sm:inline" aria-hidden>
                       ·
                     </span>

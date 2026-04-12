@@ -68,7 +68,7 @@ export function EvaluationRequestWizard({ className = '' }: { className?: string
     : { type: 'tween' as const, ease: 'anticipate' as const, duration: 0.8 };
 
   return (
-    <div className={`overflow-x-hidden ${className}`}>
+    <div className={`overflow-x-hidden bg-npf-surface ${className}`}>
       <div className="relative w-full">
         {/*
           `mode="wait"` matches the intent of legacy `exitBeforeEnter`: finish exit before enter.

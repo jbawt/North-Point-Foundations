@@ -9,6 +9,16 @@
       content="North Point Foundations — locally owned foundation repair and waterproofing in Central Alberta. Serving Lacombe, Red Deer, Blackfalds, Sylvan Lake, Innisfail, Olds, Ponoka, and surrounding areas. Waterproofing, crack repair, weeping tile, sump systems, window wells, excavation. Honest pricing, reliable service."
     />
     <meta name="theme-color" content="#1a1a1a" />
+    <script>
+      (function () {
+        try {
+          var m = localStorage.getItem('npf-theme');
+          var sys = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var dark = m === 'dark' || (m !== 'light' && sys);
+          document.documentElement.classList.toggle('dark', dark);
+        } catch (e) {}
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

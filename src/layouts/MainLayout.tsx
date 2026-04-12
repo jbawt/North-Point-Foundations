@@ -6,7 +6,7 @@ import { StickyContactRail } from '../components/StickyContactRail.tsx';
 
 export function MainLayout() {
   return (
-    <div className="flex min-h-screen min-h-[100dvh] flex-col bg-white text-npf-charcoal">
+    <div className="flex min-h-screen min-h-[100dvh] flex-col bg-white text-npf-charcoal dark:bg-zinc-950 dark:text-zinc-100">
       <ScrollToTop />
       <NavBar />
       <main className="flex min-h-0 w-full flex-1 flex-col">

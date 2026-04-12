@@ -42,14 +42,14 @@ export function ServiceAreaBackdropMap({ className = '', showPins = false }: Pro
   if (!token) {
     return (
       <div
-        className={`pointer-events-none absolute inset-0 overflow-hidden bg-gradient-to-br from-npf-surface via-zinc-100 to-zinc-200 ${className}`}
+        className={`pointer-events-none absolute inset-0 overflow-hidden bg-gradient-to-br from-npf-surface via-zinc-100 to-zinc-200 dark:from-zinc-950 dark:via-zinc-900 dark:to-zinc-950 ${className}`}
         aria-hidden
       >
         <div
           className="absolute inset-0 opacity-[0.35] [background-image:linear-gradient(rgba(190,30,45,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(190,30,45,0.05)_1px,transparent_1px)] [background-size:40px_40px]"
           aria-hidden
         />
-        <p className="absolute bottom-6 left-1/2 max-w-[90%] -translate-x-1/2 text-center font-mono text-[9px] uppercase tracking-[0.28em] text-npf-muted sm:text-[10px]">
+        <p className="absolute bottom-6 left-1/2 max-w-[90%] -translate-x-1/2 text-center font-mono text-[9px] uppercase tracking-[0.28em] text-npf-muted dark:text-zinc-400 sm:text-[10px]">
           {SITE.region} · map preview (add VITE_MAPBOX_ACCESS_TOKEN)
         </p>
       </div>

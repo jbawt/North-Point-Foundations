@@ -14,7 +14,7 @@ const SIDEBAR_MAX_H =
 
 /** Single sheet with internal dividers — no gap between sections */
 const SHEET =
-  'pointer-events-auto overflow-hidden rounded-xl border border-black/[0.08] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.06),0_4px_16px_-4px_rgba(0,0,0,0.12)]';
+  'pointer-events-auto overflow-hidden rounded-xl border border-black/[0.08] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.06),0_4px_16px_-4px_rgba(0,0,0,0.12)] dark:border-zinc-700 dark:bg-zinc-900 dark:shadow-black/40';
 const SEGMENT = 'p-5 sm:p-6';
 const SEGMENT_DIVIDE = `${SEGMENT} border-t border-npf-border/60`;
 
@@ -24,7 +24,7 @@ const PANEL_EASE = 'transition-[max-width,box-shadow] duration-300 ease-[cubic-b
 
 const expandBtnClass =
   'npf-sleek-lift-subtle inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-npf-border bg-white px-2.5 py-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-npf-charcoal shadow-sm ' +
-  'hover:border-[#BE1E2D]/35 hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 focus-visible:ring-offset-2 sm:px-3 sm:text-[10px]';
+  'hover:border-[#BE1E2D]/35 hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 focus-visible:ring-offset-2 dark:border-zinc-600 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:border-[#BE1E2D]/45 dark:focus-visible:ring-offset-zinc-900 sm:px-3 sm:text-[10px]';
 
 export function AboutPage() {
   const [aboutExpanded, setAboutExpanded] = useState(false);
@@ -117,7 +117,7 @@ export function AboutPage() {
                 <h1
                   id="about-page-heading"
                   className={
-                    'mt-2.5 text-balance font-bold tracking-tight text-npf-charcoal transition-[font-size] duration-300 ' +
+                    'mt-2.5 text-balance font-bold tracking-tight text-npf-charcoal transition-[font-size] duration-300 dark:text-zinc-100 ' +
                     (aboutExpanded ? 'text-3xl sm:text-4xl lg:text-[2.65rem] lg:leading-tight' : 'text-2xl sm:text-3xl')
                   }
                 >
@@ -137,7 +137,7 @@ export function AboutPage() {
 
             <div className="mt-6 flex min-h-0 flex-1 flex-col justify-start gap-4 sm:mt-8 sm:gap-5">
             <article className={SEGMENT_DIVIDE}>
-              <h2 className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-npf-charcoal/80 sm:text-xs">
+              <h2 className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-npf-charcoal/80 dark:text-zinc-400 sm:text-xs">
                 Who we are
               </h2>
               <p
@@ -148,7 +148,7 @@ export function AboutPage() {
               >
                 {SITE.name} keeps your home dry and your foundation sound — from stopping water at the
                 wall to moving soil when excavation is the right fix. We serve{' '}
-                <strong className="font-medium text-npf-charcoal">{serviceAreasSentence()}</strong>.
+                <strong className="font-medium text-npf-charcoal dark:text-zinc-100">{serviceAreasSentence()}</strong>.
               </p>
               <div className="mt-4 space-y-3 border-t border-npf-border/80 pt-4">
                 {SITE.aboutHomeExtraParagraphs.map((paragraph, i) => (
@@ -174,12 +174,12 @@ export function AboutPage() {
                   Map · view only
                 </span>
               </div>
-              <h2 className="mt-3 font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-npf-charcoal/80 sm:text-xs">
+              <h2 className="mt-3 font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-npf-charcoal/80 dark:text-zinc-400 sm:text-xs">
                 What we believe
               </h2>
               <p
                 className={
-                  'mt-2.5 font-medium leading-relaxed text-npf-charcoal ' +
+                  'mt-2.5 font-medium leading-relaxed text-npf-charcoal dark:text-zinc-100 ' +
                   (aboutExpanded ? 'text-base sm:text-lg' : 'text-sm sm:text-base')
                 }
               >
@@ -238,7 +238,7 @@ export function AboutPage() {
                   <h2
                     id="about-gallery-heading"
                     className={
-                      'mt-2.5 text-balance font-bold tracking-tight text-npf-charcoal transition-[font-size] duration-300 ' +
+                      'mt-2.5 text-balance font-bold tracking-tight text-npf-charcoal transition-[font-size] duration-300 dark:text-zinc-100 ' +
                       (galleryExpanded ? 'text-2xl sm:text-3xl lg:text-4xl' : 'text-xl sm:text-2xl')
                     }
                   >
@@ -275,7 +275,7 @@ export function AboutPage() {
               aria-label="Gallery image list"
             >
               <div className="shrink-0 px-5 pb-2 pt-4 sm:px-6 sm:pb-2 sm:pt-5">
-                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-npf-charcoal/70 sm:text-[11px]">
+                <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-npf-charcoal/70 dark:text-zinc-400 sm:text-[11px]">
                   Placeholders — scroll
                 </p>
               </div>

@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* North Point Foundations — palette from brand (charcoal, red, white) */
 @theme {
   --color-npf-charcoal: #1a1a1a;
@@ -26,6 +28,19 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.dark body {
+  background-color: #0c0e12;
+  color: #e8eaef;
+}
+
+.dark {
+  --color-npf-border: #303648;
+  --color-npf-surface: #12151e;
+  --color-npf-muted: #9aa3b5;
+  --color-npf-navy: #b8c5db;
+  --color-npf-consult-canvas: #10151f;
+}
+
 /** Light consultation surfaces — fine grid / linen-style texture (very low contrast) */
 .npf-consult-surface {
   background-color: var(--color-npf-consult-canvas);
@@ -41,6 +56,14 @@ body {
     0 0,
     0 0,
     0 0;
+}
+
+.dark .npf-consult-surface {
+  background-color: #0f141d;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(30, 58, 138, 0.12), transparent 55%);
 }
 
 /* ServiceShowcase deck — scrollbar hidden; wheel/touch/trackpad scroll unchanged */

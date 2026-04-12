@@ -38,7 +38,7 @@ export function EvaluationRequestProgress({ activeStepIndex, className = '' }: E
         ))}
       </ol>
       <div
-        className="mt-3 h-0.5 w-full overflow-hidden rounded-full bg-npf-navy/10"
+        className="mt-3 h-0.5 w-full overflow-hidden rounded-full bg-npf-navy/10 dark:bg-zinc-700/50"
         role="presentation"
         aria-hidden
       >

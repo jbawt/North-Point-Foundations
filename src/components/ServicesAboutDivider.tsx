@@ -4,7 +4,7 @@
 export function ServicesAboutDivider() {
   return (
     <div
-      className="w-full bg-gradient-to-b from-npf-surface to-white py-7 sm:py-9"
+      className="w-full bg-gradient-to-b from-npf-surface to-white py-7 dark:from-zinc-900 dark:to-zinc-950 sm:py-9"
       role="separator"
       aria-hidden="true"
     >

@@ -314,7 +314,7 @@ export function EvaluationRequestStep2({
 
   return (
     <div
-      className={`npf-consult-surface text-npf-navy ${className}`}
+      className={`bg-npf-surface text-npf-navy ${className}`}
       style={{ fontFamily: 'var(--font-npf-consult-body)' }}
     >
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
@@ -347,7 +347,7 @@ export function EvaluationRequestStep2({
           onSubmit={handleSubmit((data) => onContinue?.(data))}
           aria-labelledby={headingId}
         >
-          <div className="overflow-visible rounded-lg border border-npf-navy/20 bg-white shadow-[0_1px_2px_rgba(26,54,93,0.06),0_8px_28px_-10px_rgba(26,54,93,0.15)]">
+          <div className="overflow-visible rounded-lg border border-npf-navy/20 bg-white shadow-[0_1px_2px_rgba(26,54,93,0.06),0_8px_28px_-10px_rgba(26,54,93,0.15)] dark:border-zinc-600/80 dark:bg-zinc-900/95 dark:shadow-black/35">
             {!token ? (
               <div className="flex min-h-[min(52vh,400px)] flex-col items-center justify-center gap-3 px-6 py-12 text-center">
                 <p className="max-w-md text-sm leading-relaxed text-npf-navy/80">
@@ -382,7 +382,7 @@ export function EvaluationRequestStep2({
                   ) : null}
                 </Map>
                 <div className="pointer-events-none absolute bottom-3 left-3 right-3 z-10 sm:left-auto sm:right-4 sm:top-4 sm:w-auto">
-                  <p className="rounded-md border border-npf-navy/10 bg-white/95 px-3 py-2 text-[10px] font-medium uppercase tracking-[0.14em] text-npf-navy/70 shadow-sm backdrop-blur-sm sm:text-[11px]">
+                  <p className="rounded-md border border-npf-navy/10 bg-white/95 px-3 py-2 text-[10px] font-medium uppercase tracking-[0.14em] text-npf-navy/70 shadow-sm backdrop-blur-sm dark:border-zinc-600/60 dark:bg-zinc-900/95 dark:text-zinc-300 sm:text-[11px]">
                     Pin appears for your matched location
                   </p>
                 </div>
@@ -415,7 +415,7 @@ export function EvaluationRequestStep2({
                   placeholder="e.g. 123 Example St, Red Deer, AB — or Red Deer, Lacombe, Olds…"
                   className={
                     'w-full rounded-md border-2 border-npf-navy bg-white px-4 py-3 text-sm text-npf-navy shadow-inner placeholder:text-npf-navy/35 ' +
-                    'transition-[box-shadow,border-color] duration-200 ease-out focus:border-npf-navy focus:outline-none focus:ring-2 focus:ring-npf-navy/20 sm:text-[15px]'
+                    'transition-[box-shadow,border-color] duration-200 ease-out focus:border-npf-navy focus:outline-none focus:ring-2 focus:ring-npf-navy/20 dark:border-zinc-500 dark:bg-zinc-900/90 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-zinc-400 dark:focus:ring-zinc-600/30 sm:text-[15px]'
                   }
                   onChange={(e) => {
                     addrOnChange(e);
@@ -438,7 +438,7 @@ export function EvaluationRequestStep2({
                   <ul
                     id={listboxId}
                     role="listbox"
-                    className="absolute left-0 right-0 top-full z-30 mt-1 max-h-60 overflow-y-auto rounded-md border border-npf-navy/20 bg-white py-1 shadow-lg"
+                    className="absolute left-0 right-0 top-full z-30 mt-1 max-h-60 overflow-y-auto rounded-md border border-npf-navy/20 bg-white py-1 shadow-lg dark:border-zinc-600 dark:bg-zinc-900"
                   >
                     {suggestions.map((f, i) => (
                       <li key={f.id} role="presentation" className="px-0.5">

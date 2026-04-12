@@ -110,6 +110,8 @@ const SHOWCASE_SECTIONS: ShowcaseSection[] = [
   },
 ];
 
+const END_DECK_SLIDE_INDEX = SHOWCASE_SECTIONS.length + 1;
+
 const TYPE_MS = 38;
 
 function useMatchMedia(query: string) {
@@ -171,7 +173,7 @@ function TerminalTypingTitle({
   return (
     <Tag
       id={id}
-      className="max-w-full overflow-x-auto font-mono text-2xl font-semibold tracking-tight text-npf-charcoal [scrollbar-width:none] [-ms-overflow-style:none] sm:text-3xl md:text-4xl lg:text-[2.75rem] lg:leading-tight [&::-webkit-scrollbar]:hidden whitespace-nowrap"
+      className="max-w-full overflow-x-auto font-mono text-2xl font-semibold tracking-tight text-npf-charcoal [scrollbar-width:none] [-ms-overflow-style:none] dark:text-zinc-100 sm:text-3xl md:text-4xl lg:text-[2.75rem] lg:leading-tight [&::-webkit-scrollbar]:hidden whitespace-nowrap"
     >
       <span className="text-[#BE1E2D]" aria-hidden>
         &gt;{' '}
@@ -195,7 +197,12 @@ function ShowcaseVisualPanel({
 }) {
   return (
     <motion.div
-      className="relative flex aspect-[4/3] w-full max-w-xl items-center justify-center overflow-hidden rounded-2xl border border-[#BE1E2D]/25 bg-gradient-to-br from-white via-npf-surface to-zinc-100 shadow-[0_24px_64px_-28px_rgba(26,26,26,0.12),0_0_48px_-16px_rgba(190,30,45,0.18)] md:aspect-auto md:h-[min(36rem,52dvh)] md:max-w-none lg:h-[min(40rem,56dvh)]"
+      className={
+        'relative flex aspect-[4/3] w-full max-w-xl items-center justify-center overflow-hidden rounded-2xl border border-[#BE1E2D]/25 ' +
+        'bg-gradient-to-br from-white via-npf-surface to-zinc-100 shadow-[0_24px_64px_-28px_rgba(26,26,26,0.12),0_0_48px_-16px_rgba(190,30,45,0.18)] ' +
+        'dark:from-zinc-900 dark:via-zinc-950 dark:to-black dark:shadow-[0_24px_64px_-28px_rgba(0,0,0,0.45),0_0_48px_-16px_rgba(190,30,45,0.22)] ' +
+        'md:aspect-auto md:h-[min(36rem,52dvh)] md:max-w-none lg:h-[min(40rem,56dvh)]'
+      }
       style={{ perspective: 1200 }}
       animate={
         reduceMotion
@@ -213,7 +220,7 @@ function ShowcaseVisualPanel({
       }
     >
       <div
-        className="pointer-events-none absolute inset-0 opacity-[0.55] [background-image:linear-gradient(rgba(190,30,45,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(190,30,45,0.05)_1px,transparent_1px)] [background-size:32px_32px]"
+        className="pointer-events-none absolute inset-0 opacity-[0.55] [background-image:linear-gradient(rgba(190,30,45,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(190,30,45,0.05)_1px,transparent_1px)] [background-size:32px_32px] dark:opacity-[0.35] dark:[background-image:linear-gradient(rgba(190,30,45,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(190,30,45,0.08)_1px,transparent_1px)]"
         aria-hidden
       />
       <div
@@ -221,13 +228,13 @@ function ShowcaseVisualPanel({
         aria-hidden
       />
       <div className="relative flex flex-col items-center gap-5 px-8 text-center">
-        <div className="flex h-28 w-28 items-center justify-center rounded-2xl border border-[#BE1E2D]/35 bg-white text-[#BE1E2D] shadow-[0_8px_32px_-8px_rgba(190,30,45,0.25)] md:h-36 md:w-36">
+        <div className="flex h-28 w-28 items-center justify-center rounded-2xl border border-[#BE1E2D]/35 bg-white text-[#BE1E2D] shadow-[0_8px_32px_-8px_rgba(190,30,45,0.25)] dark:bg-zinc-900 md:h-36 md:w-36">
           <ServiceIcon icon={icon} className="h-16 w-16 md:h-[4.5rem] md:w-[4.5rem]" />
         </div>
-        <p className="max-w-xs font-mono text-[10px] uppercase tracking-[0.28em] text-npf-muted sm:text-[11px]">
+        <p className="max-w-xs font-mono text-[10px] uppercase tracking-[0.28em] text-npf-muted dark:text-zinc-400 sm:text-[11px]">
           {label}
         </p>
-        <p className="font-mono text-xs text-npf-muted/90">3D / render placeholder</p>
+        <p className="font-mono text-xs text-npf-muted/90 dark:text-zinc-500">3D / render placeholder</p>
       </div>
     </motion.div>
   );
@@ -235,9 +242,23 @@ function ShowcaseVisualPanel({
 
 const DECK_TITLE = 'Service launch deck';
 
+const tocBtnClass =
+  'group flex w-full items-center gap-3 rounded-md border border-transparent px-2.5 py-2 text-left transition-colors ' +
+  'hover:border-npf-border hover:bg-npf-surface/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 ' +
+  'dark:hover:border-zinc-600 dark:hover:bg-zinc-800/80 dark:focus-visible:ring-[#BE1E2D]/40 sm:px-3 sm:py-2.5';
+
+/** Mono slide index in a dark pill with white figures (TOC + fixed HUD). */
+const SHOWCASE_INDEX_BADGE_SHARED =
+  'inline-flex w-8 shrink-0 items-center justify-center rounded-md px-1 py-0.5 font-mono text-[10px] font-semibold tabular-nums tracking-wider text-white sm:w-9 sm:py-1 sm:text-[11px]';
+
+const tocIndexClass = SHOWCASE_INDEX_BADGE_SHARED + ' bg-zinc-900 dark:bg-zinc-700';
+
+const tocLabelClass =
+  'min-w-0 flex-1 text-sm font-medium leading-snug text-npf-charcoal group-hover:text-[#BE1E2D] dark:text-zinc-100 dark:group-hover:text-[#f87171] sm:text-[15px]';
+
 /** Below md, scroll-mt clears sticky nav; md+ deck pane sits under nav, so scroll-mt would inset snaps and add a gap. */
 const SLIDE_SECTION_SHELL =
-  'relative shrink-0 scroll-mt-[calc(5rem+1px)] border-b border-npf-border sm:scroll-mt-[calc(7rem+1px)] md:scroll-mt-0 ' +
+  'relative shrink-0 scroll-mt-[calc(5rem+1px)] border-b border-npf-border dark:border-zinc-800 sm:scroll-mt-[calc(7rem+1px)] md:scroll-mt-0 ' +
   'flex min-h-0 w-full flex-col overflow-hidden px-5 py-16 sm:px-8 md:h-full md:min-h-0 md:px-10 ' +
   'md:snap-start md:snap-always md:py-0 lg:px-14';
 
@@ -248,11 +269,16 @@ function SlideMapBackdrop() {
         <ServiceAreaBackdropMap />
       </div>
       <div
-        className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-white/96 via-white/88 to-white/72 md:bg-gradient-to-r md:from-white/[0.97] md:via-white/90 md:to-white/35"
+        className={
+          'pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-white/96 via-white/88 to-white/72 ' +
+          'md:bg-gradient-to-r md:from-white/[0.97] md:via-white/90 md:to-white/35 ' +
+          'dark:from-zinc-950/94 dark:via-zinc-950/88 dark:to-zinc-950/72 ' +
+          'dark:md:from-zinc-950/[0.96] dark:md:via-zinc-950/88 dark:md:to-zinc-950/38'
+        }
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_90%_70%_at_50%_120%,rgba(190,30,45,0.06),transparent_55%)]"
+        className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_90%_70%_at_50%_120%,rgba(190,30,45,0.06),transparent_55%)] dark:bg-[radial-gradient(ellipse_90%_70%_at_50%_120%,rgba(190,30,45,0.12),transparent_55%)]"
         aria-hidden
       />
     </>
@@ -272,7 +298,7 @@ function ScrollForMoreCue({ inView, reduceMotion }: { inView: boolean; reduceMot
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       >
         <motion.div
-          className="flex flex-col items-center gap-0.5 text-npf-muted"
+          className="flex flex-col items-center gap-0.5 text-npf-muted dark:text-zinc-400"
           animate={
             reduceMotion || !inView
               ? { y: 0 }
@@ -284,7 +310,7 @@ function ScrollForMoreCue({ inView, reduceMotion }: { inView: boolean; reduceMot
               : { duration: 2.2, repeat: Infinity, ease: 'easeInOut' }
           }
         >
-          <span className="font-mono text-[9px] uppercase tracking-[0.32em] text-npf-muted/85 sm:text-[10px]">
+          <span className="font-mono text-[9px] uppercase tracking-[0.32em] text-npf-muted/85 dark:text-zinc-400 sm:text-[10px]">
             Scroll for more
           </span>
           <FaChevronDown className="h-3 w-3 opacity-65 sm:h-3.5 sm:w-3.5" aria-hidden />
@@ -297,12 +323,15 @@ function ScrollForMoreCue({ inView, reduceMotion }: { inView: boolean; reduceMot
 function DeckIntroSlide({
   titleId,
   reduceMotion,
+  onJumpToSlide,
 }: {
   titleId: string;
   reduceMotion: boolean;
+  onJumpToSlide: (slideIndex: number) => void;
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const mapBackdropDescId = useId();
+  const tocHeadingId = useId();
   const inView = useInView(ref, {
     amount: 0.45,
     margin: '-12% 0px -12% 0px',
@@ -322,20 +351,64 @@ function DeckIntroSlide({
       <SlideMapBackdrop />
       <div className="relative z-10 flex min-h-0 w-full flex-1 flex-col justify-center">
         <div className="mx-auto w-full max-w-7xl">
-          <div className="mx-auto min-w-0 max-w-3xl space-y-6 text-center md:mx-0 md:text-left">
-            <TerminalTypingTitle
-              as="h1"
-              id={titleId}
-              text={DECK_TITLE}
-              active={inView}
-              reduceMotion={reduceMotion}
-            />
-            <div className="space-y-4 border-t border-npf-border pt-6">
-              <h2 className="font-mono text-[10px] font-normal uppercase tracking-[0.35em] text-[#BE1E2D] sm:text-xs">
-                Technical brief
-              </h2>
-              <p className="text-sm leading-relaxed text-npf-muted sm:text-base md:text-lg">{SITE.shortTagline}</p>
+          <div className="mx-auto grid min-w-0 max-w-3xl gap-8 text-center md:mx-0 md:max-w-none md:grid-cols-[minmax(0,1fr)_min(18rem,38%)] md:gap-10 md:text-left lg:grid-cols-[minmax(0,1fr)_min(20rem,34%)]">
+            <div className="min-w-0 space-y-6">
+              <TerminalTypingTitle
+                as="h1"
+                id={titleId}
+                text={DECK_TITLE}
+                active={inView}
+                reduceMotion={reduceMotion}
+              />
+              <div className="space-y-4 border-t border-npf-border pt-6 dark:border-zinc-700">
+                <h2 className="font-mono text-[10px] font-normal uppercase tracking-[0.35em] text-[#BE1E2D] sm:text-xs">
+                  Technical brief
+                </h2>
+                <p className="text-sm leading-relaxed text-npf-muted dark:text-zinc-400 sm:text-base md:text-lg">
+                  {SITE.shortTagline}
+                </p>
+              </div>
             </div>
+
+            <nav
+              className="min-w-0 rounded-xl border border-npf-border bg-white/80 p-4 text-left shadow-sm backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-900/75 sm:p-5"
+              aria-labelledby={tocHeadingId}
+            >
+              <h2
+                id={tocHeadingId}
+                className="border-b border-npf-border/80 pb-3 font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#BE1E2D] dark:border-zinc-600/80 sm:text-[11px]"
+              >
+                Table of contents
+              </h2>
+              <ol className="mt-3 list-none space-y-0.5 p-0 sm:mt-4">
+                {SHOWCASE_SECTIONS.map((section, i) => {
+                  const slideIndex = i + 1;
+                  const idxLabel = String(slideIndex).padStart(2, '0');
+                  return (
+                    <li key={section.id}>
+                      <button
+                        type="button"
+                        className={tocBtnClass}
+                        onClick={() => onJumpToSlide(slideIndex)}
+                      >
+                        <span className={tocIndexClass}>{idxLabel}</span>
+                        <span className={tocLabelClass}>{section.title}</span>
+                      </button>
+                    </li>
+                  );
+                })}
+                <li>
+                  <button
+                    type="button"
+                    className={tocBtnClass}
+                    onClick={() => onJumpToSlide(END_DECK_SLIDE_INDEX)}
+                  >
+                    <span className={tocIndexClass}>{String(END_DECK_SLIDE_INDEX).padStart(2, '0')}</span>
+                    <span className={tocLabelClass}>{'Next steps & quote'}</span>
+                  </button>
+                </li>
+              </ol>
+            </nav>
           </div>
         </div>
       </div>
@@ -367,7 +440,7 @@ function ServiceShowcaseSection({
       id={section.id}
       data-showcase-index={slideIndex}
       className={
-        'relative shrink-0 overflow-hidden scroll-mt-[calc(5rem+1px)] border-b border-npf-border sm:scroll-mt-[calc(7rem+1px)] md:scroll-mt-0 ' +
+        'relative shrink-0 overflow-hidden scroll-mt-[calc(5rem+1px)] border-b border-npf-border dark:border-zinc-800 sm:scroll-mt-[calc(7rem+1px)] md:scroll-mt-0 ' +
         'flex min-h-0 w-full flex-col px-5 py-14 sm:px-8 md:h-full md:min-h-0 md:px-10 md:py-0 ' +
         'md:snap-start md:snap-always lg:px-14'
       }
@@ -386,18 +459,18 @@ function ServiceShowcaseSection({
                 reduceMotion={reduceMotion}
               />
             </div>
-            <p className="max-w-xl text-sm leading-relaxed text-npf-muted sm:text-base">
+            <p className="max-w-xl text-sm leading-relaxed text-npf-muted dark:text-zinc-400 sm:text-base">
               {section.technicalDescription}
             </p>
             <div>
-              <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.25em] text-npf-muted sm:text-xs">
+              <p className="mb-3 font-mono text-[10px] uppercase tracking-[0.25em] text-npf-muted dark:text-zinc-500 sm:text-xs">
                 Spec sheet
               </p>
               <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
                 {section.specs.map((row, i) => (
                   <motion.div
                     key={row.label}
-                    className="rounded-lg border border-npf-border bg-white px-3 py-2.5 shadow-sm sm:px-4 sm:py-3"
+                    className="rounded-lg border border-npf-border bg-white px-3 py-2.5 shadow-sm dark:border-zinc-600 dark:bg-zinc-900 sm:px-4 sm:py-3"
                     initial={reduceMotion ? false : { opacity: 0, y: 18 }}
                     animate={
                       reduceMotion
@@ -415,7 +488,7 @@ function ServiceShowcaseSection({
                     <p className="font-mono text-[10px] uppercase tracking-wider text-[#BE1E2D] sm:text-[11px]">
                       {row.label}
                     </p>
-                    <p className="mt-1 font-mono text-xs text-npf-charcoal sm:text-sm">{row.value}</p>
+                    <p className="mt-1 font-mono text-xs text-npf-charcoal dark:text-zinc-200 sm:text-sm">{row.value}</p>
                   </motion.div>
                 ))}
               </div>
@@ -430,8 +503,6 @@ function ServiceShowcaseSection({
   );
 }
 
-const END_DECK_SLIDE_INDEX = SHOWCASE_SECTIONS.length + 1;
-
 function DeckOutroSlide() {
   return (
     <section
@@ -439,7 +510,7 @@ function DeckOutroSlide() {
       data-showcase-index={END_DECK_SLIDE_INDEX}
       aria-labelledby="deck-outro-heading"
       className={
-        'relative shrink-0 overflow-hidden scroll-mt-[calc(5rem+1px)] border-b border-npf-border sm:scroll-mt-[calc(7rem+1px)] md:scroll-mt-0 ' +
+        'relative shrink-0 overflow-hidden scroll-mt-[calc(5rem+1px)] border-b border-npf-border dark:border-zinc-800 sm:scroll-mt-[calc(7rem+1px)] md:scroll-mt-0 ' +
         'flex min-h-0 w-full flex-col px-5 py-14 sm:px-8 md:h-full md:min-h-0 md:px-10 md:py-0 ' +
         'md:snap-start md:snap-always lg:px-14'
       }
@@ -449,16 +520,16 @@ function DeckOutroSlide() {
         <div className="mx-auto w-full max-w-2xl text-center md:text-left">
           <p
             id="deck-outro-heading"
-            className="font-mono text-[10px] uppercase tracking-[0.28em] text-npf-muted sm:text-xs"
+            className="font-mono text-[10px] uppercase tracking-[0.28em] text-npf-muted dark:text-zinc-500 sm:text-xs"
           >
             End of deck
           </p>
-          <p className="mt-4 max-w-xl text-sm leading-relaxed text-npf-muted sm:text-base">
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-npf-muted dark:text-zinc-400 sm:text-base">
             Serving {SITE.region}. Call for scope verification and on-site assessment.
           </p>
           <Link
             to="/contact"
-            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-[#BE1E2D] px-6 py-2.5 font-mono text-sm font-semibold text-white shadow-sm shadow-[#BE1E2D]/30 transition-[background-color,box-shadow,transform] duration-300 hover:bg-npf-red-dark hover:shadow-[0_16px_40px_-12px_rgba(190,30,45,0.45)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            className="mt-6 inline-flex min-h-11 items-center justify-center rounded-lg bg-[#BE1E2D] px-6 py-2.5 font-mono text-sm font-semibold text-white shadow-sm shadow-[#BE1E2D]/30 transition-[background-color,box-shadow,transform] duration-300 hover:bg-npf-red-dark hover:shadow-[0_16px_40px_-12px_rgba(190,30,45,0.45)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D] focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950"
           >
             Get a quote
           </Link>
@@ -490,20 +561,23 @@ function SectionTrackerHUD({
           <button
             key={i}
             type="button"
-            className="group flex items-center gap-3 py-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D] focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            className="group flex items-center gap-3 py-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D] focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950"
             onClick={() => onSelect(i)}
             aria-current={active ? 'true' : undefined}
             aria-label={`Go to slide ${String(i).padStart(2, '0')}`}
           >
             <span
               className={
-                'font-mono text-xs transition-colors duration-300 ' +
-                (active ? 'text-[#BE1E2D]' : 'text-npf-muted group-hover:text-npf-charcoal')
+                SHOWCASE_INDEX_BADGE_SHARED +
+                ' transition-[background-color,opacity] duration-300 ' +
+                (active
+                  ? 'bg-[#BE1E2D]'
+                  : 'bg-zinc-900 dark:bg-zinc-700 group-hover:bg-zinc-800 dark:group-hover:bg-zinc-600')
               }
             >
               {String(i).padStart(2, '0')}
             </span>
-            <span className="flex h-px w-10 items-center bg-npf-border" aria-hidden>
+            <span className="flex h-px w-10 items-center bg-npf-border dark:bg-zinc-700" aria-hidden>
               <motion.span
                 className={
                   'h-px w-full origin-left bg-[#BE1E2D] ' +
@@ -595,7 +669,7 @@ export function ServiceShowcase() {
   const slideCount = SHOWCASE_SECTIONS.length + 2;
 
   return (
-    <div className="relative bg-white text-npf-charcoal">
+    <div className="relative bg-white text-npf-charcoal dark:bg-zinc-950 dark:text-zinc-100">
       <div
         ref={scrollRef}
         className={
@@ -605,7 +679,7 @@ export function ServiceShowcase() {
         }
         aria-labelledby={headerId}
       >
-        <DeckIntroSlide titleId={headerId} reduceMotion={reduceMotion} />
+        <DeckIntroSlide titleId={headerId} reduceMotion={reduceMotion} onJumpToSlide={scrollToIndex} />
         {SHOWCASE_SECTIONS.map((section, i) => (
           <ServiceShowcaseSection
             key={section.id}
