@@ -252,9 +252,7 @@ export function ProjectServiceMap() {
               onBlur={onMarkerLeave}
             >
               <span
-                className={
-                  reduceMotion ? 'npf-map-node-core' : 'npf-map-node-core npf-map-node-pulse'
-                }
+                className="npf-map-node-core"
                 style={{ backgroundColor: NPF_SIGNAL }}
               />
             </button>

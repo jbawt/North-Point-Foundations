@@ -1,6 +1,7 @@
 import {
   FaBars,
   FaCircleInfo,
+  FaEnvelope,
   FaHouse,
   FaScrewdriverWrench,
   FaXmark,
@@ -14,6 +15,7 @@ const navItems = [
   { to: '/', label: 'Home', icon: FaHouse },
   { to: '/services', label: 'Services', icon: FaScrewdriverWrench },
   { to: '/about', label: 'About', icon: FaCircleInfo },
+  { to: '/contact', label: 'Contact', icon: FaEnvelope },
 ] as const;
 
 function navLinkShell(isActive: boolean) {

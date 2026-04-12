@@ -88,7 +88,7 @@ export function ServiceAreaBackdropMap({ className = '', showPins = false }: Pro
               >
                 <div className="pointer-events-none flex h-4 w-4 items-center justify-center" aria-hidden>
                   <span
-                    className="npf-map-node-core npf-map-node-pulse"
+                    className="npf-map-node-core"
                     style={{ backgroundColor: NPF_SIGNAL }}
                   />
                 </div>

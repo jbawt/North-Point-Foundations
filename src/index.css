@@ -9,6 +9,12 @@
   --color-npf-muted: #5a5a5a;
   --color-npf-border: #e8e8e8;
   --color-npf-surface: #f5f5f5;
+  /** Contact / evaluation wizard — classic consultancy palette */
+  --color-npf-navy: #1a365d;
+  --color-npf-classic-red: #be1e2d;
+  --color-npf-consult-canvas: #f5f7fa;
+  --font-npf-consult-heading: "Merriweather", Georgia, "Times New Roman", serif;
+  --font-npf-consult-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 body {
@@ -18,6 +24,23 @@ body {
   color: var(--color-npf-charcoal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/** Light consultation surfaces — fine grid / linen-style texture (very low contrast) */
+.npf-consult-surface {
+  background-color: var(--color-npf-consult-canvas);
+  background-image:
+    linear-gradient(rgba(26, 54, 93, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 54, 93, 0.018) 1px, transparent 1px),
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(26, 54, 93, 0.04), transparent 55%);
+  background-size:
+    20px 20px,
+    20px 20px,
+    100% 100%;
+  background-position:
+    0 0,
+    0 0,
+    0 0;
 }
 
 /* ServiceShowcase deck — scrollbar hidden; wheel/touch/trackpad scroll unchanged */
@@ -86,37 +109,6 @@ body {
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.25),
     0 0 12px rgba(190, 30, 45, 0.65);
-}
-
-@keyframes npf-map-node-pulse {
-  0% {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.25),
-      0 0 12px rgba(190, 30, 45, 0.65),
-      0 0 0 0 rgba(190, 30, 45, 0.45);
-  }
-  70% {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.25),
-      0 0 12px rgba(190, 30, 45, 0.65),
-      0 0 0 14px rgba(190, 30, 45, 0);
-  }
-  100% {
-    box-shadow:
-      0 0 0 1px rgba(255, 255, 255, 0.25),
-      0 0 12px rgba(190, 30, 45, 0.65),
-      0 0 0 0 rgba(190, 30, 45, 0);
-  }
-}
-
-.npf-map-node-pulse {
-  animation: npf-map-node-pulse 2.2s ease-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .npf-map-node-pulse {
-    animation: none;
-  }
 }
 
 /**
