@@ -90,12 +90,6 @@ export function EvaluationRequestStep1({
     >
       <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6 sm:py-12 lg:px-8 lg:py-14">
         <header className="mb-8 sm:mb-10">
-          {/* <p
-            className="text-[11px] font-semibold uppercase tracking-[0.22em] text-npf-navy/70 sm:text-xs"
-            style={{ fontFamily: 'var(--font-npf-consult-body)' }}
-          >
-            Request a quote
-          </p> */}
           <h2
             className="mt-2 text-2xl font-semibold leading-tight tracking-tight text-npf-navy sm:text-3xl"
             style={{ fontFamily: 'var(--font-npf-consult-heading)' }}
