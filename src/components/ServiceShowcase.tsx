@@ -4,7 +4,7 @@ import {
   useReducedMotion,
 } from 'framer-motion';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa6';
 import { SITE } from '../content/siteCopy.ts';
 import { ServiceAreaBackdropMap } from './ServiceAreaBackdropMap.tsx';
@@ -606,6 +606,7 @@ export function ServiceShowcase() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const headerId = useId();
+  const location = useLocation();
 
   const lastSlideIndex = END_DECK_SLIDE_INDEX;
 
@@ -659,6 +660,25 @@ export function ServiceShowcase() {
       window.removeEventListener('resize', onScroll);
     };
   }, [updateActiveFromScroll, useSnapScroll]);
+
+  useEffect(() => {
+    const raw = location.hash.replace(/^#/, '');
+    if (!raw || !SHOWCASE_SECTIONS.some((s) => s.id === raw)) return;
+
+    const el = document.getElementById(raw);
+    if (!el) return;
+
+    const behavior: ScrollBehavior = reduceMotion ? 'auto' : 'smooth';
+    const run = () => el.scrollIntoView({ behavior, block: 'start' });
+
+    run();
+    const raf = window.requestAnimationFrame(run);
+    const t = window.setTimeout(run, 120);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.clearTimeout(t);
+    };
+  }, [location.hash, location.pathname, reduceMotion, useSnapScroll]);
 
   const scrollToIndex = (index: number) => {
     const el = document.querySelector<HTMLElement>(`[data-showcase-index="${index}"]`);

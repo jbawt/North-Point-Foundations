@@ -129,6 +129,19 @@ export const SITE = {
   heroSub: `Locally owned foundation repair and waterproofing in Central Alberta — serving ${serviceAreasSentenceFrom(SERVICE_AREAS)}. Exterior waterproofing, crack repair, weeping tile, sump systems, window wells, and excavation. Honest pricing and reliable service.`,
 } as const;
 
+/**
+ * Fragment IDs for `/services#…` deep links into the service deck.
+ * Order must match `SITE.services` and `SHOWCASE_SECTIONS` in `ServiceShowcase.tsx`.
+ */
+export const SERVICE_DECK_FRAGMENT_IDS = [
+  'exterior-waterproofing',
+  'crack-repair',
+  'weeping-tile',
+  'sump-systems',
+  'window-wells',
+  'excavation',
+] as const;
+
 /** Home testimonials carousel — placeholder-style quotes for local marketing. */
 export const TESTIMONIALS = [
   {

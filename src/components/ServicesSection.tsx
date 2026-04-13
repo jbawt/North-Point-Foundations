@@ -6,7 +6,7 @@ import {
   REPAIR_PLAN_OUTLINE_D,
   REPAIR_PLAN_VIEWBOX,
 } from '../content/repairPlanBlueprint.ts';
-import { SITE, type ServiceDetail } from '../content/siteCopy.ts';
+import { SERVICE_DECK_FRAGMENT_IDS, SITE, type ServiceDetail } from '../content/siteCopy.ts';
 import { ServiceIcon } from './ServiceIcon.tsx';
 
 const VIEWPORT = { once: true, amount: 0.28 } as const;
@@ -63,15 +63,21 @@ const listItemReduced = {
 };
 
 function ServiceCard({ service }: { service: ServiceDetail }) {
+  const deckIdx = SITE.services.indexOf(service);
+  const deckFragment =
+    deckIdx >= 0 && deckIdx < SERVICE_DECK_FRAGMENT_IDS.length ? SERVICE_DECK_FRAGMENT_IDS[deckIdx] : undefined;
+  const to = deckFragment ? `/services#${deckFragment}` : '/services';
+
   return (
-    <div
+    <Link
+      to={to}
       className={
-        `group flex min-h-[9.5rem] flex-col cursor-default overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 dark:bg-zinc-900 dark:shadow-black/20 ` +
-        `[&_*]:cursor-default ` +
+        `group flex min-h-[9.5rem] flex-col overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 dark:bg-zinc-900 dark:shadow-black/20 ` +
         `transition-[transform,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ` +
         `hover:border-[#BE1E2D]/35 hover:shadow-[0_26px_58px_-28px_rgba(26,26,26,0.22),0_0_0_1px_rgba(190,30,45,0.07)] ` +
         `hover:[transform:translate3d(0,-6px,0)_scale(1.045)] ` +
         `motion-reduce:transition-[border-color,box-shadow] motion-reduce:hover:[transform:none] ` +
+        `focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 focus-visible:ring-offset-2 focus-visible:ring-offset-npf-surface dark:focus-visible:ring-[#BE1E2D]/45 dark:focus-visible:ring-offset-zinc-950 ` +
         `sm:min-h-[10.5rem] lg:min-h-0 lg:h-full`
       }
     >
@@ -107,7 +113,7 @@ function ServiceCard({ service }: { service: ServiceDetail }) {
           {service.detail}
         </p>
       </div>
-    </div>
+    </Link>
   );
 }
 
