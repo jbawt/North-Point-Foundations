@@ -11,25 +11,30 @@ import {
 
 const STORAGE_KEY = 'npf-theme';
 
-export type ThemePreference = 'light' | 'dark' | 'system';
+/** User explicitly chose light or dark. `null` means follow the OS (`prefers-color-scheme`). */
+export type ThemeExplicit = 'light' | 'dark';
 
-function readStored(): ThemePreference {
+function readStored(): ThemeExplicit | null {
   try {
     const v = localStorage.getItem(STORAGE_KEY);
-    if (v === 'light' || v === 'dark' || v === 'system') return v;
+    if (v === 'light' || v === 'dark') return v;
+    if (v === 'system') localStorage.removeItem(STORAGE_KEY);
   } catch {
     /* private mode etc. */
   }
-  return 'system';
+  return null;
 }
 
 type ThemeContextValue = {
-  preference: ThemePreference;
-  /** Effective light/dark after applying system preference when needed. */
-  resolved: 'light' | 'dark';
-  setPreference: (p: ThemePreference) => void;
-  /** Cycles system → light → dark → system. */
-  cyclePreference: () => void;
+  /** Saved choice, or `null` when matching the device. */
+  explicit: ThemeExplicit | null;
+  /** Whether the site follows `prefers-color-scheme` (no saved override). */
+  followsSystem: boolean;
+  /** Effective light/dark on screen. */
+  resolved: ThemeExplicit;
+  setTheme: (mode: ThemeExplicit) => void;
+  /** Toggle between light and dark and persist (no separate “system” mode in the control). */
+  toggleTheme: () => void;
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -39,12 +44,12 @@ function applyDarkClass(isDark: boolean) {
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [preference, setPreferenceState] = useState<ThemePreference>('system');
+  const [explicit, setExplicitState] = useState<ThemeExplicit | null>(null);
   const [systemDark, setSystemDark] = useState(false);
   const [mounted, setMounted] = useState(false);
 
   useLayoutEffect(() => {
-    setPreferenceState(readStored());
+    setExplicitState(readStored());
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     setSystemDark(mq.matches);
     setMounted(true);
@@ -57,33 +62,32 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     return () => mq.removeEventListener('change', onChange);
   }, []);
 
-  const resolved: 'light' | 'dark' =
-    preference === 'light' ? 'light' : preference === 'dark' ? 'dark' : systemDark ? 'dark' : 'light';
+  const resolved: ThemeExplicit =
+    explicit === 'light' ? 'light' : explicit === 'dark' ? 'dark' : systemDark ? 'dark' : 'light';
+
+  const followsSystem = explicit === null;
 
   useLayoutEffect(() => {
     if (!mounted) return;
     applyDarkClass(resolved === 'dark');
   }, [resolved, mounted]);
 
-  const setPreference = useCallback((p: ThemePreference) => {
-    setPreferenceState(p);
+  const setTheme = useCallback((mode: ThemeExplicit) => {
+    setExplicitState(mode);
     try {
-      if (p === 'system') localStorage.removeItem(STORAGE_KEY);
-      else localStorage.setItem(STORAGE_KEY, p);
+      localStorage.setItem(STORAGE_KEY, mode);
     } catch {
       /* ignore */
     }
   }, []);
 
-  const cyclePreference = useCallback(() => {
-    const next: ThemePreference =
-      preference === 'system' ? 'light' : preference === 'light' ? 'dark' : 'system';
-    setPreference(next);
-  }, [preference, setPreference]);
+  const toggleTheme = useCallback(() => {
+    setTheme(resolved === 'dark' ? 'light' : 'dark');
+  }, [resolved, setTheme]);
 
   const value = useMemo(
-    () => ({ preference, resolved, setPreference, cyclePreference }),
-    [preference, resolved, setPreference, cyclePreference],
+    () => ({ explicit, followsSystem, resolved, setTheme, toggleTheme }),
+    [explicit, followsSystem, resolved, setTheme, toggleTheme],
   );
 
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;

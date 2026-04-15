@@ -1,4 +1,4 @@
-import { FaDesktop, FaMoon, FaSun } from 'react-icons/fa6';
+import { FaMoon, FaSun } from 'react-icons/fa6';
 import { useTheme } from '../theme/ThemeProvider.tsx';
 
 type ThemeToggleProps = {
@@ -6,21 +6,22 @@ type ThemeToggleProps = {
 };
 
 export function ThemeToggle({ className = '' }: ThemeToggleProps) {
-  const { preference, resolved, cyclePreference } = useTheme();
+  const { resolved, followsSystem, toggleTheme } = useTheme();
 
-  const Icon = preference === 'system' ? FaDesktop : resolved === 'dark' ? FaMoon : FaSun;
+  const Icon = resolved === 'dark' ? FaMoon : FaSun;
 
-  const label =
-    preference === 'system'
-      ? 'Theme: matching device. Click to use light mode.'
-      : preference === 'light'
-        ? 'Theme: light. Click for dark mode.'
-        : 'Theme: dark. Click to match device settings.';
+  const label = followsSystem
+    ? resolved === 'dark'
+      ? 'Dark (matching device). Click to use light mode.'
+      : 'Light (matching device). Click to use dark mode.'
+    : resolved === 'dark'
+      ? 'Dark mode. Click for light mode.'
+      : 'Light mode. Click for dark mode.';
 
   return (
     <button
       type="button"
-      onClick={cyclePreference}
+      onClick={toggleTheme}
       className={
         'npf-sleek-lift-subtle inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-npf-border bg-white text-lg text-npf-charcoal shadow-sm ' +
         'transition-[background-color,border-color,color,box-shadow] hover:border-npf-red/35 hover:text-npf-red ' +
