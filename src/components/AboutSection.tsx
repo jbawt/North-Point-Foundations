@@ -263,7 +263,7 @@ export function AboutSection() {
                 aria-controls={`${carouselId}-panel-0`}
                 className={`rounded-full px-3.5 py-2 text-xs font-semibold uppercase tracking-[0.14em] transition-[transform,background-color,color,box-shadow] duration-300 sm:px-4 ${
                   active === 0
-                    ? 'bg-npf-charcoal text-white shadow-sm'
+                    ? 'bg-[#BE1E2D] text-white shadow-sm shadow-[#BE1E2D]/20'
                     : 'text-npf-muted hover:scale-[1.03] hover:bg-npf-surface hover:text-npf-charcoal motion-reduce:hover:scale-100'
                 }`}
               >

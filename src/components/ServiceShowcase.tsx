@@ -114,20 +114,6 @@ const END_DECK_SLIDE_INDEX = SHOWCASE_SECTIONS.length + 1;
 
 const TYPE_MS = 38;
 
-function useMatchMedia(query: string) {
-  const [matches, setMatches] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia(query);
-    const onChange = () => setMatches(mq.matches);
-    onChange();
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, [query]);
-
-  return matches;
-}
-
 function TerminalTypingTitle({
   text,
   active,
@@ -256,11 +242,15 @@ const tocIndexClass = SHOWCASE_INDEX_BADGE_SHARED + ' bg-zinc-900 dark:bg-zinc-7
 const tocLabelClass =
   'min-w-0 flex-1 text-sm font-medium leading-snug text-npf-charcoal group-hover:text-[#BE1E2D] dark:text-zinc-100 dark:group-hover:text-[#f87171] sm:text-[15px]';
 
-/** Below md, scroll-mt clears sticky nav; md+ deck pane sits under nav, so scroll-mt would inset snaps and add a gap. */
+/**
+ * No scroll-margin: it breaks vertical scroll-snap inside this deck (previous slide peeks in when
+ * swiping down). The deck scroller already clears the nav via its fixed height; hash jumps use this
+ * container as the scrollport. `snap-end` lands each slide with its bottom edge flush to the deck
+ * (better handoff when advancing to the next slide / below-the-fold content).
+ */
 const SLIDE_SECTION_SHELL =
-  'relative shrink-0 scroll-mt-[calc(5rem+1px)] border-b border-npf-border dark:border-zinc-800 sm:scroll-mt-[calc(7rem+1px)] md:scroll-mt-0 ' +
-  'flex min-h-0 w-full flex-col overflow-hidden px-5 py-16 sm:px-8 md:h-full md:min-h-0 md:px-10 ' +
-  'md:snap-start md:snap-always md:py-0 lg:px-14';
+  'relative shrink-0 snap-end snap-always scroll-mt-0 border-b border-npf-border dark:border-zinc-800 ' +
+  'flex min-h-full w-full flex-col overflow-hidden px-5 py-16 sm:px-8 md:h-full md:min-h-0 md:px-10 md:py-0 lg:px-14';
 
 function SlideMapBackdrop() {
   return (
@@ -444,15 +434,14 @@ function ServiceShowcaseSection({
       id={section.id}
       data-showcase-index={slideIndex}
       className={
-        'relative shrink-0 overflow-hidden scroll-mt-[calc(5rem+1px)] border-b border-npf-border dark:border-zinc-800 sm:scroll-mt-[calc(7rem+1px)] md:scroll-mt-0 ' +
-        'flex min-h-0 w-full flex-col px-5 py-14 sm:px-8 md:h-full md:min-h-0 md:px-10 md:py-0 ' +
-        'md:snap-start md:snap-always lg:px-14'
+        'relative shrink-0 snap-end snap-always overflow-hidden scroll-mt-0 border-b border-npf-border dark:border-zinc-800 ' +
+        'flex min-h-full w-full flex-col px-5 py-14 sm:px-8 md:h-full md:min-h-0 md:px-10 md:py-0 lg:px-14'
       }
     >
       <SlideMapBackdrop />
       <div className="relative z-10 flex min-h-0 w-full flex-1 flex-col justify-center gap-10 md:gap-0">
         <div className="mx-auto grid w-full max-w-7xl items-center gap-10 md:grid-cols-2 md:items-stretch md:gap-12 lg:gap-16">
-          <div className="flex min-h-0 min-w-0 flex-col justify-center space-y-6 overflow-y-auto overscroll-y-contain md:space-y-8 md:pr-4">
+          <div className="flex min-h-0 min-w-0 flex-col justify-center space-y-6 max-md:overflow-visible md:overflow-y-auto md:overscroll-y-contain md:space-y-8 md:pr-4">
             <div className="space-y-2">
               <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#BE1E2D] sm:text-xs">
                 {`NPF // SVC_${String(index + 1).padStart(2, '0')}`}
@@ -514,9 +503,8 @@ function DeckOutroSlide() {
       data-showcase-index={END_DECK_SLIDE_INDEX}
       aria-labelledby="deck-outro-heading"
       className={
-        'relative shrink-0 overflow-hidden scroll-mt-[calc(5rem+1px)] border-b border-npf-border dark:border-zinc-800 sm:scroll-mt-[calc(7rem+1px)] md:scroll-mt-0 ' +
-        'flex min-h-0 w-full flex-col px-5 py-14 sm:px-8 md:h-full md:min-h-0 md:px-10 md:py-0 ' +
-        'md:snap-start md:snap-always lg:px-14'
+        'relative shrink-0 snap-end snap-always overflow-hidden scroll-mt-0 border-b border-npf-border dark:border-zinc-800 ' +
+        'flex min-h-full w-full flex-col px-5 py-14 sm:px-8 md:h-full md:min-h-0 md:px-10 md:py-0 lg:px-14'
       }
     >
       <SlideMapBackdrop />
@@ -606,7 +594,6 @@ function SectionTrackerHUD({
 
 export function ServiceShowcase() {
   const reduceMotion = useReducedMotion() ?? false;
-  const useSnapScroll = useMatchMedia('(min-width: 768px)');
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const headerId = useId();
@@ -615,8 +602,8 @@ export function ServiceShowcase() {
   const lastSlideIndex = END_DECK_SLIDE_INDEX;
 
   const updateActiveFromScroll = useCallback(() => {
-    const root = useSnapScroll ? scrollRef.current : null;
-    if (useSnapScroll && root) {
+    const root = scrollRef.current;
+    if (root) {
       const { scrollTop, scrollHeight, clientHeight } = root;
       if (scrollHeight - scrollTop - clientHeight < 8) {
         setActiveIndex(lastSlideIndex);
@@ -628,27 +615,24 @@ export function ServiceShowcase() {
     if (sections.length === 0) return;
 
     const rootRect = root?.getBoundingClientRect();
-    const centerY = rootRect
-      ? rootRect.top + rootRect.height * 0.42
-      : window.innerHeight * 0.42;
+    const portBottom = rootRect ? rootRect.bottom : window.innerHeight;
 
     let best = 0;
     let bestDist = Infinity;
     sections.forEach((el) => {
       const idx = Number(el.dataset.showcaseIndex ?? '0');
       const r = el.getBoundingClientRect();
-      const mid = r.top + r.height * 0.45;
-      const d = Math.abs(mid - centerY);
+      const d = Math.abs(r.bottom - portBottom);
       if (d < bestDist) {
         bestDist = d;
         best = idx;
       }
     });
     setActiveIndex(best);
-  }, [useSnapScroll, lastSlideIndex]);
+  }, [lastSlideIndex]);
 
   useEffect(() => {
-    const root = useSnapScroll ? scrollRef.current : window;
+    const root = scrollRef.current;
     if (!root) return;
 
     const onScroll = () => {
@@ -663,7 +647,7 @@ export function ServiceShowcase() {
       root.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
     };
-  }, [updateActiveFromScroll, useSnapScroll]);
+  }, [updateActiveFromScroll]);
 
   useEffect(() => {
     const raw = location.hash.replace(/^#/, '');
@@ -673,7 +657,7 @@ export function ServiceShowcase() {
     if (!el) return;
 
     const behavior: ScrollBehavior = reduceMotion ? 'auto' : 'smooth';
-    const run = () => el.scrollIntoView({ behavior, block: 'start' });
+    const run = () => el.scrollIntoView({ behavior, block: 'end' });
 
     run();
     const raf = window.requestAnimationFrame(run);
@@ -682,24 +666,22 @@ export function ServiceShowcase() {
       window.cancelAnimationFrame(raf);
       window.clearTimeout(t);
     };
-  }, [location.hash, location.pathname, reduceMotion, useSnapScroll]);
+  }, [location.hash, location.pathname, reduceMotion]);
 
   const scrollToIndex = (index: number) => {
     const el = document.querySelector<HTMLElement>(`[data-showcase-index="${index}"]`);
     if (!el) return;
-    el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'end' });
   };
 
   const slideCount = SHOWCASE_SECTIONS.length + 2;
 
   return (
-    <div className="relative bg-white text-npf-charcoal dark:bg-zinc-950 dark:text-zinc-100">
+    <div className="relative flex min-h-0 flex-1 flex-col bg-white text-npf-charcoal dark:bg-zinc-950 dark:text-zinc-100">
       <div
         ref={scrollRef}
         className={
-          useSnapScroll
-            ? 'npf-deck-scroll flex flex-col h-[calc(100dvh-5rem-1px)] snap-y snap-mandatory overflow-y-auto scroll-smooth motion-reduce:scroll-auto overscroll-y-auto sm:h-[calc(100dvh-7rem-1px)] md:h-[calc(100dvh-8rem-1px)] lg:h-[calc(100dvh-9rem-1px)]'
-            : ''
+          'npf-deck-scroll flex h-[calc(100dvh-5rem-1px)] w-full flex-col snap-y snap-mandatory overflow-y-auto overscroll-y-auto scroll-smooth motion-reduce:scroll-auto sm:h-[calc(100dvh-7rem-1px)] md:h-[calc(100dvh-8rem-1px)] lg:h-[calc(100dvh-9rem-1px)]'
         }
         aria-labelledby={headerId}
       >
