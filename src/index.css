@@ -77,32 +77,6 @@ body {
   height: 0;
 }
 
-/* HeroVisual — fiber-optic stroke flow
-   Dash period = 40 + 60 = 100. Offset must move a whole multiple of 100 each loop
-   or the stroke visibly “jumps” when the animation repeats. */
-@keyframes npf-fiber-dash {
-  from {
-    stroke-dashoffset: 0;
-  }
-  to {
-    stroke-dashoffset: -1000;
-  }
-}
-
-.npf-fiber-path {
-  stroke-dasharray: 40 60;
-  stroke-dashoffset: 0;
-  animation: npf-fiber-dash 10s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .npf-fiber-path {
-    animation: none;
-    stroke-dasharray: none;
-    stroke-dashoffset: 0;
-  }
-}
-
 @keyframes npf-data-ribbon-marquee {
   from {
     transform: translate3d(0, 0, 0);

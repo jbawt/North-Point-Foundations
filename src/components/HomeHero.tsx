@@ -4,7 +4,7 @@ import { useLayoutEffect, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SITE } from '../content/siteCopy.ts';
 import { HeroTypingHeadline } from './HeroTypingHeadline.tsx';
-import { HeroVisual } from './HeroVisual.tsx';
+import { BespokeHouseAnimation } from './BespokeHouseAnimation.tsx';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -153,20 +153,18 @@ export function HomeHero() {
 
       <div className="relative z-10 mx-auto w-full max-w-[48rem] px-6 pb-6 pt-1 sm:max-w-[52rem] sm:px-8 sm:pb-8 sm:pt-2 md:max-w-[56rem] md:pb-10 md:pt-3 lg:max-w-3xl xl:max-w-4xl">
         <div className="relative z-20 flex w-full flex-col items-center px-2 text-center">
-          <div className="perspective-[1000px]">
-            <div className="mb-4 sm:mb-5 md:mb-6">
-              <HeroVisual />
-            </div>
-
-            <p
-              ref={eyebrowRef}
-              className="mx-auto mb-4 max-w-xl text-xs font-semibold uppercase leading-relaxed tracking-[0.18em] text-npf-red sm:mb-5 sm:text-sm md:mb-6"
-            >
-              {SITE.shortTagline} · {SITE.region}
-            </p>
-
-            <HeroTypingHeadline ref={headlineRef} reduceMotion={reduceMotion} />
+          <div className="mb-4 sm:mb-5 md:mb-6">
+            <BespokeHouseAnimation />
           </div>
+
+          <p
+            ref={eyebrowRef}
+            className="mx-auto mb-4 max-w-xl text-xs font-semibold uppercase leading-relaxed tracking-[0.18em] text-npf-red sm:mb-5 sm:text-sm md:mb-6"
+          >
+            {SITE.shortTagline} · {SITE.region}
+          </p>
+
+          <HeroTypingHeadline ref={headlineRef} reduceMotion={reduceMotion} />
           <p
             ref={subRef}
             className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/78 sm:mt-8 sm:text-lg"
