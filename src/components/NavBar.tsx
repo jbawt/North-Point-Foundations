@@ -6,7 +6,7 @@ import {
   FaScrewdriverWrench,
   FaXmark,
 } from 'react-icons/fa6';
-import { useEffect, useId, useState } from 'react';
+import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import brandLogo from '../assets/Logo_transparent_250px.png';
 import { SITE } from '../content/siteCopy.ts';
@@ -44,6 +44,21 @@ export function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const menuId = useId();
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const menuPanelRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const panel = menuPanelRef.current;
+    if (!panel) return;
+    if (menuOpen) {
+      panel.removeAttribute('inert');
+      return;
+    }
+    if (panel.contains(document.activeElement)) {
+      menuButtonRef.current?.focus({ preventScroll: true });
+    }
+    panel.setAttribute('inert', '');
+  }, [menuOpen]);
 
   useEffect(() => {
     setMenuOpen(false);
@@ -115,6 +130,7 @@ export function NavBar() {
           <ThemeToggle />
           <div className="relative md:hidden">
           <button
+            ref={menuButtonRef}
             aria-controls={menuId}
             aria-expanded={menuOpen}
             className="npf-sleek-lift-subtle flex min-h-11 min-w-11 items-center justify-center rounded-lg border border-npf-border bg-white text-npf-charcoal shadow-sm hover:border-npf-red/40 hover:bg-white hover:text-npf-red active:scale-95 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:border-npf-red/45 dark:hover:bg-zinc-800"
@@ -126,7 +142,7 @@ export function NavBar() {
           </button>
 
           <div
-            aria-hidden={!menuOpen}
+            ref={menuPanelRef}
             className={`absolute right-0 top-[calc(100%+0.5rem)] z-50 w-[min(calc(100vw-2rem),22rem)] min-w-[16rem] origin-top-right rounded-xl border border-npf-border bg-white shadow-xl transition-[opacity,transform] duration-200 ease-out dark:border-zinc-700 dark:bg-zinc-900 md:hidden ${
               menuOpen
                 ? 'pointer-events-auto scale-100 opacity-100'

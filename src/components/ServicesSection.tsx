@@ -23,8 +23,8 @@ const listContainerAnimated = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 1.05,
+      staggerChildren: 0.06,
+      delayChildren: 0.12,
     },
   },
 };
@@ -109,7 +109,7 @@ function ServiceCard({ service }: { service: ServiceDetail }) {
         <p className="text-xs font-medium leading-relaxed text-npf-charcoal/90 dark:text-zinc-200 sm:text-sm">
           {service.blurb}
         </p>
-        <p className="mt-2 text-xs leading-relaxed text-npf-muted sm:mt-2.5 sm:text-[13px] sm:leading-relaxed">
+        <p className="mt-2 text-xs leading-relaxed text-npf-muted dark:text-zinc-400 sm:mt-2.5 sm:text-[13px] sm:leading-relaxed">
           {service.detail}
         </p>
       </div>
@@ -152,7 +152,7 @@ export function ServicesSection() {
             >
               Professional Solutions
             </h2>
-            <p className="text-sm leading-relaxed text-npf-muted sm:text-base">
+            <p className="text-sm leading-relaxed text-npf-muted dark:text-zinc-300 sm:text-base">
               Foundation repair and waterproofing engineered for Central Alberta conditions — from
               exterior sealing to drainage and structural stabilization.
             </p>
@@ -181,14 +181,11 @@ export function ServicesSection() {
         <div className="order-2 flex w-full justify-center lg:order-none">
           <div className="group npf-sleek-lift relative aspect-[4/3] w-full max-w-[min(100%,640px)] min-h-[20rem] overflow-hidden rounded-xl border border-npf-border bg-white shadow-sm shadow-npf-charcoal/5 dark:bg-zinc-900 dark:shadow-black/25 sm:min-h-[26rem] lg:max-w-none lg:min-h-[30rem] xl:min-h-[36rem] 2xl:min-h-[40rem]">
             <div
-              className="pointer-events-none absolute inset-0 z-[1]"
-              style={{
-                backgroundImage: `
-                linear-gradient(rgba(26,26,26,0.14) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(26,26,26,0.14) 1px, transparent 1px)
-              `,
-                backgroundSize: '24px 24px',
-              }}
+              className={
+                'pointer-events-none absolute inset-0 z-[1] [background-size:24px_24px] ' +
+                '[background-image:linear-gradient(rgba(26,26,26,0.14)_1px,transparent_1px),linear-gradient(90deg,rgba(26,26,26,0.14)_1px,transparent_1px)] ' +
+                'dark:[background-image:linear-gradient(rgba(255,255,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.1)_1px,transparent_1px)]'
+              }
               aria-hidden
             />
 
@@ -225,9 +222,8 @@ export function ServicesSection() {
                     cx={m.cx}
                     cy={m.cy}
                     r={4.75}
-                    fill="#1d4ed8"
-                    stroke="#93c5fd"
                     strokeWidth={0.95}
+                    className="fill-blue-700 stroke-blue-200 dark:fill-sky-400 dark:stroke-sky-100"
                     initial={{ opacity: reduceMotion ? 1 : 0, scale: reduceMotion ? 1 : 0.6 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={blueprintOverlayTransition(0.05 + i * 0.035)}
@@ -243,8 +239,7 @@ export function ServicesSection() {
                     textAnchor={ann.textAnchor ?? 'start'}
                     fontSize={11.5}
                     fontFamily="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
-                    fill="#1e293b"
-                    className="select-none [text-rendering:geometricPrecision]"
+                    className="select-none fill-[#1e293b] [text-rendering:geometricPrecision] dark:fill-zinc-100"
                     initial={{ opacity: reduceMotion ? 1 : 0 }}
                     whileInView={{ opacity: 1 }}
                     transition={blueprintOverlayTransition(0.08 + i * 0.04)}
