@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { useId } from 'react';
 import { SITE, serviceAreasSentence } from '../content/siteCopy.ts';
-import { ProjectServiceMap } from './ProjectServiceMap.tsx';
+import { ServiceAreaRadarMap } from './ServiceAreaRadarMap.tsx';
 
 const VIEWPORT = { once: true, amount: 0.25 } as const;
 
@@ -62,10 +62,10 @@ export function ServiceAreaDivider() {
               </p>
             </div>
             <p className="text-sm leading-relaxed text-npf-muted sm:text-base dark:text-zinc-400">
-              Recent project locations across{' '}
+              Approximate service region across{' '}
               <strong className="font-medium text-npf-charcoal dark:text-zinc-100">{serviceAreasSentence()}</strong>.
-              Explore the map to see where we&apos;ve delivered work — then read what homeowners say
-              below.
+              Radar nodes on the map mark where we typically operate — hover a node for operational stats, then
+              read what homeowners say below.
             </p>
           </div>
 
@@ -92,7 +92,7 @@ export function ServiceAreaDivider() {
       </div>
 
       <div className="relative z-[1] w-full">
-        <ProjectServiceMap />
+        <ServiceAreaRadarMap variant="interactive" introFlyFromGlobe />
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ServiceAreaBackdropMap } from '../components/ServiceAreaBackdropMap.tsx';
+import { ServiceAreaRadarMap } from '../components/ServiceAreaRadarMap.tsx';
 import { SITE, serviceAreasSentence } from '../content/siteCopy.ts';
 
 /** Aligns with deck / nav clearance patterns elsewhere in the app. */
@@ -49,12 +49,17 @@ export function AboutPage() {
       className={`relative isolate flex min-h-0 w-full flex-1 flex-col overflow-hidden border-b border-npf-border ${VIEWPORT_MAIN}`}
     >
       <p className="sr-only">
-        A non-interactive map of the {SITE.region} service area is shown full screen behind the
-        following information panels, with red markers indicating representative project locations.
+        A non-interactive map of the {SITE.region} service area is shown full screen behind the following
+        information panels, with animated radar nodes indicating communities we serve.
       </p>
 
       <div className="absolute inset-0 z-0 min-h-0 min-w-0">
-        <ServiceAreaBackdropMap className="h-full w-full" showPins />
+        <ServiceAreaRadarMap
+          variant="backdrop"
+          shellClassName="absolute inset-0 min-h-0 min-w-0"
+          className="h-full w-full"
+          initialViewState={{ zoom: 8.55 }}
+        />
       </div>
 
       <div

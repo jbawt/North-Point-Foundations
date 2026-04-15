@@ -7,7 +7,7 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa6';
 import { SITE } from '../content/siteCopy.ts';
-import { ServiceAreaBackdropMap } from './ServiceAreaBackdropMap.tsx';
+import { ServiceAreaRadarMap } from './ServiceAreaRadarMap.tsx';
 import { ServiceIcon } from './ServiceIcon.tsx';
 import type { ServiceIconId } from '../content/siteCopy.ts';
 
@@ -266,7 +266,11 @@ function SlideMapBackdrop() {
   return (
     <>
       <div className="pointer-events-none absolute inset-0 z-0">
-        <ServiceAreaBackdropMap />
+        <ServiceAreaRadarMap
+          variant="backdrop"
+          shellClassName="absolute inset-0 min-h-0 min-w-0"
+          className="h-full w-full"
+        />
       </div>
       <div
         className={

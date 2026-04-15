@@ -2,16 +2,11 @@ import { motion, useReducedMotion } from 'framer-motion';
 import type { Map as MapboxMap } from 'mapbox-gl';
 import type { KeyboardEvent } from 'react';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
-import Map, { Marker, type MapRef } from 'react-map-gl/mapbox';
-import 'mapbox-gl/dist/mapbox-gl.css';
+import { Marker, type MapRef } from 'react-map-gl/mapbox';
 import { useForm } from 'react-hook-form';
+import { SERVICE_RADAR_MAP_VIEW } from '../content/serviceAreaRadarNodes.ts';
+import { ServiceAreaRadarMap } from './ServiceAreaRadarMap.tsx';
 import { EvaluationRequestProgress } from './EvaluationRequestProgress.tsx';
-
-const MAP_CENTER = {
-  longitude: -113.8111,
-  latitude: 52.2681,
-  zoom: 8.35,
-};
 
 const NPF_NAVY = '#1a365d';
 
@@ -102,8 +97,6 @@ export function EvaluationRequestStep2({
   const [suggestLoading, setSuggestLoading] = useState(false);
 
   const token = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
-  const mapStyle =
-    import.meta.env.VITE_MAPBOX_STYLE_URL ?? 'mapbox://styles/mapbox/light-v11';
 
   const {
     register,
@@ -164,7 +157,10 @@ export function EvaluationRequestStep2({
         url.searchParams.set('autocomplete', 'true');
         url.searchParams.set('country', 'CA');
         url.searchParams.set('limit', String(SUGGEST_LIMIT));
-        url.searchParams.set('proximity', `${MAP_CENTER.longitude},${MAP_CENTER.latitude}`);
+        url.searchParams.set(
+          'proximity',
+          `${SERVICE_RADAR_MAP_VIEW.longitude},${SERVICE_RADAR_MAP_VIEW.latitude}`,
+        );
         url.searchParams.set('types', 'address,postcode,place,locality,neighborhood,district');
 
         const res = await fetch(url.toString(), { signal: ac.signal });
@@ -212,7 +208,10 @@ export function EvaluationRequestStep2({
         url.searchParams.set('access_token', token);
         url.searchParams.set('country', 'CA');
         url.searchParams.set('limit', '1');
-        url.searchParams.set('proximity', `${MAP_CENTER.longitude},${MAP_CENTER.latitude}`);
+        url.searchParams.set(
+          'proximity',
+          `${SERVICE_RADAR_MAP_VIEW.longitude},${SERVICE_RADAR_MAP_VIEW.latitude}`,
+        );
         url.searchParams.set('types', 'address,postcode,place,locality,neighborhood,district');
 
         const res = await fetch(url.toString(), { signal: ac.signal });
@@ -236,10 +235,10 @@ export function EvaluationRequestStep2({
     };
   }, [propertyAddress, token, applyGeocodeFeatureToMap]);
 
-  const onMapLoad = useCallback(() => {
-    const map = mapRef.current?.getMap();
-    if (!map) return;
-    const apply = () => applyConsultationMapStyling(map);
+  const onRadarMapReady = useCallback((map: MapboxMap) => {
+    const apply = () => {
+      applyConsultationMapStyling(map);
+    };
     if (map.isStyleLoaded()) apply();
     else map.once('style.load', apply);
   }, []);
@@ -360,16 +359,11 @@ export function EvaluationRequestStep2({
               </div>
             ) : (
               <div className="relative isolate h-[min(52vh,420px)] min-h-[280px] w-full overflow-hidden rounded-t-lg sm:min-h-[360px]">
-                <Map
+                <ServiceAreaRadarMap
                   ref={mapRef}
-                  mapboxAccessToken={token}
-                  mapStyle={mapStyle}
-                  initialViewState={MAP_CENTER}
-                  style={{ width: '100%', height: '100%' }}
-                  reuseMaps
-                  dragRotate={false}
-                  attributionControl
-                  onLoad={onMapLoad}
+                  variant="form"
+                  className="h-full w-full"
+                  onMapReady={onRadarMapReady}
                 >
                   {addressPin ? (
                     <Marker longitude={addressPin.lng} latitude={addressPin.lat} anchor="center">
@@ -380,7 +374,7 @@ export function EvaluationRequestStep2({
                       />
                     </Marker>
                   ) : null}
-                </Map>
+                </ServiceAreaRadarMap>
                 <div className="pointer-events-none absolute bottom-3 left-3 right-3 z-10 sm:left-auto sm:right-4 sm:top-4 sm:w-auto">
                   <p className="rounded-md border border-npf-navy/10 bg-white/95 px-3 py-2 text-[10px] font-medium uppercase tracking-[0.14em] text-npf-navy/70 shadow-sm backdrop-blur-sm dark:border-zinc-600/60 dark:bg-zinc-900/95 dark:text-zinc-300 sm:text-[11px]">
                     Pin appears for your matched location
