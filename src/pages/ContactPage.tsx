@@ -7,7 +7,7 @@ export function ContactPage() {
     <div className="flex w-full flex-1 flex-col">
       <section
         aria-labelledby="contact-hero-heading"
-        className="relative isolate border-b border-white/10 bg-npf-charcoal px-4 py-5 text-white sm:px-6 sm:py-6 md:py-7 lg:px-12"
+        className="relative isolate hidden border-b border-white/10 bg-npf-charcoal px-4 py-5 text-white sm:px-6 sm:py-6 md:block md:py-7 lg:px-12"
       >
         <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_115%_85%_at_72%_18%,rgba(188,44,38,0.26),transparent_52%),radial-gradient(ellipse_85%_65%_at_8%_88%,rgba(255,255,255,0.07),transparent_48%),linear-gradient(168deg,#101010_0%,#1a1a1a_42%,#131313_100%)]" />
