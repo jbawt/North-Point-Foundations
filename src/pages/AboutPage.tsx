@@ -8,9 +8,8 @@ import { SITE, serviceAreasSentence } from '../content/siteCopy.ts';
 const VIEWPORT_MAIN =
   'min-h-[calc(100dvh-5rem-1px)] sm:min-h-[calc(100dvh-7rem-1px)] md:min-h-[calc(100dvh-8rem-1px)] lg:min-h-[calc(100dvh-9rem-1px)]';
 
-/** Sidebar scroll region — same vertical budget as the hero. */
-const SIDEBAR_MAX_H =
-  'max-h-[calc(100dvh-5rem-1px)] sm:max-h-[calc(100dvh-7rem-1px)] md:max-h-[calc(100dvh-8rem-1px)] lg:max-h-[calc(100dvh-9rem-1px)]';
+/** Sidebar scroll region for desktop columns only (`lg+`). Below `lg`, stacked panels use `MOBILE_COLLAPSED_PANEL_MAX`. */
+const SIDEBAR_MAX_H_LG = 'lg:max-h-[calc(100dvh-9rem-1px)]';
 
 /** Single sheet with internal dividers — no gap between sections */
 const SHEET =
@@ -20,7 +19,19 @@ const SEGMENT_DIVIDE = `${SEGMENT} border-t border-npf-border/60`;
 
 const GALLERY_PLACEHOLDER_COUNT = 12;
 
-const PANEL_EASE = 'transition-[max-width,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]';
+const PANEL_EASE =
+  'transition-[max-width,max-height,flex-grow,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]';
+
+/** Compact stacked panels (map visible between); only below `lg` so desktop sidebars keep full height. */
+const MOBILE_COLLAPSED_PANEL_MAX =
+  'max-lg:max-h-[min(38vh,13.5rem)] max-lg:sm:max-h-[min(40vh,15rem)] max-lg:md:max-h-[min(42vh,17rem)]';
+
+/**
+ * Caps expanded panel height below `lg` so flex children stay bounded and `overflow-y-auto` regions
+ * actually scroll (matches nav clearance in `VIEWPORT_MAIN`).
+ */
+const MOBILE_EXPANDED_PANEL_H =
+  'max-lg:max-h-[calc(100dvh-5rem-1px)] max-lg:sm:max-h-[calc(100dvh-7rem-1px)] max-lg:md:max-h-[calc(100dvh-8rem-1px)]';
 
 const expandBtnClass =
   'npf-sleek-lift-subtle inline-flex shrink-0 items-center gap-1.5 rounded-lg border border-npf-border bg-white px-2.5 py-1.5 font-mono text-[9px] font-semibold uppercase tracking-[0.14em] text-npf-charcoal shadow-sm ' +
@@ -63,11 +74,21 @@ export function AboutPage() {
       </div>
 
       <div
-        className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-black/45 via-black/15 to-transparent sm:from-black/40 sm:via-black/10"
+        className={
+          'pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r transition-opacity duration-300 ' +
+          (anyExpanded
+            ? 'from-black/45 via-black/15 to-transparent sm:from-black/40 sm:via-black/10'
+            : 'from-black/45 via-black/15 to-transparent max-lg:from-black/22 max-lg:via-black/06 max-lg:to-transparent sm:from-black/40 sm:via-black/10')
+        }
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute inset-0 z-[1] bg-[radial-gradient(ellipse_70%_70%_at_0%_0%,rgba(190,30,45,0.1),transparent_60%)]"
+        className={
+          'pointer-events-none absolute inset-0 z-[1] transition-opacity duration-300 ' +
+          (anyExpanded
+            ? 'bg-[radial-gradient(ellipse_70%_70%_at_0%_0%,rgba(190,30,45,0.1),transparent_60%)]'
+            : 'bg-[radial-gradient(ellipse_70%_70%_at_0%_0%,rgba(190,30,45,0.1),transparent_60%)] max-lg:bg-[radial-gradient(ellipse_55%_55%_at_50%_45%,rgba(190,30,45,0.06),transparent_55%)]')
+        }
         aria-hidden
       />
 
@@ -83,21 +104,37 @@ export function AboutPage() {
         />
       ) : null}
 
-      <div className="relative z-[12] flex min-h-0 min-w-0 flex-1 flex-col gap-4 md:flex-row md:items-stretch md:justify-between md:gap-0">
+      <div className="relative z-[12] flex min-h-0 min-w-0 flex-1 flex-col lg:flex-row lg:items-stretch lg:justify-between lg:gap-0">
         <aside
           className={
-            `relative flex min-h-0 w-full flex-col overflow-hidden py-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:shrink-0 ${SIDEBAR_MAX_H} ${PANEL_EASE} ` +
-            'pl-[max(1.25rem,env(safe-area-inset-left))] pr-3 sm:py-5 md:py-6 md:pr-4 ' +
+            `relative flex min-h-0 w-full flex-col overflow-hidden py-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:shrink-0 ${SIDEBAR_MAX_H_LG} ${PANEL_EASE} ` +
+            'max-lg:max-w-none pl-[max(1.25rem,env(safe-area-inset-left))] pr-3 sm:py-5 lg:py-6 lg:pr-4 ' +
+            (galleryExpanded ? 'max-lg:hidden ' : '') +
+            (aboutExpanded
+              ? `max-lg:flex-1 max-lg:min-h-0 max-lg:basis-0 max-lg:overflow-hidden ${MOBILE_EXPANDED_PANEL_H} `
+              : !galleryExpanded
+                ? `${MOBILE_COLLAPSED_PANEL_MAX} max-lg:shrink-0 `
+                : '') +
             (anyExpanded ? (aboutExpanded ? 'z-[25]' : 'z-[20]') : 'z-10') +
             ' ' +
             (aboutExpanded
-              ? 'max-w-[min(56rem,calc(100vw-2rem))] shadow-[8px_0_48px_-12px_rgba(0,0,0,0.35)] md:shadow-[12px_0_56px_-16px_rgba(0,0,0,0.38)] '
-              : 'max-w-[min(22.5rem,calc(100vw-1.25rem))] sm:max-w-[24rem] md:max-w-[26rem] md:shadow-[6px_0_32px_-12px_rgba(0,0,0,0.22)] ')
+              ? 'max-w-[min(56rem,calc(100vw-2rem))] shadow-[8px_0_48px_-12px_rgba(0,0,0,0.35)] lg:shadow-[12px_0_56px_-16px_rgba(0,0,0,0.38)] '
+              : 'max-w-[min(22.5rem,calc(100vw-1.25rem))] sm:max-w-[24rem] lg:max-w-[26rem] lg:shadow-[6px_0_32px_-12px_rgba(0,0,0,0.22)] ')
           }
         >
-          <div className={`${SHEET} flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden`}>
-            <div className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-npf-border [&::-webkit-scrollbar-track]:bg-transparent">
-            <div className="flex min-h-full flex-col">
+          <div
+            className={
+              `${SHEET} flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden ` +
+              (aboutExpanded ? 'max-lg:h-full max-lg:max-h-full ' : '')
+            }
+          >
+            <div
+              className={
+                'min-h-0 flex-1 overflow-y-auto overscroll-y-contain [-webkit-overflow-scrolling:touch] [scrollbar-width:thin] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-npf-border [&::-webkit-scrollbar-track]:bg-transparent ' +
+                (aboutExpanded ? 'max-lg:min-h-0 max-lg:touch-pan-y ' : '')
+              }
+            >
+            <div className={`flex flex-col ${aboutExpanded ? 'min-h-full max-lg:min-h-min' : 'min-h-full'}`}>
             <article className={SEGMENT}>
               <div className="flex items-start justify-between gap-3">
                 <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#BE1E2D] sm:text-xs">
@@ -221,19 +258,37 @@ export function AboutPage() {
           </div>
         </aside>
 
+               {!anyExpanded ? (
+          <div
+            className="pointer-events-none max-lg:min-h-[min(24dvh,10rem)] max-lg:flex-1 max-lg:basis-0 max-lg:min-w-0 lg:hidden"
+            aria-hidden
+          />
+        ) : null}
+
         <aside
           aria-labelledby="about-gallery-heading"
           className={
-            `relative flex min-h-0 w-full flex-col overflow-hidden py-4 pb-[max(1rem,env(safe-area-inset-bottom))] md:ml-auto md:shrink-0 ${SIDEBAR_MAX_H} ${PANEL_EASE} ` +
-            'pl-3 pr-[max(1.25rem,env(safe-area-inset-right))] sm:py-5 md:py-6 md:pl-4 ' +
+            `relative flex min-h-0 w-full flex-col overflow-hidden py-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:ml-auto lg:shrink-0 ${SIDEBAR_MAX_H_LG} ${PANEL_EASE} ` +
+            'max-lg:max-w-none pl-3 pr-[max(1.25rem,env(safe-area-inset-right))] sm:py-5 lg:py-6 lg:pl-4 ' +
+            (aboutExpanded ? 'max-lg:hidden ' : '') +
+            (galleryExpanded
+              ? `max-lg:flex-1 max-lg:min-h-0 max-lg:basis-0 max-lg:overflow-hidden ${MOBILE_EXPANDED_PANEL_H} `
+              : !aboutExpanded
+                ? `${MOBILE_COLLAPSED_PANEL_MAX} max-lg:shrink-0 `
+                : '') +
             (anyExpanded ? (galleryExpanded ? 'z-[25]' : 'z-[20]') : 'z-10') +
             ' ' +
             (galleryExpanded
-              ? 'max-w-[min(56rem,calc(100vw-2rem))] shadow-[-8px_0_48px_-12px_rgba(0,0,0,0.35)] md:shadow-[-12px_0_56px_-16px_rgba(0,0,0,0.38)] '
-              : 'max-w-[min(22.5rem,calc(100vw-1.25rem))] sm:max-w-[24rem] md:max-w-[26rem] md:shadow-[-6px_0_32px_-12px_rgba(0,0,0,0.22)] ')
+              ? 'max-w-[min(56rem,calc(100vw-2rem))] shadow-[-8px_0_48px_-12px_rgba(0,0,0,0.35)] lg:shadow-[-12px_0_56px_-16px_rgba(0,0,0,0.38)] '
+              : 'max-w-[min(22.5rem,calc(100vw-1.25rem))] sm:max-w-[24rem] lg:max-w-[26rem] lg:shadow-[-6px_0_32px_-12px_rgba(0,0,0,0.22)] ')
           }
         >
-          <div className={`${SHEET} flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden`}>
+          <div
+            className={
+              `${SHEET} flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden ` +
+              (galleryExpanded ? 'max-lg:h-full max-lg:max-h-full ' : '')
+            }
+          >
             <div className={`${SEGMENT} shrink-0`}>
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
@@ -285,14 +340,17 @@ export function AboutPage() {
                 </p>
               </div>
               <div
-                className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-5 pb-5 pt-0 [scrollbar-width:thin] sm:px-6 sm:pb-6 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-npf-border [&::-webkit-scrollbar-track]:bg-transparent"
+                className={
+                  'min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-5 pb-5 pt-0 [-webkit-overflow-scrolling:touch] [scrollbar-width:thin] sm:px-6 sm:pb-6 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-thumb]:bg-npf-border [&::-webkit-scrollbar-track]:bg-transparent ' +
+                  (galleryExpanded ? 'max-lg:min-h-0 max-lg:touch-pan-y ' : '')
+                }
               >
                 <ul
                   className={
                     'grid gap-3 ' +
                     (galleryExpanded
                       ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-                      : 'grid-cols-1 sm:grid-cols-2 md:grid-cols-1')
+                      : 'grid-cols-1 max-lg:sm:grid-cols-1 sm:grid-cols-2 md:grid-cols-1')
                   }
                   role="list"
                 >
