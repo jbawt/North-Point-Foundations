@@ -35,5 +35,7 @@ export default defineConfig({
   ],
   build: {
     cssMinify: 'esbuild',
+    /** mapbox-gl is ~1.7MB minified; the default 500 kB warning is noisy without lazy-loading maps. */
+    chunkSizeWarningLimit: 2000,
   },
 });
