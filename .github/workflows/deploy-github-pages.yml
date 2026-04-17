@@ -32,21 +32,17 @@ jobs:
       - name: Install
         run: npm ci
 
-      - name: Set base path for GitHub Pages
-        id: base
+      - name: Build for GitHub Pages
         run: |
           REPO="${{ github.event.repository.name }}"
           OWNER="${{ github.repository_owner }}"
           if [ "$REPO" = "$OWNER.github.io" ]; then
-            echo "path=/" >> "$GITHUB_OUTPUT"
+            export GITHUB_PAGES_BASE="/"
           else
-            echo "path=/$REPO/" >> "$GITHUB_OUTPUT"
+            export GITHUB_PAGES_BASE="/$REPO/"
           fi
-
-      - name: Build
-        env:
-          GITHUB_PAGES_BASE: ${{ steps.base.outputs.path }}
-        run: npm run build:gh-pages
+          echo "GITHUB_PAGES_BASE=$GITHUB_PAGES_BASE"
+          npm run build:gh-pages
 
       - uses: actions/upload-pages-artifact@v3
         with:

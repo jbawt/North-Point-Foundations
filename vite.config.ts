@@ -8,7 +8,9 @@ import react from '@vitejs/plugin-react';
  * Set `GITHUB_PAGES_BASE` to `/<repo>/` for those builds; omit or use `/` for
  * `username.github.io` repos or hosts at the domain root (e.g. Netlify).
  */
-const pagesBase = process.env.GITHUB_PAGES_BASE ?? '/';
+/** Treat blank like unset — `??` alone misses `GITHUB_PAGES_BASE=""` in CI. */
+const rawBase = process.env.GITHUB_PAGES_BASE?.trim();
+const pagesBase = rawBase && rawBase !== '' ? rawBase : '/';
 const base = pagesBase.endsWith('/') ? pagesBase : `${pagesBase}/`;
 
 function thankYouFormAction(): string {
