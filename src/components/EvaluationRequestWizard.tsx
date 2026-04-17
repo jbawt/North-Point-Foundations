@@ -13,7 +13,7 @@ import {
   EvaluationRequestFinalStep,
   type EvaluationRequestFinalStepValues,
 } from './EvaluationRequestFinalStep.tsx';
-import { sendQuoteRequestViaEmailJs } from '../lib/emailjsQuoteRequest.ts';
+import { sendQuoteRequestViaNetlify } from '../lib/netlifyQuoteRequest.ts';
 
 type SlideDirection = 'forward' | 'back';
 
@@ -134,7 +134,7 @@ export function EvaluationRequestWizard({ className = '' }: { className?: string
                     email: data.email,
                     phone: data.phone,
                   });
-                  await sendQuoteRequestViaEmailJs({
+                  await sendQuoteRequestViaNetlify({
                     evaluationCategoryId: categoryId,
                     propertyAddress,
                     finalStep: data,

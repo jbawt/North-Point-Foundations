@@ -1,4 +1,3 @@
-import emailjs from '@emailjs/browser';
 import type { EvaluationCategoryId } from '../components/EvaluationRequestStep1.tsx';
 import { getEvaluationCategoryLabel } from '../components/EvaluationRequestStep1.tsx';
 import type { EvaluationRequestFinalStepValues } from '../components/EvaluationRequestFinalStep.tsx';
@@ -10,23 +9,16 @@ export type QuoteRequestEmailPayload = {
   finalStep: EvaluationRequestFinalStepValues;
 };
 
+const FORM_NAME = 'quote-request';
+
 /**
- * Sends the full quote request through EmailJS. Create a template that uses any of:
- * `{{from_name}}`, `{{reply_to}}`, `{{user_email}}`, `{{phone}}`, `{{property_address}}`,
- * `{{problem_category}}`, `{{work_timeline}}`, `{{project_summary}}`, `{{message}}`
- * (`message` is a plain-text summary of the whole request).
+ * Submits the quote request to Netlify Forms. Enable form notifications under
+ * Netlify → Forms → {form name} → Notifications & webhooks.
+ *
+ * Optional: set `VITE_NETLIFY_FORM_ACTION` to your deployed site origin when testing from local dev
+ * (e.g. `https://your-site.netlify.app/`); otherwise posts to `/` (same origin).
  */
-export async function sendQuoteRequestViaEmailJs(payload: QuoteRequestEmailPayload): Promise<void> {
-  const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY?.trim();
-  const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID?.trim();
-  const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID?.trim();
-
-  if (!publicKey || !serviceId || !templateId) {
-    throw new Error(
-      'Email is not configured. Add VITE_EMAILJS_PUBLIC_KEY, VITE_EMAILJS_SERVICE_ID, and VITE_EMAILJS_TEMPLATE_ID to your environment.',
-    );
-  }
-
+export async function sendQuoteRequestViaNetlify(payload: QuoteRequestEmailPayload): Promise<void> {
   const categoryLabel = getEvaluationCategoryLabel(payload.evaluationCategoryId);
   const timelineLabel = TIMELINE_LABELS[payload.finalStep.workTimeline];
   const { fullName, email, phone, projectSummary } = payload.finalStep;
@@ -40,17 +32,32 @@ export async function sendQuoteRequestViaEmailJs(payload: QuoteRequestEmailPaylo
     projectSummary,
   ].join('\n');
 
-  const templateParams: Record<string, string> = {
+  const action = import.meta.env.VITE_NETLIFY_FORM_ACTION?.trim() || '/';
+
+  const body = new URLSearchParams({
+    'form-name': FORM_NAME,
+    'bot-field': '',
     from_name: fullName,
     reply_to: email,
     user_email: email,
     phone,
     property_address: payload.propertyAddress,
     problem_category: categoryLabel,
+    problem_category_id: payload.evaluationCategoryId,
     work_timeline: timelineLabel,
     project_summary: projectSummary,
     message,
-  };
+  });
 
-  await emailjs.send(serviceId, templateId, templateParams, { publicKey });
+  const res = await fetch(action, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: body.toString(),
+  });
+
+  if (!res.ok) {
+    throw new Error(
+      'Could not send your request. Please try again or phone the office.',
+    );
+  }
 }

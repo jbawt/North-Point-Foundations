@@ -20,7 +20,6 @@
     "vite": "^8.0.1"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
     "@sendgrid/mail": "^8.1.6",
     "dotenv": "^17.4.1",
     "framer-motion": "^12.38.0",

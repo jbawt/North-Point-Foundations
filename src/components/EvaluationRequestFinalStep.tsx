@@ -29,7 +29,7 @@ type FinalStepFormValues = Omit<EvaluationRequestFinalStepValues, 'workTimeline'
 
 export type EvaluationRequestFinalStepProps = {
   onBack?: () => void;
-  /** Called before the confirmation modal; await to delay the modal until async work (e.g. EmailJS) finishes. */
+  /** Called before the confirmation modal; await to delay the modal until async work (e.g. Netlify form POST) finishes. */
   onSubmitted?: (data: EvaluationRequestFinalStepValues) => void | Promise<void>;
   defaultValues?: Partial<EvaluationRequestFinalStepValues>;
   className?: string;

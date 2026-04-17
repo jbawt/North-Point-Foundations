@@ -28,6 +28,20 @@
     <title>North Point Foundations | Foundation repair & waterproofing | Central Alberta</title>
   </head>
   <body>
+    <!-- Netlify parses this at build time to enable the quote-request form + notifications -->
+    <form name="quote-request" netlify netlify-honeypot="bot-field" hidden>
+      <input name="bot-field" />
+      <input name="from_name" />
+      <input name="reply_to" />
+      <input name="user_email" />
+      <input name="phone" />
+      <input name="property_address" />
+      <input name="problem_category" />
+      <input name="problem_category_id" />
+      <input name="work_timeline" />
+      <input name="project_summary" />
+      <input name="message" />
+    </form>
     <div id="app"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
