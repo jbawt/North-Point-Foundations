@@ -129,7 +129,7 @@ export const HeroTypingHeadline = forwardRef<HTMLHeadingElement, Props>(function
       aria-label={`${LINE1} ${LINE2} ${LINE3}`}
       className="mx-auto min-h-[1.15em] max-w-4xl text-center text-4xl font-bold leading-[1.1] tracking-tight text-white sm:min-h-[1.1em] sm:text-5xl md:text-6xl lg:text-7xl"
     >
-      <span className="inline-block text-left">{display}</span>
+      <span className="block w-full text-center">{display}</span>
     </h1>
   );
 });

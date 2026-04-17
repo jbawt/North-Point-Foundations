@@ -2,7 +2,11 @@ import { useLayoutEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { SITE } from '../content/siteCopy.ts';
 
-export function NotFoundPage() {
+/**
+ * Success landing after a quote request is accepted by Netlify Forms.
+ * Use `/thank-you` in the Netlify form “Success” settings, or rely on the in-app redirect after submit.
+ */
+export function QuoteThankYouPage() {
   useLayoutEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, []);
@@ -10,7 +14,7 @@ export function NotFoundPage() {
   return (
     <div className="flex w-full flex-1 flex-col">
       <section
-        aria-labelledby="not-found-heading"
+        aria-labelledby="quote-thank-you-heading"
         className={
           'relative isolate flex min-h-[min(72vh,36rem)] w-full flex-1 flex-col justify-center ' +
           'border-b border-white/10 bg-npf-charcoal px-4 py-16 text-white sm:min-h-[min(78vh,40rem)] sm:px-6 sm:py-20 lg:px-12'
@@ -39,18 +43,25 @@ export function NotFoundPage() {
 
         <div className="relative z-10 mx-auto w-full max-w-2xl text-center">
           <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-npf-red sm:text-[11px]">
-            Error 404
+            Request received
           </p>
           <h1
-            id="not-found-heading"
+            id="quote-thank-you-heading"
             className="mt-3 text-3xl font-semibold leading-snug tracking-tight text-white sm:mt-4 sm:text-4xl md:text-[2.35rem] md:leading-tight"
             style={{ fontFamily: 'var(--font-npf-consult-heading)' }}
           >
-            Page not found
+            Thank you — we&apos;ll be in touch
           </h1>
           <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-white/78 sm:mt-5 sm:text-base sm:leading-relaxed">
-            That URL doesn&apos;t match anything on {SITE.name}. Try the home page, or request a quote if you
-            need help with your foundation or waterproofing project.
+            Your quote request was submitted successfully. The {SITE.name} team will review your details and
+            follow up using the contact information you provided. If you need to reach us sooner, you can still{' '}
+            <a
+              className="font-semibold text-white underline decoration-white/35 underline-offset-4 transition-colors hover:decoration-white"
+              href={SITE.quotePhoneTel}
+            >
+              call the office
+            </a>
+            .
           </p>
           <div className="mt-8 flex flex-col items-center gap-3 sm:mt-10 sm:flex-row sm:justify-center sm:gap-4">
             <Link
@@ -61,26 +72,17 @@ export function NotFoundPage() {
             </Link>
             <Link
               className="npf-sleek-lift-subtle inline-flex min-h-12 w-full items-center justify-center rounded-lg border border-white/22 bg-white/5 px-8 py-3 text-center text-sm font-semibold text-white backdrop-blur-sm hover:border-white/45 hover:bg-white/14 hover:shadow-[0_16px_40px_-18px_rgba(0,0,0,0.35)] active:translate-y-0 sm:w-auto"
-              to="/contact"
+              to="/services"
             >
-              Get a quote
+              View services
             </Link>
           </div>
           <p className="mt-8 text-xs text-white/55 sm:text-sm">
             <Link
               className="font-medium text-white/85 underline-offset-4 transition-colors hover:text-white hover:underline"
-              to="/services"
+              to="/contact"
             >
-              View services
-            </Link>
-            <span className="mx-2 text-white/35" aria-hidden>
-              ·
-            </span>
-            <Link
-              className="font-medium text-white/85 underline-offset-4 transition-colors hover:text-white hover:underline"
-              to="/about"
-            >
-              About
+              Submit another request
             </Link>
           </p>
         </div>

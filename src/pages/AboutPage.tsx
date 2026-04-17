@@ -108,7 +108,7 @@ export function AboutPage() {
         <aside
           className={
             `relative flex min-h-0 w-full flex-col overflow-hidden py-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:shrink-0 ${SIDEBAR_MAX_H_LG} ${PANEL_EASE} ` +
-            'max-lg:max-w-none pl-[max(1.25rem,env(safe-area-inset-left))] pr-3 sm:py-5 lg:py-6 lg:pr-4 ' +
+            'pl-[max(1.25rem,env(safe-area-inset-left))] pr-3 max-lg:pr-[max(1.25rem,env(safe-area-inset-right))] sm:py-5 lg:py-6 lg:pr-4 ' +
             (galleryExpanded ? 'max-lg:hidden ' : '') +
             (aboutExpanded
               ? `max-lg:flex-1 max-lg:min-h-0 max-lg:basis-0 max-lg:overflow-hidden ${MOBILE_EXPANDED_PANEL_H} `
@@ -118,8 +118,8 @@ export function AboutPage() {
             (anyExpanded ? (aboutExpanded ? 'z-[25]' : 'z-[20]') : 'z-10') +
             ' ' +
             (aboutExpanded
-              ? 'max-w-[min(56rem,calc(100vw-2rem))] shadow-[8px_0_48px_-12px_rgba(0,0,0,0.35)] lg:shadow-[12px_0_56px_-16px_rgba(0,0,0,0.38)] '
-              : 'max-w-[min(22.5rem,calc(100vw-1.25rem))] sm:max-w-[24rem] lg:max-w-[26rem] lg:shadow-[6px_0_32px_-12px_rgba(0,0,0,0.22)] ')
+              ? 'max-lg:max-w-none max-lg:w-full lg:max-w-[min(56rem,calc(100vw-2rem))] shadow-[8px_0_48px_-12px_rgba(0,0,0,0.35)] lg:shadow-[12px_0_56px_-16px_rgba(0,0,0,0.38)] '
+              : 'max-lg:max-w-none max-lg:w-full lg:max-w-[26rem] lg:shadow-[6px_0_32px_-12px_rgba(0,0,0,0.22)] ')
           }
         >
           <div
@@ -269,7 +269,7 @@ export function AboutPage() {
           aria-labelledby="about-gallery-heading"
           className={
             `relative flex min-h-0 w-full flex-col overflow-hidden py-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:ml-auto lg:shrink-0 ${SIDEBAR_MAX_H_LG} ${PANEL_EASE} ` +
-            'max-lg:max-w-none pl-3 pr-[max(1.25rem,env(safe-area-inset-right))] sm:py-5 lg:py-6 lg:pl-4 ' +
+            'pl-3 max-lg:pl-[max(1.25rem,env(safe-area-inset-left))] pr-[max(1.25rem,env(safe-area-inset-right))] sm:py-5 lg:py-6 lg:pl-4 ' +
             (aboutExpanded ? 'max-lg:hidden ' : '') +
             (galleryExpanded
               ? `max-lg:flex-1 max-lg:min-h-0 max-lg:basis-0 max-lg:overflow-hidden ${MOBILE_EXPANDED_PANEL_H} `
@@ -279,8 +279,8 @@ export function AboutPage() {
             (anyExpanded ? (galleryExpanded ? 'z-[25]' : 'z-[20]') : 'z-10') +
             ' ' +
             (galleryExpanded
-              ? 'max-w-[min(56rem,calc(100vw-2rem))] shadow-[-8px_0_48px_-12px_rgba(0,0,0,0.35)] lg:shadow-[-12px_0_56px_-16px_rgba(0,0,0,0.38)] '
-              : 'max-w-[min(22.5rem,calc(100vw-1.25rem))] sm:max-w-[24rem] lg:max-w-[26rem] lg:shadow-[-6px_0_32px_-12px_rgba(0,0,0,0.22)] ')
+              ? 'max-lg:max-w-none max-lg:w-full lg:max-w-[min(56rem,calc(100vw-2rem))] shadow-[-8px_0_48px_-12px_rgba(0,0,0,0.35)] lg:shadow-[-12px_0_56px_-16px_rgba(0,0,0,0.38)] '
+              : 'max-lg:max-w-none max-lg:w-full lg:max-w-[26rem] lg:shadow-[-6px_0_32px_-12px_rgba(0,0,0,0.22)] ')
           }
         >
           <div

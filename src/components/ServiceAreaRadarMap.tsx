@@ -52,6 +52,9 @@ export type ServiceAreaRadarMapProps = {
 const MAP_STYLE_URL =
   import.meta.env.VITE_MAPBOX_STYLE_URL ?? 'mapbox://styles/mapbox/light-v11';
 
+/** Must match `fitBounds` `duration` for `introFlyFromGlobe` on interactive desktop. */
+const INTRO_FLY_DURATION_MS = 5200;
+
 function useNarrowViewport() {
   const query = '(max-width: 639px)';
   const subscribe = useCallback((onChange: () => void) => {
@@ -160,10 +163,33 @@ export const ServiceAreaRadarMap = forwardRef<MapRef, ServiceAreaRadarMapProps>(
     const wrapRef = useRef<HTMLDivElement | null>(null);
     const mapRef = useRef<MapRef | null>(null);
     const introIoRef = useRef<IntersectionObserver | null>(null);
+    const introUnlockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const narrowViewport = useNarrowViewport();
 
+    const needsIntroInteractionLock =
+      introFlyFromGlobe && variant === 'interactive' && !narrowViewport;
+
+    const [introFlyComplete, setIntroFlyComplete] = useState(!needsIntroInteractionLock);
+
+    useEffect(() => {
+      if (!needsIntroInteractionLock) {
+        setIntroFlyComplete(true);
+      }
+    }, [needsIntroInteractionLock]);
+
+    useEffect(() => {
+      return () => {
+        if (introUnlockTimerRef.current != null) {
+          clearTimeout(introUnlockTimerRef.current);
+          introUnlockTimerRef.current = null;
+        }
+      };
+    }, []);
+
     const staticInteractions =
-      variant === 'backdrop' || (variant === 'interactive' && narrowViewport);
+      variant === 'backdrop' ||
+      (variant === 'interactive' && narrowViewport) ||
+      (needsIntroInteractionLock && !introFlyComplete);
 
     const setMapRef = useCallback(
       (instance: MapRef | null) => {
@@ -190,9 +216,20 @@ export const ServiceAreaRadarMap = forwardRef<MapRef, ServiceAreaRadarMapProps>(
 
           const flyToServiceArea = () => {
             map.resize();
+            const duration = reduceMotion ? 0 : INTRO_FLY_DURATION_MS;
+            if (needsIntroInteractionLock) {
+              if (introUnlockTimerRef.current != null) {
+                clearTimeout(introUnlockTimerRef.current);
+              }
+              setIntroFlyComplete(false);
+              introUnlockTimerRef.current = setTimeout(() => {
+                introUnlockTimerRef.current = null;
+                setIntroFlyComplete(true);
+              }, duration + 150);
+            }
             map.fitBounds(getServiceRadarBounds(), {
               padding: { top: 44, bottom: 56, left: 44, right: 44 },
-              duration: reduceMotion ? 0 : 5200,
+              duration,
               maxZoom: 10,
               essential: true,
             });
@@ -237,7 +274,7 @@ export const ServiceAreaRadarMap = forwardRef<MapRef, ServiceAreaRadarMapProps>(
         if (map.isStyleLoaded()) afterStyle();
         else map.once('style.load', afterStyle);
       },
-      [introFlyFromGlobe, onMapReady, variant],
+      [introFlyFromGlobe, needsIntroInteractionLock, onMapReady, variant],
     );
 
     useEffect(() => {
@@ -362,6 +399,14 @@ export const ServiceAreaRadarMap = forwardRef<MapRef, ServiceAreaRadarMapProps>(
           ))}
           {children}
         </Map>
+
+        {needsIntroInteractionLock && !introFlyComplete ? (
+          <div
+            className="pointer-events-auto absolute inset-0 z-20 touch-none"
+            aria-hidden
+            style={{ cursor: 'default' }}
+          />
+        ) : null}
       </div>
     );
   },

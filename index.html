@@ -29,7 +29,14 @@
   </head>
   <body>
     <!-- Netlify parses this at build time to enable the quote-request form + notifications -->
-    <form name="quote-request" netlify netlify-honeypot="bot-field" hidden>
+    <form
+      name="quote-request"
+      method="POST"
+      action="/thank-you"
+      netlify
+      netlify-honeypot="bot-field"
+      hidden
+    >
       <input name="bot-field" />
       <input name="from_name" />
       <input name="reply_to" />

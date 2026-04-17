@@ -119,6 +119,7 @@ export function EvaluationRequestWizard({ className = '' }: { className?: string
               <EvaluationRequestFinalStep
                 defaultValues={step3Values}
                 onBack={goBack}
+                successRedirectTo="/thank-you"
                 onSubmitted={async (data) => {
                   const categoryId = step1Values.evaluationCategory;
                   const propertyAddress = step2Values.propertyAddress?.trim();

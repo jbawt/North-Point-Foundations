@@ -4,6 +4,7 @@ import { X } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { EvaluationRequestProgress } from './EvaluationRequestProgress.tsx';
 
 const WORK_TIMELINE_VALUES = ['immediately', 'within_1_3_months', 'just_researching'] as const;
@@ -31,6 +32,8 @@ export type EvaluationRequestFinalStepProps = {
   onBack?: () => void;
   /** Called before the confirmation modal; await to delay the modal until async work (e.g. Netlify form POST) finishes. */
   onSubmitted?: (data: EvaluationRequestFinalStepValues) => void | Promise<void>;
+  /** After a successful submit, navigate here with `replace` instead of opening the confirmation modal. */
+  successRedirectTo?: string;
   defaultValues?: Partial<EvaluationRequestFinalStepValues>;
   className?: string;
 };
@@ -198,10 +201,12 @@ function QuoteConfirmationModal({
 export function EvaluationRequestFinalStep({
   onBack,
   onSubmitted,
+  successRedirectTo,
   defaultValues,
   className = '',
 }: EvaluationRequestFinalStepProps) {
   const reduceMotion = useReducedMotion();
+  const navigate = useNavigate();
   const headingId = useId();
   const inputId = useId();
   const [completeOpen, setCompleteOpen] = useState(false);
@@ -232,6 +237,10 @@ export function EvaluationRequestFinalStep({
     setSubmitError(null);
     try {
       await onSubmitted?.(payload);
+      if (successRedirectTo) {
+        navigate(successRedirectTo, { replace: true });
+        return;
+      }
       setCompleteOpen(true);
     } catch (e) {
       const msg =

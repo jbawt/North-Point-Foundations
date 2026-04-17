@@ -15,6 +15,10 @@ const FORM_NAME = 'quote-request';
  * Submits the quote request to Netlify Forms. Enable form notifications under
  * Netlify → Forms → {form name} → Notifications & webhooks.
  *
+ * Success URL for end users: `/thank-you` (see `QuoteThankYouPage` and `index.html` form `action`).
+ * In the app, the contact wizard redirects there after a successful POST. You can also set the same
+ * path under Netlify → Forms → quote-request → Success page if you use classic HTML submissions.
+ *
  * Optional: set `VITE_NETLIFY_FORM_ACTION` to your deployed site origin when testing from local dev
  * (e.g. `https://your-site.netlify.app/`); otherwise posts to `/` (same origin).
  */
