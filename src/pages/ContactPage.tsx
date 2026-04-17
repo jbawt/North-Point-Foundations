@@ -47,7 +47,7 @@ export function ContactPage() {
               className="font-semibold text-white underline decoration-white/35 underline-offset-4 transition-colors hover:decoration-white"
               href={SITE.quotePhoneTel}
             >
-              call now
+              call
             </a>
             .
           </p>

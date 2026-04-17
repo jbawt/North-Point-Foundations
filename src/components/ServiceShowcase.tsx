@@ -8,8 +8,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa6';
 import { SITE } from '../content/siteCopy.ts';
 import { ServiceAreaRadarMap } from './ServiceAreaRadarMap.tsx';
-import { ServiceIcon } from './ServiceIcon.tsx';
-import type { ServiceIconId } from '../content/siteCopy.ts';
 
 type SpecRow = { label: string; value: string };
 
@@ -18,8 +16,6 @@ type ShowcaseSection = {
   title: string;
   technicalDescription: string;
   specs: SpecRow[];
-  icon: ServiceIconId;
-  visualLabel: string;
 };
 
 /** Technical “spec sheet” + copy aligned to `SITE.services` order */
@@ -35,8 +31,6 @@ const SHOWCASE_SECTIONS: ShowcaseSection[] = [
       { label: 'Warranty', value: '25-Year Transferable' },
       { label: 'Design load', value: 'Hydrostatic relief + perimeter intercept' },
     ],
-    icon: 'waterproofing',
-    visualLabel: 'Exterior membrane assembly — schematic render',
   },
   {
     id: 'crack-repair',
@@ -49,8 +43,6 @@ const SHOWCASE_SECTIONS: ShowcaseSection[] = [
       { label: 'Performance', value: 'Elastic recovery −35°C to +40°C' },
       { label: 'QA', value: 'Pressure-monitored injection cycles' },
     ],
-    icon: 'crack-repair',
-    visualLabel: 'Injection plane — detail visualization',
   },
   {
     id: 'weeping-tile',
@@ -63,8 +55,6 @@ const SHOWCASE_SECTIONS: ShowcaseSection[] = [
       { label: 'Bedding', value: 'Clear stone envelope — min. 6″ cover' },
       { label: 'Access', value: 'Inline cleanouts @ ≤ 50 ft' },
     ],
-    icon: 'weeping-tile',
-    visualLabel: 'Perimeter drain field — isometric',
   },
   {
     id: 'sump-systems',
@@ -77,8 +67,6 @@ const SHOWCASE_SECTIONS: ShowcaseSection[] = [
       { label: 'Discharge', value: '1½″ PVC — freeze-guard exit' },
       { label: 'Backup', value: 'DC + charger (optional stack)' },
     ],
-    icon: 'sump-pump',
-    visualLabel: 'Sump chamber — cutaway schematic',
   },
   {
     id: 'window-wells',
@@ -91,8 +79,6 @@ const SHOWCASE_SECTIONS: ShowcaseSection[] = [
       { label: 'Backfill', value: 'Clear stone — min. 12″ lift' },
       { label: 'Sealant', value: 'UV-stable flexible joint membrane' },
     ],
-    icon: 'window-well',
-    visualLabel: 'Well stack — sectional render',
   },
   {
     id: 'excavation',
@@ -105,8 +91,6 @@ const SHOWCASE_SECTIONS: ShowcaseSection[] = [
       { label: 'Backfill', value: 'Granular — lifts @ 8″ max' },
       { label: 'Compaction', value: 'Plate + jump — spec density' },
     ],
-    icon: 'excavation',
-    visualLabel: 'Trench geometry — site model',
   },
 ];
 
@@ -172,75 +156,18 @@ function TerminalTypingTitle({
   );
 }
 
-function ShowcaseVisualPanel({
-  icon,
-  label,
-  reduceMotion,
-}: {
-  icon: ServiceIconId;
-  label: string;
-  reduceMotion: boolean;
-}) {
-  return (
-    <motion.div
-      className={
-        'relative flex aspect-[4/3] w-full max-w-xl items-center justify-center overflow-hidden rounded-2xl border border-[#BE1E2D]/25 ' +
-        'bg-gradient-to-br from-white via-npf-surface to-zinc-100 shadow-[0_24px_64px_-28px_rgba(26,26,26,0.12),0_0_48px_-16px_rgba(190,30,45,0.18)] ' +
-        'dark:from-zinc-900 dark:via-zinc-950 dark:to-black dark:shadow-[0_24px_64px_-28px_rgba(0,0,0,0.45),0_0_48px_-16px_rgba(190,30,45,0.22)] ' +
-        'md:aspect-auto md:h-[min(36rem,52dvh)] md:max-w-none lg:h-[min(40rem,56dvh)]'
-      }
-      style={{ perspective: 1200 }}
-      animate={
-        reduceMotion
-          ? undefined
-          : {
-              y: [0, -10, 0],
-              rotateX: [0, 2.5, 0],
-              rotateY: [0, -3, 0],
-            }
-      }
-      transition={
-        reduceMotion
-          ? undefined
-          : { duration: 10, repeat: Infinity, ease: 'easeInOut' }
-      }
-    >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.55] [background-image:linear-gradient(rgba(190,30,45,0.06)_1px,transparent_1px),linear-gradient(90deg,rgba(190,30,45,0.05)_1px,transparent_1px)] [background-size:32px_32px] dark:opacity-[0.35] dark:[background-image:linear-gradient(rgba(190,30,45,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(190,30,45,0.08)_1px,transparent_1px)]"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_115%,rgba(190,30,45,0.1),transparent_55%)]"
-        aria-hidden
-      />
-      <div className="relative flex flex-col items-center gap-5 px-8 text-center">
-        <div className="flex h-28 w-28 items-center justify-center rounded-2xl border border-[#BE1E2D]/35 bg-white text-[#BE1E2D] shadow-[0_8px_32px_-8px_rgba(190,30,45,0.25)] dark:bg-zinc-900 md:h-36 md:w-36">
-          <ServiceIcon icon={icon} className="h-16 w-16 md:h-[4.5rem] md:w-[4.5rem]" />
-        </div>
-        <p className="max-w-xs font-mono text-[10px] uppercase tracking-[0.28em] text-npf-muted dark:text-zinc-400 sm:text-[11px]">
-          {label}
-        </p>
-        <p className="font-mono text-xs text-npf-muted/90 dark:text-zinc-500">3D / render placeholder</p>
-      </div>
-    </motion.div>
-  );
-}
-
 const DECK_TITLE = 'Service launch deck';
 
-const tocBtnClass =
-  'group flex w-full items-center gap-3 rounded-md border border-transparent px-2.5 py-2 text-left transition-colors ' +
-  'hover:border-npf-border hover:bg-npf-surface/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 ' +
-  'dark:hover:border-zinc-600 dark:hover:bg-zinc-800/80 dark:focus-visible:ring-[#BE1E2D]/40 sm:px-3 sm:py-2.5';
+/** Labels for the fixed HUD (same order as `data-showcase-index` 0…n). */
+const SHOWCASE_HUD_LABELS: readonly string[] = [
+  DECK_TITLE,
+  ...SHOWCASE_SECTIONS.map((s) => s.title),
+  'Next steps & quote',
+];
 
-/** Mono slide index in a dark pill with white figures (TOC + fixed HUD). */
+/** Mono slide index in a dark pill with white figures (fixed HUD). */
 const SHOWCASE_INDEX_BADGE_SHARED =
   'inline-flex w-8 shrink-0 items-center justify-center rounded-md px-1 py-0.5 font-mono text-[10px] font-semibold tabular-nums tracking-wider text-white sm:w-9 sm:py-1 sm:text-[11px]';
-
-const tocIndexClass = SHOWCASE_INDEX_BADGE_SHARED + ' bg-zinc-900 dark:bg-zinc-700';
-
-const tocLabelClass =
-  'min-w-0 flex-1 text-sm font-medium leading-snug text-npf-charcoal group-hover:text-[#BE1E2D] dark:text-zinc-100 dark:group-hover:text-[#f87171] sm:text-[15px]';
 
 /**
  * No scroll-margin: it breaks vertical scroll-snap inside this deck (previous slide peeks in when
@@ -321,11 +248,11 @@ function DeckIntroSlide({
 }: {
   titleId: string;
   reduceMotion: boolean;
-  onJumpToSlide: (slideIndex: number) => void;
+  /** Mobile / &lt;md: compact jump controls (fixed HUD is hidden there). */
+  onJumpToSlide: (index: number) => void;
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const mapBackdropDescId = useId();
-  const tocHeadingId = useId();
   const inView = useInView(ref, {
     amount: 0.45,
     margin: '-12% 0px -12% 0px',
@@ -341,67 +268,52 @@ function DeckIntroSlide({
     >
       <p id={mapBackdropDescId} className="sr-only">
         A non-interactive map of the {SITE.region} service area is shown as the background of each slide in this deck.
+        Use the numbered controls on the right to jump to a slide; hover or focus a control to see its title.
       </p>
       <SlideMapBackdrop />
       <div className="relative z-10 flex min-h-0 w-full flex-1 flex-col justify-center">
         <div className="mx-auto w-full max-w-7xl">
-          <div className="mx-auto grid min-w-0 max-w-3xl gap-8 text-center md:mx-0 md:max-w-none md:grid-cols-[minmax(0,1fr)_min(18rem,38%)] md:gap-10 md:text-left lg:grid-cols-[minmax(0,1fr)_min(20rem,34%)]">
-            <div className="min-w-0 space-y-6">
-              <TerminalTypingTitle
-                as="h1"
-                id={titleId}
-                text={DECK_TITLE}
-                active={inView}
-                reduceMotion={reduceMotion}
-              />
-              <div className="space-y-4 border-t border-npf-border pt-6 dark:border-zinc-700">
-                <h2 className="font-mono text-[10px] font-normal uppercase tracking-[0.35em] text-[#BE1E2D] sm:text-xs">
-                  Technical brief
-                </h2>
-                <p className="text-sm leading-relaxed text-npf-muted dark:text-zinc-400 sm:text-base md:text-lg">
-                  {SITE.shortTagline}
-                </p>
-              </div>
+          <div className="mx-auto min-w-0 max-w-3xl space-y-6 text-center md:mx-0 md:max-w-2xl md:text-left lg:max-w-3xl">
+            <TerminalTypingTitle
+              as="h1"
+              id={titleId}
+              text={DECK_TITLE}
+              active={inView}
+              reduceMotion={reduceMotion}
+            />
+            <div className="space-y-4 border-t border-npf-border pt-6 dark:border-zinc-700">
+              <h2 className="font-mono text-[10px] font-normal uppercase tracking-[0.35em] text-[#BE1E2D] sm:text-xs">
+                Technical brief
+              </h2>
+              <p className="text-sm leading-relaxed text-npf-muted dark:text-zinc-400 sm:text-base md:text-lg">
+                {SITE.shortTagline}
+              </p>
             </div>
 
             <nav
-              className="min-w-0 rounded-xl border border-npf-border bg-white/80 p-4 text-left shadow-sm backdrop-blur-sm dark:border-zinc-700 dark:bg-zinc-900/75 sm:p-5"
-              aria-labelledby={tocHeadingId}
+              className="border-t border-npf-border pt-6 dark:border-zinc-700 md:hidden"
+              aria-label="Jump to slide"
             >
-              <h2
-                id={tocHeadingId}
-                className="border-b border-npf-border/80 pb-3 font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#BE1E2D] dark:border-zinc-600/80 sm:text-[11px]"
-              >
-                Table of contents
-              </h2>
-              <ol className="mt-3 list-none space-y-0.5 p-0 sm:mt-4">
-                {SHOWCASE_SECTIONS.map((section, i) => {
-                  const slideIndex = i + 1;
-                  const idxLabel = String(slideIndex).padStart(2, '0');
-                  return (
-                    <li key={section.id}>
-                      <button
-                        type="button"
-                        className={tocBtnClass}
-                        onClick={() => onJumpToSlide(slideIndex)}
-                      >
-                        <span className={tocIndexClass}>{idxLabel}</span>
-                        <span className={tocLabelClass}>{section.title}</span>
-                      </button>
-                    </li>
-                  );
-                })}
-                <li>
+              <p className="mb-3 text-center font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-npf-muted dark:text-zinc-500">
+                Slides
+              </p>
+              <div className="flex max-w-full flex-wrap justify-center gap-2">
+                {SHOWCASE_HUD_LABELS.map((label, i) => (
                   <button
+                    key={i}
                     type="button"
-                    className={tocBtnClass}
-                    onClick={() => onJumpToSlide(END_DECK_SLIDE_INDEX)}
+                    className={
+                      'rounded-md border border-npf-border bg-white/90 px-2.5 py-1.5 font-mono text-[10px] font-semibold tabular-nums text-npf-charcoal ' +
+                      'shadow-sm transition-colors hover:border-[#BE1E2D]/40 hover:text-[#BE1E2D] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/35 ' +
+                      'dark:border-zinc-600 dark:bg-zinc-900/90 dark:text-zinc-100 dark:hover:border-[#BE1E2D]/45'
+                    }
+                    onClick={() => onJumpToSlide(i)}
+                    aria-label={`Go to ${label}`}
                   >
-                    <span className={tocIndexClass}>{String(END_DECK_SLIDE_INDEX).padStart(2, '0')}</span>
-                    <span className={tocLabelClass}>{'Next steps & quote'}</span>
+                    {String(i).padStart(2, '0')}
                   </button>
-                </li>
-              </ol>
+                ))}
+              </div>
             </nav>
           </div>
         </div>
@@ -440,8 +352,8 @@ function ServiceShowcaseSection({
     >
       <SlideMapBackdrop />
       <div className="relative z-10 flex min-h-0 w-full flex-1 flex-col justify-center gap-10 md:gap-0">
-        <div className="mx-auto grid w-full max-w-7xl items-center gap-10 md:grid-cols-2 md:items-stretch md:gap-12 lg:gap-16">
-          <div className="flex min-h-0 min-w-0 flex-col justify-center space-y-6 max-md:overflow-visible md:overflow-y-auto md:overscroll-y-contain md:space-y-8 md:pr-4">
+        <div className="mx-auto w-full max-w-7xl">
+          <div className="flex min-h-0 min-w-0 max-w-3xl flex-col justify-center space-y-6 max-md:overflow-visible md:overflow-y-auto md:overscroll-y-contain md:space-y-8 md:pr-4 lg:max-w-4xl">
             <div className="space-y-2">
               <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#BE1E2D] sm:text-xs">
                 {`NPF // SVC_${String(index + 1).padStart(2, '0')}`}
@@ -487,9 +399,6 @@ function ServiceShowcaseSection({
               </div>
             </div>
           </div>
-          <div className="flex min-h-0 items-center justify-center md:justify-end">
-            <ShowcaseVisualPanel icon={section.icon} label={section.visualLabel} reduceMotion={reduceMotion} />
-          </div>
         </div>
       </div>
     </section>
@@ -532,44 +441,57 @@ function DeckOutroSlide() {
 }
 
 function SectionTrackerHUD({
-  count,
+  labels,
   activeIndex,
   onSelect,
   reduceMotion,
+  expandAllLabels,
 }: {
-  count: number;
+  labels: readonly string[];
   activeIndex: number;
   onSelect: (index: number) => void;
   reduceMotion: boolean;
+  /** When true (intro slide), every row shows its title; otherwise hover/focus only. */
+  expandAllLabels: boolean;
 }) {
   return (
     <nav
       className="pointer-events-auto fixed right-[max(0.75rem,env(safe-area-inset-right))] top-1/2 z-30 hidden -translate-y-1/2 flex-col items-end gap-0 md:flex lg:right-8"
-      aria-label="Showcase slides"
+      aria-label="Showcase slides and table of contents"
     >
-      {Array.from({ length: count }, (_, i) => {
+      {labels.map((label, i) => {
         const active = i === activeIndex;
         return (
           <button
             key={i}
             type="button"
-            className="group flex items-center gap-3 py-2 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D] focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950"
-            onClick={() => onSelect(i)}
+            className={
+              'group flex max-w-[min(100vw-1.5rem,22rem)] items-center justify-end gap-3 py-2 text-left ' +
+              'focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D] focus-visible:ring-offset-2 ' +
+              'focus-visible:ring-offset-white dark:focus-visible:ring-offset-zinc-950'
+            }
+            onClick={(e) => {
+              onSelect(i);
+              e.currentTarget.blur();
+            }}
             aria-current={active ? 'true' : undefined}
-            aria-label={`Go to slide ${String(i).padStart(2, '0')}`}
+            aria-label={`Go to ${label}`}
           >
-            <span
+                       <span
               className={
-                SHOWCASE_INDEX_BADGE_SHARED +
-                ' transition-[background-color,opacity] duration-300 ' +
-                (active
-                  ? 'bg-[#BE1E2D]'
-                  : 'bg-zinc-900 dark:bg-zinc-700 group-hover:bg-zinc-800 dark:group-hover:bg-zinc-600')
+                'min-w-0 shrink truncate text-right text-sm font-medium leading-snug text-npf-charcoal transition-[max-width,opacity] ease-[cubic-bezier(0.22,1,0.36,1)] dark:text-zinc-100 ' +
+                (reduceMotion ? '' : 'duration-300 ') +
+                'motion-reduce:transition-none ' +
+                (expandAllLabels
+                  ? 'max-w-[min(12.5rem,calc(100vw-5.5rem))] opacity-100'
+                  : 'max-w-0 overflow-hidden opacity-0 ' +
+                    'group-hover:max-w-[min(12.5rem,calc(100vw-5.5rem))] group-hover:opacity-100 ' +
+                    'group-focus-within:max-w-[min(12.5rem,calc(100vw-5.5rem))] group-focus-within:opacity-100')
               }
             >
-              {String(i).padStart(2, '0')}
+              {label}
             </span>
-            <span className="flex h-px w-10 items-center bg-npf-border dark:bg-zinc-700" aria-hidden>
+            <span className="flex h-px w-10 shrink-0 items-center bg-npf-border dark:bg-zinc-700" aria-hidden>
               <motion.span
                 className={
                   'h-px w-full origin-left bg-[#BE1E2D] ' +
@@ -584,6 +506,17 @@ function SectionTrackerHUD({
                   reduceMotion ? { duration: 0 } : { duration: 0.35, ease: [0.22, 1, 0.36, 1] }
                 }
               />
+            </span>
+            <span
+              className={
+                SHOWCASE_INDEX_BADGE_SHARED +
+                ' transition-[background-color,opacity] duration-300 motion-reduce:transition-none ' +
+                (active
+                  ? 'bg-[#BE1E2D]'
+                  : 'bg-zinc-900 dark:bg-zinc-700 group-hover:bg-zinc-800 dark:group-hover:bg-zinc-600')
+              }
+            >
+              {String(i).padStart(2, '0')}
             </span>
           </button>
         );
@@ -674,8 +607,6 @@ export function ServiceShowcase() {
     el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'end' });
   };
 
-  const slideCount = SHOWCASE_SECTIONS.length + 2;
-
   return (
     <div className="relative flex min-h-0 flex-1 flex-col bg-white text-npf-charcoal dark:bg-zinc-950 dark:text-zinc-100">
       <div
@@ -699,10 +630,11 @@ export function ServiceShowcase() {
       </div>
 
       <SectionTrackerHUD
-        count={slideCount}
+        labels={SHOWCASE_HUD_LABELS}
         activeIndex={activeIndex}
         onSelect={scrollToIndex}
         reduceMotion={reduceMotion}
+        expandAllLabels={activeIndex === 0}
       />
     </div>
   );

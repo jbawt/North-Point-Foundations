@@ -65,7 +65,7 @@ export function NavBar() {
   }, [location.pathname]);
 
   useEffect(() => {
-    const mq = window.matchMedia('(min-width: 768px)');
+    const mq = window.matchMedia('(min-width: 1024px)');
     const onChange = () => setMenuOpen(false);
     mq.addEventListener('change', onChange);
     return () => mq.removeEventListener('change', onChange);
@@ -79,7 +79,7 @@ export function NavBar() {
       {menuOpen ? (
         <button
           aria-label="Close menu"
-          className="fixed inset-0 z-[45] bg-npf-charcoal/35 backdrop-blur-[1px] md:hidden"
+          className="fixed inset-0 z-[45] bg-npf-charcoal/35 backdrop-blur-[1px] lg:hidden"
           onClick={() => setMenuOpen(false)}
           type="button"
         />
@@ -92,7 +92,7 @@ export function NavBar() {
           >
             <img
               alt={SITE.name}
-              className="h-14 w-auto max-w-[min(54vw,13rem)] object-contain object-left sm:h-20 sm:max-w-none md:h-24 lg:h-28"
+              className="h-14 w-auto max-w-[min(54vw,13rem)] object-contain object-left sm:h-20 sm:max-w-none lg:h-24 xl:h-28"
               height={120}
               src={brandLogo}
               width={300}
@@ -108,7 +108,7 @@ export function NavBar() {
           </div>
         </div>
 
-        <ul className="hidden items-center gap-2 md:flex md:gap-3 lg:gap-4">
+        <ul className="hidden items-center gap-2 lg:flex lg:gap-3 xl:gap-4">
           {navItems.map(({ to, label, icon: Icon }) => (
             <li key={to}>
               <NavLink
@@ -128,7 +128,7 @@ export function NavBar() {
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <ThemeToggle />
-          <div className="relative md:hidden">
+          <div className="relative lg:hidden">
           <button
             ref={menuButtonRef}
             aria-controls={menuId}
@@ -143,7 +143,7 @@ export function NavBar() {
 
           <div
             ref={menuPanelRef}
-            className={`absolute right-0 top-[calc(100%+0.5rem)] z-50 w-[min(calc(100vw-2rem),22rem)] min-w-[16rem] origin-top-right rounded-xl border border-npf-border bg-white shadow-xl transition-[opacity,transform] duration-200 ease-out dark:border-zinc-700 dark:bg-zinc-900 md:hidden ${
+            className={`absolute right-0 top-[calc(100%+0.5rem)] z-50 w-[min(calc(100vw-2rem),22rem)] min-w-[16rem] origin-top-right rounded-xl border border-npf-border bg-white shadow-xl transition-[opacity,transform] duration-200 ease-out dark:border-zinc-700 dark:bg-zinc-900 lg:hidden ${
               menuOpen
                 ? 'pointer-events-auto scale-100 opacity-100'
                 : 'pointer-events-none scale-95 opacity-0'
