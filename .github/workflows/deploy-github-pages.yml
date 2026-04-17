@@ -1,13 +1,16 @@
-# Build and deploy the Vite SPA to GitHub Pages.
+# Builds the Vite app and pushes ONLY ./dist to branch "githubpages".
 #
-# IMPORTANT — Pages must use THIS workflow’s artifact, not “Deploy from a branch”.
-# If you publish the repo root, browsers load /src/main.tsx (dev entry) → white page + MIME errors.
+# GitHub Pages setup:
+#   Settings → Pages → Build and deployment → Source: Deploy from a branch
+#   Branch: githubpages  /  Folder: / (root)
 #
-# Setup: Repo → Settings → Pages → Build and deployment → Source: GitHub Actions.
-# Visit the PROJECT URL: https://<owner>.github.io/<repo>/  (include the repo name in the path).
+# Do not commit source files to githubpages — that branch must contain the production
+# build (index.html + /assets), or the site will load /src/main.tsx and stay white.
 #
-# Project site: https://<owner>.github.io/<repo>/
-# User/org site: repo named <owner>.github.io → base path is /
+# Live URL (project repo): https://<owner>.github.io/<repo>/
+# User site repo (<owner>.github.io): https://<owner>.github.io/
+
+name: Deploy to githubpages branch
 
 on:
   push:
@@ -15,16 +18,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 concurrency:
-  group: pages
+  group: githubpages-branch-deploy
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -49,27 +50,21 @@ jobs:
           echo "GITHUB_PAGES_BASE=$GITHUB_PAGES_BASE"
           npm run build:gh-pages
 
-      - name: Ensure dist is a production build (not dev index.html)
+      - name: Ensure dist is a production build
         run: |
           if grep -q 'src/main.tsx' dist/index.html; then
-            echo "::error::dist/index.html still references dev entry — build misconfigured."
+            echo "::error::dist/index.html still references dev entry."
             exit 1
           fi
           if ! grep -qE '/assets/[^"]+\.(js|mjs)' dist/index.html; then
-            echo "::error::dist/index.html has no /assets/*.js bundle — check Vite build output."
+            echo "::error::dist/index.html has no /assets/*.js bundle."
             exit 1
           fi
 
-      - uses: actions/upload-pages-artifact@v3
+      - name: Push dist to branch githubpages
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          path: dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/deploy-pages@v4
-        id: deployment
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: githubpages
+          publish_dir: ./dist
+          force_orphan: true
