@@ -1,14 +1,14 @@
-# Builds the Vite app and pushes ONLY ./dist to branch "githubpages".
+# Builds the Vite app and force-pushes ONLY ./dist to branch "githubpages".
 #
-# GitHub Pages setup:
-#   Settings → Pages → Build and deployment → Source: Deploy from a branch
-#   Branch: githubpages  /  Folder: / (root)
+# GitHub Pages: Settings → Pages → Build and deployment
+#   Source: Deploy from a branch
+#   Branch: githubpages
+#   Folder: / (root)
 #
-# Do not commit source files to githubpages — that branch must contain the production
-# build (index.html + /assets), or the site will load /src/main.tsx and stay white.
+# Push to `main` or `master` to run this workflow. It overwrites `githubpages` with the
+# production build. Do not point Pages at `main` — that serves dev index.html (/src/main.tsx).
 #
 # Live URL (project repo): https://<owner>.github.io/<repo>/
-# User site repo (<owner>.github.io): https://<owner>.github.io/
 
 name: Deploy to githubpages branch
 
@@ -50,6 +50,9 @@ jobs:
           echo "GITHUB_PAGES_BASE=$GITHUB_PAGES_BASE"
           npm run build:gh-pages
 
+      - name: Show built index.html (debug)
+        run: head -n 40 dist/index.html
+
       - name: Ensure dist is a production build
         run: |
           if grep -q 'src/main.tsx' dist/index.html; then
@@ -68,3 +71,29 @@ jobs:
           publish_branch: githubpages
           publish_dir: ./dist
           force_orphan: true
+          commit_message: 'deploy: production build'
+
+  verify-githubpages:
+    needs: build-and-publish
+    if: success()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: githubpages
+          fetch-depth: 1
+
+      - name: Verify githubpages has production index (not dev main.tsx)
+        run: |
+          echo "---- index.html (first 40 lines) ----"
+          head -n 40 index.html
+          echo "--------------------------------------"
+          if grep -q 'src/main.tsx' index.html; then
+            echo "::error::Branch githubpages still has DEV index. Fix: Settings → Pages → source branch = githubpages (not main)."
+            exit 1
+          fi
+          if ! grep -qE '/assets/[^"]+\.(js|mjs)' index.html; then
+            echo "::error::No hashed JS bundle in index.html on githubpages."
+            exit 1
+          fi
+          echo "OK: githubpages branch contains a production index.html"
