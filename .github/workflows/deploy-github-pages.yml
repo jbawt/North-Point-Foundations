@@ -1,5 +1,10 @@
 # Build and deploy the Vite SPA to GitHub Pages.
-# Repo → Settings → Pages → Source: GitHub Actions.
+#
+# IMPORTANT — Pages must use THIS workflow’s artifact, not “Deploy from a branch”.
+# If you publish the repo root, browsers load /src/main.tsx (dev entry) → white page + MIME errors.
+#
+# Setup: Repo → Settings → Pages → Build and deployment → Source: GitHub Actions.
+# Visit the PROJECT URL: https://<owner>.github.io/<repo>/  (include the repo name in the path).
 #
 # Project site: https://<owner>.github.io/<repo>/
 # User/org site: repo named <owner>.github.io → base path is /
@@ -43,6 +48,17 @@ jobs:
           fi
           echo "GITHUB_PAGES_BASE=$GITHUB_PAGES_BASE"
           npm run build:gh-pages
+
+      - name: Ensure dist is a production build (not dev index.html)
+        run: |
+          if grep -q 'src/main.tsx' dist/index.html; then
+            echo "::error::dist/index.html still references dev entry — build misconfigured."
+            exit 1
+          fi
+          if ! grep -qE '/assets/[^"]+\.(js|mjs)' dist/index.html; then
+            echo "::error::dist/index.html has no /assets/*.js bundle — check Vite build output."
+            exit 1
+          fi
 
       - uses: actions/upload-pages-artifact@v3
         with:
