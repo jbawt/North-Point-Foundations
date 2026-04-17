@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:gh-pages": "tsc && vite build && node scripts/gh-pages-hydrate.mjs",
     "preview": "vite preview"
   },
   "devDependencies": {

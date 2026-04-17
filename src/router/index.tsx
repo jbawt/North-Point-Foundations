@@ -7,7 +7,7 @@ import { NotFoundPage } from '../pages/NotFoundPage.tsx';
 import { QuoteThankYouPage } from '../pages/QuoteThankYouPage.tsx';
 import { ServicesPage } from '../pages/ServicesPage.tsx';
 
-export const router = createBrowserRouter([
+const routes = [
   {
     path: '/',
     element: <MainLayout />,
@@ -38,4 +38,8 @@ export const router = createBrowserRouter([
       },
     ],
   },
-]);
+];
+
+const basename = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+export const router = createBrowserRouter(routes, basename ? { basename } : undefined);
