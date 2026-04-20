@@ -2,7 +2,11 @@
 
 interface ImportMetaEnv {
   readonly VITE_MAPBOX_ACCESS_TOKEN: string | undefined;
-  /** Optional Mapbox Studio style URL (overrides default light basemap) */
+  /**
+   * Optional Mapbox style URL. The app appends `optimize=true` for style-optimized vector tiles
+   * unless already present. Skip custom URLs if you add runtime layers that need source-layers
+   * stripped from the initial style (see Mapbox GL JS performance guide).
+   */
   readonly VITE_MAPBOX_STYLE_URL: string | undefined;
   /**
    * Optional Netlify form POST URL (e.g. `https://your-site.netlify.app/`). Use when hosting on

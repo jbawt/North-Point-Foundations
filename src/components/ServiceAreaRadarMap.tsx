@@ -51,8 +51,22 @@ export type ServiceAreaRadarMapProps = {
   'aria-hidden'?: boolean;
 };
 
-const MAP_STYLE_URL =
-  import.meta.env.VITE_MAPBOX_STYLE_URL ?? 'mapbox://styles/mapbox/light-v11';
+/**
+ * Style-optimized vector tiles: smaller tiles and fewer unused vertices (Mapbox performance guide).
+ * @see https://docs.mapbox.com/help/troubleshooting/mapbox-gl-js-performance/
+ * Not compatible with adding runtime layers that depend on source-layers omitted from the initial
+ * style; we only call `setPaintProperty` on layers that already exist (see consultation map).
+ */
+function withStyleOptimizedVectorTiles(styleUrl: string): string {
+  const s = styleUrl.trim();
+  if (s === '') return s;
+  if (/(\?|&)optimize=true(?:&|#|$)/.test(s)) return s;
+  return s.includes('?') ? `${s}&optimize=true` : `${s}?optimize=true`;
+}
+
+const MAP_STYLE_URL = withStyleOptimizedVectorTiles(
+  import.meta.env.VITE_MAPBOX_STYLE_URL ?? 'mapbox://styles/mapbox/light-v11',
+);
 
 /** Must match `fitBounds` `duration` for `introFlyFromGlobe` on interactive desktop. */
 const INTRO_FLY_DURATION_MS = 5200;
@@ -362,6 +376,8 @@ export const ServiceAreaRadarMap = forwardRef<MapRef, ServiceAreaRadarMapProps>(
             height: '100%',
             touchAction: staticInteractions ? 'pan-y' : undefined,
           }}
+          /** Regional service-area maps: skip wrapping copies beyond ±180° (fewer tiles to draw). */
+          renderWorldCopies={false}
           attributionControl
           reuseMaps
           dragPan={!staticInteractions}
