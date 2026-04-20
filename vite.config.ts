@@ -58,16 +58,5 @@ export default defineConfig({
       /** Defer heavy chunks so first paint does less main-thread work (layout reads in Framer / Mapbox). */
       resolveDependencies: (_filename, deps) => deps.filter((dep) => !/(mapbox|framer)/i.test(dep)),
     },
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('mapbox-gl') || id.includes('react-map-gl')) return 'mapbox';
-            if (id.includes('framer-motion')) return 'framer';
-            if (id.includes('gsap')) return 'gsap';
-          }
-        },
-      },
-    },
   },
 });
