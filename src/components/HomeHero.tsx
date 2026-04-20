@@ -1,12 +1,8 @@
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLayoutEffect, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SITE } from '../content/siteCopy.ts';
-import { HeroTypingHeadline } from './HeroTypingHeadline.tsx';
 import { BespokeHouseAnimation } from './BespokeHouseAnimation.tsx';
-
-gsap.registerPlugin(ScrollTrigger);
+import { HeroTypingHeadline } from './HeroTypingHeadline.tsx';
 
 export function HomeHero() {
   const rootRef = useRef<HTMLElement>(null);
@@ -27,97 +23,123 @@ export function HomeHero() {
 
   useLayoutEffect(() => {
     const root = rootRef.current;
-    if (!root) {
+    if (!root || reduceMotion) {
       return;
     }
 
-    if (reduceMotion) {
-      return;
-    }
+    let cancelled = false;
+    let ctxCleanup: (() => void) | undefined;
+    let idleId: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
-    const ctx = gsap.context(() => {
-      const eyebrow = eyebrowRef.current;
-      const headline = headlineRef.current;
-      const sub = subRef.current;
-      const cta = ctaRef.current;
-      const accent = accentRef.current;
-      const glow = glowRef.current;
+    const runGsap = () => {
+      if (cancelled) return;
+      void Promise.all([import('gsap'), import('gsap/ScrollTrigger')]).then(([gsapMod, stMod]) => {
+      if (cancelled) return;
+      const gsap = gsapMod.default;
+      const { ScrollTrigger } = stMod;
+      gsap.registerPlugin(ScrollTrigger);
 
-      if (eyebrow) {
-        gsap.set(eyebrow, { y: 20, opacity: 0 });
-      }
-      if (headline) {
-        gsap.set(headline, { y: 28, opacity: 0 });
-      }
-      if (sub) {
-        gsap.set(sub, { y: 28, opacity: 0 });
-      }
-      if (cta) {
-        gsap.set(cta, { y: 24, opacity: 0 });
-      }
-      if (accent) {
-        gsap.set(accent, { scaleX: 0, transformOrigin: 'left center' });
-      }
-      if (glow) {
-        gsap.set(glow, { opacity: 0, scale: 0.88 });
-      }
+      const ctx = gsap.context(() => {
+        const eyebrow = eyebrowRef.current;
+        const headline = headlineRef.current;
+        const sub = subRef.current;
+        const cta = ctaRef.current;
+        const accent = accentRef.current;
+        const glow = glowRef.current;
 
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        if (eyebrow) {
+          gsap.set(eyebrow, { y: 20, opacity: 0 });
+        }
+        if (headline) {
+          gsap.set(headline, { y: 28, opacity: 0 });
+        }
+        if (sub) {
+          gsap.set(sub, { y: 28, opacity: 0 });
+        }
+        if (cta) {
+          gsap.set(cta, { y: 24, opacity: 0 });
+        }
+        if (accent) {
+          gsap.set(accent, { scaleX: 0, transformOrigin: 'left center' });
+        }
+        if (glow) {
+          gsap.set(glow, { opacity: 0, scale: 0.88 });
+        }
 
-      if (accent) {
-        tl.to(accent, { scaleX: 1, duration: 1, ease: 'power2.inOut' }, 0);
-      }
-      if (glow) {
-        tl.to(glow, { opacity: 1, scale: 1, duration: 1.15, ease: 'power2.out' }, 0.08);
-      }
-      if (eyebrow) {
-        tl.to(eyebrow, { y: 0, opacity: 1, duration: 0.65 }, 0.22);
-      }
-      if (headline) {
-        tl.to(headline, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' }, 0.32);
-      }
-      if (sub) {
-        tl.to(sub, { y: 0, opacity: 1, duration: 0.72 }, '-=0.42');
-      }
-      if (cta) {
-        tl.to(cta, { y: 0, opacity: 1, duration: 0.62, ease: 'power2.out' }, '-=0.48');
-      }
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-      if (glow) {
-        gsap.to(glow, {
-          opacity: 0.68,
-          scale: 1.07,
-          duration: 3.4,
+        if (accent) {
+          tl.to(accent, { scaleX: 1, duration: 1, ease: 'power2.inOut' }, 0);
+        }
+        if (glow) {
+          tl.to(glow, { opacity: 1, scale: 1, duration: 1.15, ease: 'power2.out' }, 0.08);
+        }
+        if (eyebrow) {
+          tl.to(eyebrow, { y: 0, opacity: 1, duration: 0.65 }, 0.22);
+        }
+        if (headline) {
+          tl.to(headline, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' }, 0.32);
+        }
+        if (sub) {
+          tl.to(sub, { y: 0, opacity: 1, duration: 0.72 }, '-=0.42');
+        }
+        if (cta) {
+          tl.to(cta, { y: 0, opacity: 1, duration: 0.62, ease: 'power2.out' }, '-=0.48');
+        }
+
+        if (glow) {
+          gsap.to(glow, {
+            opacity: 0.68,
+            scale: 1.07,
+            duration: 3.4,
+            ease: 'sine.inOut',
+            yoyo: true,
+            repeat: 2,
+            delay: 1.1,
+          });
+        }
+
+        gsap.to(gridRef.current, {
+          opacity: 0.15,
+          duration: 5.5,
           ease: 'sine.inOut',
           yoyo: true,
           repeat: 2,
-          delay: 1.1,
         });
-      }
 
-      gsap.to(gridRef.current, {
-        opacity: 0.15,
-        duration: 5.5,
-        ease: 'sine.inOut',
-        yoyo: true,
-        repeat: 2,
-      });
+        ScrollTrigger.create({
+          trigger: root,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: 1.05,
+          onUpdate: (self) => {
+            gsap.set(parallaxRef.current, { y: self.progress * 52 });
+          },
+        });
+      }, root);
 
-      ScrollTrigger.create({
-        trigger: root,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1.05,
-        onUpdate: (self) => {
-          gsap.set(parallaxRef.current, { y: self.progress * 52 });
-        },
+      ctxCleanup = () => ctx.revert();
       });
-    }, root);
+    };
+
+    if (typeof window.requestIdleCallback === 'function') {
+      idleId = window.requestIdleCallback(runGsap, { timeout: 2200 });
+    } else {
+      timeoutId = window.setTimeout(runGsap, 1);
+    }
 
     return () => {
-      ctx.revert();
+      cancelled = true;
+      if (idleId !== undefined && typeof window.cancelIdleCallback === 'function') {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) window.clearTimeout(timeoutId);
+      ctxCleanup?.();
     };
   }, [reduceMotion]);
+
+  const motionPrep = !reduceMotion;
 
   return (
     <section
@@ -144,11 +166,17 @@ export function HomeHero() {
       />
       <div
         ref={glowRef}
-        className="pointer-events-none absolute -right-20 top-[18%] -z-10 h-80 w-80 rounded-full bg-npf-red/30 blur-[110px] sm:right-4 sm:h-[22rem] sm:w-[22rem]"
+        className={
+          'pointer-events-none absolute -right-20 top-[18%] -z-10 h-80 w-80 rounded-full bg-npf-red/30 blur-[110px] sm:right-4 sm:h-[22rem] sm:w-[22rem] ' +
+          (motionPrep ? 'opacity-0 scale-90' : '')
+        }
       />
       <div
         ref={accentRef}
-        className="absolute left-0 top-0 z-0 h-1 w-full max-w-2xl bg-gradient-to-r from-npf-red via-npf-red to-transparent sm:h-1.5 lg:max-w-3xl"
+        className={
+          'absolute left-0 top-0 z-0 h-1 w-full max-w-2xl origin-left bg-gradient-to-r from-npf-red via-npf-red to-transparent sm:h-1.5 lg:max-w-3xl ' +
+          (motionPrep ? 'scale-x-0' : '')
+        }
       />
 
       <div className="relative z-10 mx-auto w-full max-w-[48rem] px-6 pb-6 pt-1 sm:max-w-[52rem] sm:px-8 sm:pb-8 sm:pt-2 md:max-w-[56rem] md:pb-10 md:pt-3 lg:max-w-3xl xl:max-w-4xl">
@@ -159,19 +187,35 @@ export function HomeHero() {
 
           <p
             ref={eyebrowRef}
-            className="mx-auto mb-4 max-w-xl text-xs font-semibold uppercase leading-relaxed tracking-[0.18em] text-npf-red sm:mb-5 sm:text-sm md:mb-6"
+            className={
+              'mx-auto mb-4 max-w-xl text-xs font-semibold uppercase leading-relaxed tracking-[0.18em] text-npf-red sm:mb-5 sm:text-sm md:mb-6 ' +
+              (motionPrep ? 'opacity-0' : '')
+            }
           >
             {SITE.shortTagline} · {SITE.region}
           </p>
 
-          <HeroTypingHeadline ref={headlineRef} reduceMotion={reduceMotion} />
+          <HeroTypingHeadline
+            ref={headlineRef}
+            reduceMotion={reduceMotion}
+            className={motionPrep ? 'opacity-0' : ''}
+          />
           <p
             ref={subRef}
-            className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/78 sm:mt-8 sm:text-lg"
+            className={
+              'mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/78 sm:mt-8 sm:text-lg ' +
+              (motionPrep ? 'opacity-0' : '')
+            }
           >
             {SITE.heroSub}
           </p>
-          <div ref={ctaRef} className="relative z-20 mt-8 flex flex-col items-center gap-3 sm:mt-10 sm:flex-row sm:justify-center sm:gap-4">
+          <div
+            ref={ctaRef}
+            className={
+              'relative z-20 mt-8 flex flex-col items-center gap-3 sm:mt-10 sm:flex-row sm:justify-center sm:gap-4 ' +
+              (motionPrep ? 'opacity-0' : '')
+            }
+          >
             <Link
               className="npf-sleek-lift-subtle inline-flex min-h-12 items-center justify-center rounded-lg bg-npf-red px-8 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-npf-red/30 hover:bg-npf-red-dark hover:shadow-[0_20px_44px_-16px_rgba(188,44,38,0.6)] active:translate-y-0"
               to="/contact"

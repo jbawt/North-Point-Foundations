@@ -8,7 +8,8 @@ import {
 } from 'react-icons/fa6';
 import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import brandLogo from '../assets/Logo_transparent_250px.png';
+import brandLogoPng from '../assets/Logo_transparent_250px.png';
+import brandLogoWebp from '../assets/Logo_transparent_250px.webp';
 import { SITE } from '../content/siteCopy.ts';
 import { ThemeToggle } from './ThemeToggle.tsx';
 
@@ -90,15 +91,18 @@ export function NavBar() {
             className="flex shrink-0 items-center gap-2 text-npf-charcoal no-underline transition-[opacity,transform] duration-300 ease-out hover:opacity-95 hover:scale-[1.02] motion-reduce:hover:scale-100 dark:text-zinc-100 sm:gap-3"
             to="/"
           >
-            <img
-              alt={SITE.name}
-              className="h-14 w-auto max-w-[min(54vw,13rem)] object-contain object-left sm:h-20 sm:max-w-none lg:h-24 xl:h-28"
-              decoding="async"
-              fetchPriority="high"
-              height={120}
-              src={brandLogo}
-              width={300}
-            />
+            <picture>
+              <source srcSet={brandLogoWebp} type="image/webp" />
+              <img
+                alt={SITE.name}
+                className="h-14 w-auto max-w-[min(54vw,13rem)] object-contain object-left sm:h-20 sm:max-w-none lg:h-24 xl:h-28"
+                decoding="async"
+                fetchPriority="high"
+                height={120}
+                src={brandLogoPng}
+                width={300}
+              />
+            </picture>
           </NavLink>
           <div className="hidden min-h-[2.5rem] min-[400px]:flex min-[400px]:flex-col min-[400px]:justify-center border-l border-npf-border pl-3 dark:border-zinc-700 sm:min-h-0 sm:pl-4">
             <span className="text-[10px] font-semibold uppercase leading-tight tracking-wide text-npf-red sm:text-xs">

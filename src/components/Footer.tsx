@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
-import brandLogo from '../assets/Logo_transparent_250px.png';
+import brandLogoPng from '../assets/Logo_transparent_250px.png';
+import brandLogoWebp from '../assets/Logo_transparent_250px.webp';
 import { SITE, serviceAreasSentence } from '../content/siteCopy.ts';
 
 const footerNav = [
@@ -24,15 +25,18 @@ export function Footer() {
               className="inline-block transition-[transform,opacity] duration-300 ease-out hover:opacity-95 hover:scale-[1.02] motion-reduce:hover:scale-100"
               to="/"
             >
-              <img
-                alt={SITE.name}
-                className="h-14 w-auto max-w-[14rem] object-contain object-left brightness-0 invert sm:h-16 md:h-[4.5rem]"
-                decoding="async"
-                height={120}
-                loading="lazy"
-                src={brandLogo}
-                width={300}
-              />
+              <picture>
+                <source srcSet={brandLogoWebp} type="image/webp" />
+                <img
+                  alt={SITE.name}
+                  className="h-14 w-auto max-w-[14rem] object-contain object-left brightness-0 invert sm:h-16 md:h-[4.5rem]"
+                  decoding="async"
+                  height={120}
+                  loading="lazy"
+                  src={brandLogoPng}
+                  width={300}
+                />
+              </picture>
             </Link>
             <p className="text-sm leading-relaxed text-white/70">
               {SITE.shortTagline} serving {SITE.region}. Honest pricing and reliable foundation & waterproofing work.
