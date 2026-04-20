@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
+import { RootRouteError } from '../components/RootRouteError.tsx';
 import { MainLayout } from '../layouts/MainLayout.tsx';
 import { HomePage } from '../pages/HomePage.tsx';
 
@@ -15,6 +16,7 @@ const routes = [
   {
     path: '/',
     element: <MainLayout />,
+    errorElement: <RootRouteError />,
     children: [
       {
         index: true,
