@@ -1,0 +1,10 @@
+# Long cache for Vite fingerprinted assets (PageSpeed cache lifetimes).
+# Netlify and Cloudflare Pages apply this when you deploy ./dist.
+# GitHub Pages ignores this file.
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# GitHub project pages: https://USER.github.io/REPO/assets/...
+/*/assets/*
+  Cache-Control: public, max-age=31536000, immutable

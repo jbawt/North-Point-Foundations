@@ -19,6 +19,19 @@ function thankYouFormAction(): string {
   return `${prefix}/thank-you`;
 }
 
+/** PageSpeed “Render blocking requests”: avoid synchronous stylesheet links in `<head>`. */
+function nonBlockingStylesheetLinks(html: string): string {
+  return html.replace(/<link\s+rel="stylesheet"([^>]+)>/g, (full, inner: string) => {
+    if (!/\bhref="[^"]+\.css"/.test(inner)) return full;
+    const trimmed = inner.replace(/\s+/g, ' ').trim();
+    const spacer = trimmed ? ` ${trimmed}` : '';
+    return (
+      `<link rel="preload" as="style"${spacer} onload="this.onload=null;this.rel='stylesheet'">` +
+      `<noscript>${full}</noscript>`
+    );
+  });
+}
+
 export default defineConfig({
   base,
   plugins: [
@@ -28,10 +41,12 @@ export default defineConfig({
       name: 'npf-index-html-base-hints',
       transformIndexHtml(html) {
         const action = thankYouFormAction();
-        return html.replaceAll('action="/thank-you"', `action="${action}"`).replaceAll(
+        let out = html.replaceAll('action="/thank-you"', `action="${action}"`).replaceAll(
           'href="/favicon_io/',
           `href="${base}favicon_io/`,
         );
+        out = nonBlockingStylesheetLinks(out);
+        return out;
       },
     },
   ],
@@ -39,6 +54,9 @@ export default defineConfig({
     cssMinify: 'esbuild',
     /** mapbox-gl is ~1.7MB minified; the default 500 kB warning is noisy without lazy-loading maps. */
     chunkSizeWarningLimit: 2000,
+    modulePreload: {
+      resolveDependencies: (_filename, deps) => deps.filter((dep) => !/mapbox/i.test(dep)),
+    },
     rollupOptions: {
       output: {
         manualChunks(id) {

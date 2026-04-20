@@ -3,6 +3,7 @@ import {
   useCallback,
   useEffect,
   useId,
+  useLayoutEffect,
   useRef,
   useState,
   useSyncExternalStore,
@@ -10,7 +11,8 @@ import {
 } from 'react';
 import Map, { Marker, type MapRef } from 'react-map-gl/mapbox';
 import type { Map as MapboxMap } from 'mapbox-gl';
-import 'mapbox-gl/dist/mapbox-gl.css';
+/** URL-only import keeps mapbox.css out of index.html render-blocking `<link rel="stylesheet">`. */
+import mapboxStyleHref from 'mapbox-gl/dist/mapbox-gl.css?url';
 
 import { SITE } from '../content/siteCopy';
 import {
@@ -125,6 +127,16 @@ export const ServiceAreaRadarMap = forwardRef<MapRef, ServiceAreaRadarMapProps>(
     const introIoRef = useRef<IntersectionObserver | null>(null);
     const introUnlockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const narrowViewport = useNarrowViewport();
+
+    useLayoutEffect(() => {
+      if (document.querySelector('link[data-npf-mapbox-gl-css]')) return;
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = mapboxStyleHref;
+      link.crossOrigin = 'anonymous';
+      link.dataset.npfMapboxGlCss = '';
+      document.head.appendChild(link);
+    }, []);
 
     const needsIntroInteractionLock =
       introFlyFromGlobe && variant === 'interactive' && !narrowViewport;

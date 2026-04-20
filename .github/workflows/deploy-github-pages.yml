@@ -1,5 +1,14 @@
 # Publishes the Vite production build (./dist) with GitHub’s official Pages Actions.
 #
+# Cache-Control (PageSpeed “Use efficient cache lifetimes”):
+#   GitHub Pages always serves static files with max-age=600 (10 minutes). You cannot
+#   change that from this repo. To get long-lived caching for /assets/* (hashed JS/CSS),
+#   either:
+#   • Deploy the same dist to Netlify (netlify.toml), Vercel (vercel.json), or
+#     Cloudflare Pages (public/_headers is copied into dist/), or
+#   • Put a custom domain on this site and use Cloudflare (or another CDN) with cache
+#     rules that set a long browser TTL for paths matching /assets/ (and your repo base).
+#
 # REQUIRED setup (this avoids “white page” / /src/main.tsx — that happens when Pages
 # serves the repo SOURCE from `main` instead of a built site):
 #

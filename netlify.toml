@@ -1,0 +1,12 @@
+# If you connect this repo to Netlify, these headers fix PageSpeed “cache lifetimes” for hashed assets.
+# GitHub Pages does not read netlify.toml.
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
