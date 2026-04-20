@@ -55,7 +55,8 @@ export default defineConfig({
     /** mapbox-gl is ~1.7MB minified; the default 500 kB warning is noisy without lazy-loading maps. */
     chunkSizeWarningLimit: 2000,
     modulePreload: {
-      resolveDependencies: (_filename, deps) => deps.filter((dep) => !/mapbox/i.test(dep)),
+      /** Defer heavy chunks so first paint does less main-thread work (layout reads in Framer / Mapbox). */
+      resolveDependencies: (_filename, deps) => deps.filter((dep) => !/(mapbox|framer)/i.test(dep)),
     },
     rollupOptions: {
       output: {

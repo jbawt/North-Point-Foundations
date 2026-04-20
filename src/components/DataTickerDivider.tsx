@@ -1,5 +1,5 @@
-import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useId, useMemo, useState, type ReactNode } from 'react';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion.ts';
 
 function mockSoilSaturation(): number {
   return Math.round((12 + Math.random() * 6) * 10) / 10;
@@ -12,22 +12,16 @@ function mockRedDeerTemp(): string {
 
 function GlitchChip({ children }: { children: ReactNode }) {
   return (
-    <motion.span
-      className="group inline-flex cursor-default items-center gap-1.5 whitespace-nowrap rounded-sm px-0.5 py-0.5 text-[11px] leading-tight tracking-wide sm:text-xs md:text-[13px]"
-      whileHover={{
-        x: [0, -2, 2, -1, 0],
-        transition: { duration: 0.22, ease: 'easeInOut' },
-      }}
-    >
+    <span className="group inline-flex cursor-default items-center gap-1.5 whitespace-nowrap rounded-sm px-0.5 py-0.5 text-[11px] leading-tight tracking-wide sm:text-xs md:text-[13px]">
       <span className="inline-block transition-[text-shadow,filter,color,transform] duration-200 ease-out group-hover:[text-shadow:1px_0_0_#BE1E2D,-1px_0_0_rgba(0,220,255,0.35)] group-hover:[filter:hue-rotate(8deg)_saturate(1.2)_contrast(1.05)] group-hover:scale-[1.02] motion-reduce:group-hover:scale-100">
         {children}
       </span>
-    </motion.span>
+    </span>
   );
 }
 
 export function DataTickerDivider() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const labelId = useId();
   const [soilPct, setSoilPct] = useState<number | null>(null);
   const [localTemp, setLocalTemp] = useState<string | null>(null);
@@ -80,13 +74,9 @@ export function DataTickerDivider() {
         key: 'integrity',
         node: (
           <span className="inline-flex items-center gap-2">
-            <motion.span
-              className="h-2 w-2 shrink-0 rounded-full bg-emerald-600"
+            <span
+              className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-emerald-600 motion-reduce:animate-none"
               aria-hidden
-              animate={
-                reduceMotion ? undefined : { opacity: [1, 0.45, 1], scale: [1, 0.92, 1] }
-              }
-              transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
               style={{ boxShadow: '0 0 8px rgba(5,150,105,0.45)' }}
             />
             <span className="text-npf-muted">INTEGRITY:</span>{' '}
@@ -106,18 +96,8 @@ export function DataTickerDivider() {
         ),
       },
     ],
-    [localTemp, reduceMotion, soilPct],
+    [localTemp, soilPct],
   );
-
-  const crtTransition = reduceMotion
-    ? { duration: 0.2 }
-    : {
-        duration: 0.72,
-        times: [0, 0.08, 0.14, 0.22, 0.32, 0.42, 0.55, 1],
-        ease: 'easeOut' as const,
-      };
-
-  const crtKeyframes = reduceMotion ? { opacity: 1 } : { opacity: [0, 0.85, 0.15, 0.9, 0.25, 1, 0.7, 1] };
 
   return (
     <div
@@ -145,11 +125,11 @@ export function DataTickerDivider() {
         Environmental diagnostic readout for Central Alberta
       </span>
 
-      <motion.div
-        className="relative z-[1] flex min-h-[3.25rem] items-center sm:min-h-[3.5rem]"
-        initial={{ opacity: 0 }}
-        animate={crtKeyframes}
-        transition={crtTransition}
+      <div
+        className={
+          'relative z-[1] flex min-h-[3.25rem] items-center sm:min-h-[3.5rem] ' +
+          (!reduceMotion ? 'npf-crt-flicker' : '')
+        }
       >
         <div className="hidden w-full md:flex md:items-center md:justify-between md:gap-3 md:px-8 lg:px-12">
           {segments.map(({ key, node }) => (
@@ -187,7 +167,7 @@ export function DataTickerDivider() {
             )}
           </div>
         </div>
-      </motion.div>
+      </div>
     </div>
   );
 }

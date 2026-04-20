@@ -1,14 +1,34 @@
-import { motion, useReducedMotion } from 'framer-motion';
-import { useId } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { SITE, serviceAreasSentence } from '../content/siteCopy.ts';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion.ts';
 import { LoadMapWhenInView } from './LoadMapWhenInView.tsx';
 import { ServiceAreaRadarMap } from './ServiceAreaRadarMap.lazy.tsx';
 
-const VIEWPORT = { once: true, amount: 0.25 } as const;
+/** Mirrors former framer-motion `viewport: { once: true, amount: 0.25 }`. */
+const IO_OPTIONS: IntersectionObserverInit = { threshold: 0.25, rootMargin: '0px' };
 
 export function ServiceAreaDivider() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const labelId = useId();
+  const listRef = useRef<HTMLUListElement | null>(null);
+  const [areasRevealed, setAreasRevealed] = useState(reduceMotion);
+
+  useEffect(() => {
+    if (reduceMotion) {
+      setAreasRevealed(true);
+      return;
+    }
+    const el = listRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting) {
+        setAreasRevealed(true);
+        io.disconnect();
+      }
+    }, IO_OPTIONS);
+    io.observe(el);
+    return () => io.disconnect();
+  }, [reduceMotion]);
 
   return (
     <section
@@ -70,22 +90,27 @@ export function ServiceAreaDivider() {
           </div>
 
           <ul
+            ref={listRef}
             className="flex shrink-0 flex-wrap items-center justify-end gap-2 basis-full sm:basis-auto sm:max-w-none lg:max-w-[min(100%,28rem)]"
             aria-label="Communities we serve"
           >
             {SITE.serviceAreas.map((area, i) => (
-              <motion.li
+              <li
                 key={area}
-                className="cursor-default"
-                initial={reduceMotion ? false : { opacity: 0, y: 6 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={VIEWPORT}
-                transition={{ delay: 0.04 * i, duration: 0.4, ease: 'easeOut' }}
+                className={
+                  'cursor-default transition-[opacity,transform] duration-500 ease-out motion-reduce:transition-none ' +
+                  (areasRevealed ? 'translate-y-0 opacity-100' : 'translate-y-1.5 opacity-0')
+                }
+                style={
+                  reduceMotion
+                    ? undefined
+                    : { transitionDelay: areasRevealed ? `${Math.min(i, 12) * 40}ms` : '0ms' }
+                }
               >
                 <span className="npf-sleek-lift-subtle inline-flex cursor-default select-none items-center rounded-md border border-npf-border bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-npf-charcoal shadow-sm hover:border-[#BE1E2D]/35 hover:text-[#BE1E2D] dark:border-zinc-600 dark:bg-zinc-900/95 dark:text-zinc-100 dark:hover:border-[#BE1E2D]/45 sm:px-3 sm:text-[11px] [&_*]:cursor-default">
                   {area}
                 </span>
-              </motion.li>
+              </li>
             ))}
           </ul>
         </div>

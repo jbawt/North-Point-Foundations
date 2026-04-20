@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import {
   useCallback,
   useEffect,
@@ -8,6 +7,7 @@ import {
   useState,
   useSyncExternalStore,
   forwardRef,
+  type CSSProperties,
 } from 'react';
 import Map, { Marker, type MapRef } from 'react-map-gl/mapbox';
 import type { Map as MapboxMap } from 'mapbox-gl';
@@ -96,10 +96,9 @@ function RadarNodeMarker({ node, index }: { node: ServiceRadarNode; index: numbe
       >
         <span className="npf-radar-ping-disk" style={ringStyle} />
         <span className="npf-radar-ping-disk npf-radar-ping-disk--echo" style={echoStyle} />
-        <motion.span
-          className="absolute z-[1] block h-3 w-3 rounded-full bg-[#BE1E2D] shadow-[0_0_14px_rgba(190,30,45,0.95),0_0_28px_rgba(255,100,110,0.35)]"
-          animate={{ scale: [1, 1.1, 1], opacity: [1, 0.88, 1] }}
-          transition={{ duration: 2.1 / scale, repeat: Infinity, ease: 'easeInOut' }}
+        <span
+          className="npf-radar-dot-breathe absolute z-[1] block h-3 w-3 rounded-full bg-[#BE1E2D] shadow-[0_0_14px_rgba(190,30,45,0.95),0_0_28px_rgba(255,100,110,0.35)]"
+          style={{ '--npf-radar-dot-dur': `${(2.1 / scale).toFixed(2)}s` } as CSSProperties}
         />
       </div>
     </Marker>

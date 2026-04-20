@@ -151,6 +151,69 @@ body {
   }
 }
 
+/* Radar map center dot — avoids Framer layout reads on the map chunk */
+@keyframes npf-radar-dot-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.88;
+  }
+}
+
+.npf-radar-dot-breathe {
+  animation: npf-radar-dot-breathe var(--npf-radar-dot-dur, 2.1s) ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .npf-radar-dot-breathe {
+    animation: none;
+  }
+}
+
+/* Data ticker “CRT power-on” — replaces Framer opacity keyframes on the home path */
+@keyframes npf-crt-flicker {
+  0% {
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.85;
+  }
+  14% {
+    opacity: 0.15;
+  }
+  22% {
+    opacity: 0.9;
+  }
+  32% {
+    opacity: 0.25;
+  }
+  42% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.npf-crt-flicker {
+  animation: npf-crt-flicker 0.72s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .npf-crt-flicker {
+    animation: none;
+    opacity: 1;
+  }
+}
+
 /**
  * Shared hover polish — lift + shadow + border cross-fade.
  * Skips transform on touch / no-hover; disables motion when prefers-reduced-motion.
