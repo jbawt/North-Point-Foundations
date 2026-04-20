@@ -1,6 +1,7 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Check } from 'lucide-react';
 import type { ServiceDetail } from '../content/siteCopy.ts';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion.ts';
 import { ServiceIcon } from './ServiceIcon.tsx';
 
 type ServicePageCardProps = {
@@ -9,7 +10,7 @@ type ServicePageCardProps = {
 };
 
 export function ServicePageCard({ service, index }: ServicePageCardProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
 
   const motionProps = reduceMotion
     ? { initial: false as const }

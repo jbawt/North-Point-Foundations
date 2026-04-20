@@ -1,6 +1,7 @@
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { useMemo, useState } from 'react';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion.ts';
 import {
   EvaluationRequestStep1,
   type EvaluationRequestStep1Values,
@@ -29,7 +30,7 @@ export function EvaluationRequestWizard({ className = '' }: { className?: string
   const [step2Values, setStep2Values] = useState<Partial<EvaluationRequestStep2Values>>({});
   const [step3Values, setStep3Values] = useState<Partial<EvaluationRequestFinalStepValues>>({});
 
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
 
   const slideVariants = useMemo<Variants>(() => {
     if (reduceMotion) {

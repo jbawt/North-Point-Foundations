@@ -1,7 +1,8 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { BrickWall, Building2, Check, Cylinder, Droplet } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion.ts';
 import { EvaluationRequestProgress } from './EvaluationRequestProgress.tsx';
 
 export const EVALUATION_CATEGORY_VALUES = [
@@ -68,7 +69,7 @@ export function EvaluationRequestStep1({
   defaultValues,
   className = '',
 }: EvaluationRequestStep1Props) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const {
     register,
     handleSubmit,

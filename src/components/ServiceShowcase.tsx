@@ -1,12 +1,9 @@
-import {
-  motion,
-  useInView,
-  useReducedMotion,
-} from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa6';
 import { SITE } from '../content/siteCopy.ts';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion.ts';
 import { ServiceAreaRadarMap } from './ServiceAreaRadarMap.lazy.tsx';
 
 type SpecRow = { label: string; value: string };
@@ -524,7 +521,7 @@ function SectionTrackerHUD({
 }
 
 export function ServiceShowcase() {
-  const reduceMotion = useReducedMotion() ?? false;
+  const reduceMotion = usePrefersReducedMotion();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const headerId = useId();

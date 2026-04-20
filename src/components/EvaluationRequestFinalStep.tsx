@@ -1,10 +1,11 @@
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion.ts';
 import { EvaluationRequestProgress } from './EvaluationRequestProgress.tsx';
 
 const WORK_TIMELINE_VALUES = ['immediately', 'within_1_3_months', 'just_researching'] as const;
@@ -52,7 +53,7 @@ function QuoteConfirmationModal({
   open: boolean;
   onDismiss: () => void;
 }) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const titleId = useId();
   const descId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -205,7 +206,7 @@ export function EvaluationRequestFinalStep({
   defaultValues,
   className = '',
 }: EvaluationRequestFinalStepProps) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const navigate = useNavigate();
   const headingId = useId();
   const inputId = useId();

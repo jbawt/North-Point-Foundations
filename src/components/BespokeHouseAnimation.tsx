@@ -1,10 +1,6 @@
-import {
-  motion,
-  useAnimationFrame,
-  useMotionValue,
-  useReducedMotion,
-} from 'framer-motion';
+import { motion, useAnimationFrame, useMotionValue } from 'framer-motion';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion.ts';
 
 const RED = '#BE1E2D';
 
@@ -38,7 +34,7 @@ const RED_GLOW =
 type Ramp = { start: number; from: number; to: number; durationMs: number };
 
 export function BespokeHouseAnimation() {
-  const reduceMotion = useReducedMotion() ?? false;
+  const reduceMotion = usePrefersReducedMotion();
   const [glitch, setGlitch] = useState(false);
   const boostTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 

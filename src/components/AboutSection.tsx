@@ -1,8 +1,9 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { SITE } from '../content/siteCopy.ts';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion.ts';
 
 const SLIDE_TRANSITION = { duration: 0.62, ease: [0.22, 1, 0.36, 1] as const };
 
@@ -16,7 +17,7 @@ const ABOUT_CARD_PANEL = `${ABOUT_CARD_MIN_H} flex flex-col`;
 type Slide = 0 | 1;
 
 export function AboutSection() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const carouselId = useId();
   const [active, setActive] = useState<Slide>(0);
   const pauseAutoplayRef = useRef(false);

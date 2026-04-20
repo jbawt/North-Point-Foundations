@@ -1,4 +1,4 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   REPAIR_PLAN_ANNOTATIONS,
@@ -7,6 +7,7 @@ import {
   REPAIR_PLAN_VIEWBOX,
 } from '../content/repairPlanBlueprint.ts';
 import { SERVICE_DECK_FRAGMENT_IDS, SITE, type ServiceDetail } from '../content/siteCopy.ts';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion.ts';
 import { ServiceIcon } from './ServiceIcon.tsx';
 
 const VIEWPORT = { once: true, amount: 0.28 } as const;
@@ -118,7 +119,7 @@ function ServiceCard({ service }: { service: ServiceDetail }) {
 }
 
 export function ServicesSection() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
 
   const pathTarget = { pathLength: 1 as const };
   const pathInitial = reduceMotion ? pathTarget : { pathLength: 0 as const };

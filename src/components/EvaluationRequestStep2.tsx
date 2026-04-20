@@ -1,10 +1,11 @@
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import type { Map as MapboxMap } from 'mapbox-gl';
 import type { KeyboardEvent } from 'react';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Marker, type MapRef } from 'react-map-gl/mapbox';
 import { useForm } from 'react-hook-form';
 import { SERVICE_RADAR_MAP_VIEW } from '../content/serviceAreaRadarNodes.ts';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion.ts';
 import { ServiceAreaRadarMap } from './ServiceAreaRadarMap.lazy.tsx';
 import { EvaluationRequestProgress } from './EvaluationRequestProgress.tsx';
 
@@ -86,7 +87,7 @@ export function EvaluationRequestStep2({
   defaultValues,
   className = '',
 }: EvaluationRequestStep2Props) {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const headingId = useId();
   const listboxId = useId();
   const mapRef = useRef<MapRef>(null);

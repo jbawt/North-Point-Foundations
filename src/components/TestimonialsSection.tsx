@@ -1,12 +1,13 @@
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import { useCallback, useEffect, useId, useState } from 'react';
 import { TESTIMONIALS } from '../content/siteCopy.ts';
+import { usePrefersReducedMotion } from '../hooks/usePrefersReducedMotion.ts';
 
 const AUTO_MS = 6500;
 
 export function TestimonialsSection() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const headingId = useId();
   const [index, setIndex] = useState(0);
   const n = TESTIMONIALS.length;
