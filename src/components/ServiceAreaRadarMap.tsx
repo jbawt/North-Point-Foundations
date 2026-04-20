@@ -128,6 +128,14 @@ export const ServiceAreaRadarMap = forwardRef<MapRef, ServiceAreaRadarMapProps>(
     const narrowViewport = useNarrowViewport();
 
     useLayoutEffect(() => {
+      if (!document.querySelector('link[data-npf-mapbox-preconnect]')) {
+        const pre = document.createElement('link');
+        pre.rel = 'preconnect';
+        pre.href = 'https://api.mapbox.com';
+        pre.crossOrigin = '';
+        pre.dataset.npfMapboxPreconnect = '';
+        document.head.appendChild(pre);
+      }
       if (document.querySelector('link[data-npf-mapbox-gl-css]')) return;
       const link = document.createElement('link');
       link.rel = 'stylesheet';

@@ -1,8 +1,11 @@
-import { useLayoutEffect, useMemo, useRef } from 'react';
+import { lazy, Suspense, useLayoutEffect, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SITE } from '../content/siteCopy.ts';
-import { BespokeHouseAnimation } from './BespokeHouseAnimation.tsx';
 import { HeroTypingHeadline } from './HeroTypingHeadline.tsx';
+
+const BespokeHouseAnimation = lazy(() =>
+  import('./BespokeHouseAnimation.tsx').then((m) => ({ default: m.BespokeHouseAnimation })),
+);
 
 export function HomeHero() {
   const rootRef = useRef<HTMLElement>(null);
@@ -182,7 +185,16 @@ export function HomeHero() {
       <div className="relative z-10 mx-auto w-full max-w-[48rem] px-6 pb-6 pt-1 sm:max-w-[52rem] sm:px-8 sm:pb-8 sm:pt-2 md:max-w-[56rem] md:pb-10 md:pt-3 lg:max-w-3xl xl:max-w-4xl">
         <div className="relative z-20 flex w-full flex-col items-center px-2 text-center">
           <div className="mb-4 sm:mb-5 md:mb-6">
-            <BespokeHouseAnimation />
+            <Suspense
+              fallback={
+                <div
+                  className="mx-auto flex min-h-[10.5rem] max-w-[24rem] justify-center sm:min-h-[12rem] md:min-h-[13rem]"
+                  aria-hidden
+                />
+              }
+            >
+              <BespokeHouseAnimation />
+            </Suspense>
           </div>
 
           <p

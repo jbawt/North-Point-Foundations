@@ -1,22 +1,46 @@
-import { AboutSection } from '../components/AboutSection.tsx';
+import { lazy, Suspense } from 'react';
 import { DataTickerDivider } from '../components/DataTickerDivider.tsx';
 import { HomeHero } from '../components/HomeHero.tsx';
-import { ServiceAreaDivider } from '../components/ServiceAreaDivider.tsx';
 import { ServicesAboutDivider } from '../components/ServicesAboutDivider.tsx';
-import { ServicesSection } from '../components/ServicesSection.tsx';
-import { TestimonialsSection } from '../components/TestimonialsSection.tsx';
 import { SITE } from '../content/siteCopy.ts';
+
+const ServicesSection = lazy(() =>
+  import('../components/ServicesSection.tsx').then((m) => ({ default: m.ServicesSection })),
+);
+const AboutSection = lazy(() =>
+  import('../components/AboutSection.tsx').then((m) => ({ default: m.AboutSection })),
+);
+const ServiceAreaDivider = lazy(() =>
+  import('../components/ServiceAreaDivider.tsx').then((m) => ({ default: m.ServiceAreaDivider })),
+);
+const TestimonialsSection = lazy(() =>
+  import('../components/TestimonialsSection.tsx').then((m) => ({ default: m.TestimonialsSection })),
+);
+
+function BelowFoldFallback() {
+  return <div className="min-h-px w-full" aria-hidden />;
+}
 
 export function HomePage() {
   return (
     <>
       <HomeHero />
       <DataTickerDivider />
-      <ServicesSection />
+      <Suspense fallback={<BelowFoldFallback />}>
+        <ServicesSection />
+      </Suspense>
       <ServicesAboutDivider />
-      <AboutSection />
-      <ServiceAreaDivider />
-      {SITE.showTestimonialsOnHome ? <TestimonialsSection /> : null}
+      <Suspense fallback={<BelowFoldFallback />}>
+        <AboutSection />
+      </Suspense>
+      <Suspense fallback={<BelowFoldFallback />}>
+        <ServiceAreaDivider />
+      </Suspense>
+      {SITE.showTestimonialsOnHome ? (
+        <Suspense fallback={<BelowFoldFallback />}>
+          <TestimonialsSection />
+        </Suspense>
+      ) : null}
     </>
   );
 }
