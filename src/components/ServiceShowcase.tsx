@@ -1,5 +1,14 @@
 import { motion, useInView } from 'framer-motion';
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type RefObject,
+} from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa6';
 import { SITE } from '../content/siteCopy.ts';
@@ -174,16 +183,17 @@ const SLIDE_SECTION_SHELL =
   'relative shrink-0 snap-end snap-always scroll-mt-0 border-b border-npf-border dark:border-zinc-800 ' +
   'flex min-h-full w-full flex-col overflow-hidden px-5 py-16 sm:px-8 md:h-full md:min-h-0 md:px-10 md:py-0 lg:px-14';
 
-function SlideMapBackdrop() {
+/** Framer `useInView` expects `root` as a ref; `root.current` is the scrollport (see framer-motion use-in-view). */
+const DeckScrollRootRefContext = createContext<RefObject<HTMLDivElement | null> | null>(null);
+
+function useDeckScrollRootRef() {
+  return useContext(DeckScrollRootRefContext);
+}
+
+/** Per-slide readability overlays only. One shared `ServiceAreaRadarMap` sits behind the whole deck. */
+function SlideGradientOverlays() {
   return (
     <>
-      <div className="pointer-events-none absolute inset-0 z-0">
-        <ServiceAreaRadarMap
-          variant="backdrop"
-          shellClassName="absolute inset-0 min-h-0 min-w-0"
-          className="h-full w-full"
-        />
-      </div>
       <div
         className={
           'pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-white/96 via-white/88 to-white/72 ' +
@@ -248,9 +258,11 @@ function DeckIntroSlide({
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const mapBackdropDescId = useId();
+  const deckScrollRootRef = useDeckScrollRootRef();
   const inView = useInView(ref, {
     amount: 0.45,
     margin: '-12% 0px -12% 0px',
+    root: deckScrollRootRef ?? undefined,
   });
 
   return (
@@ -262,10 +274,10 @@ function DeckIntroSlide({
       aria-describedby={mapBackdropDescId}
     >
       <p id={mapBackdropDescId} className="sr-only">
-        A non-interactive map of the {SITE.region} service area is shown as the background of each slide in this deck.
+        A non-interactive map of the {SITE.region} service area is shown as the background of this deck.
         Use the numbered controls on the right to jump to a slide; hover or focus a control to see its title.
       </p>
-      <SlideMapBackdrop />
+      <SlideGradientOverlays />
       <div className="relative z-10 flex min-h-0 w-full flex-1 flex-col justify-center">
         <div className="mx-auto w-full max-w-7xl">
           <div className="mx-auto min-w-0 max-w-3xl space-y-6 text-center md:mx-0 md:max-w-2xl md:text-left lg:max-w-3xl">
@@ -330,9 +342,11 @@ function ServiceShowcaseSection({
   reduceMotion: boolean;
 }) {
   const ref = useRef<HTMLElement | null>(null);
+  const deckScrollRootRef = useDeckScrollRootRef();
   const inView = useInView(ref, {
     amount: 0.45,
     margin: '-12% 0px -12% 0px',
+    root: deckScrollRootRef ?? undefined,
   });
 
   return (
@@ -345,7 +359,7 @@ function ServiceShowcaseSection({
         'flex min-h-full w-full flex-col px-5 py-14 sm:px-8 md:px-10 md:py-0 lg:px-14'
       }
     >
-      <SlideMapBackdrop />
+      <SlideGradientOverlays />
       <div className="relative z-10 flex w-full flex-1 flex-col justify-center gap-10 md:gap-0">
         <div className="mx-auto w-full max-w-7xl">
           <div className="flex min-w-0 max-w-3xl flex-col justify-center space-y-6 md:space-y-8 lg:max-w-4xl">
@@ -411,7 +425,7 @@ function DeckOutroSlide() {
         'flex min-h-full w-full flex-col px-5 py-14 sm:px-8 md:px-10 md:py-0 lg:px-14'
       }
     >
-      <SlideMapBackdrop />
+      <SlideGradientOverlays />
       <div className="relative z-10 flex w-full flex-1 flex-col justify-center">
         <div className="mx-auto w-full max-w-2xl text-center md:text-left">
           <p
@@ -522,7 +536,7 @@ function SectionTrackerHUD({
 
 export function ServiceShowcase() {
   const reduceMotion = usePrefersReducedMotion();
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const headerId = useId();
   const location = useLocation();
@@ -604,24 +618,35 @@ export function ServiceShowcase() {
 
   return (
     <div className="relative flex min-h-0 flex-1 flex-col bg-white text-npf-charcoal dark:bg-zinc-950 dark:text-zinc-100">
-      <div
-        ref={scrollRef}
-        className={
-          'npf-deck-scroll flex h-[calc(100dvh-5rem-1px)] w-full flex-col snap-y snap-mandatory overflow-y-auto overscroll-y-auto scroll-smooth motion-reduce:scroll-auto sm:h-[calc(100dvh-7rem-1px)] md:h-[calc(100dvh-8rem-1px)] lg:h-[calc(100dvh-9rem-1px)]'
-        }
-        aria-labelledby={headerId}
-      >
-        <DeckIntroSlide titleId={headerId} reduceMotion={reduceMotion} onJumpToSlide={scrollToIndex} />
-        {SHOWCASE_SECTIONS.map((section, i) => (
-          <ServiceShowcaseSection
-            key={section.id}
-            section={section}
-            index={i}
-            slideIndex={i + 1}
-            reduceMotion={reduceMotion}
+      <div className="relative min-h-0 flex-1">
+        <div className="pointer-events-none absolute inset-0 z-0">
+          <ServiceAreaRadarMap
+            variant="backdrop"
+            shellClassName="absolute inset-0 min-h-0 min-w-0"
+            className="h-full w-full"
           />
-        ))}
-        <DeckOutroSlide />
+        </div>
+        <DeckScrollRootRefContext.Provider value={scrollRef}>
+          <div
+            ref={scrollRef}
+            className={
+              'npf-deck-scroll relative z-10 flex h-[calc(100dvh-5rem-1px)] w-full flex-col snap-y snap-mandatory overflow-y-auto overscroll-y-auto scroll-smooth motion-reduce:scroll-auto sm:h-[calc(100dvh-7rem-1px)] md:h-[calc(100dvh-8rem-1px)] lg:h-[calc(100dvh-9rem-1px)]'
+            }
+            aria-labelledby={headerId}
+          >
+            <DeckIntroSlide titleId={headerId} reduceMotion={reduceMotion} onJumpToSlide={scrollToIndex} />
+            {SHOWCASE_SECTIONS.map((section, i) => (
+              <ServiceShowcaseSection
+                key={section.id}
+                section={section}
+                index={i}
+                slideIndex={i + 1}
+                reduceMotion={reduceMotion}
+              />
+            ))}
+            <DeckOutroSlide />
+          </div>
+        </DeckScrollRootRefContext.Provider>
       </div>
 
       <SectionTrackerHUD
