@@ -64,8 +64,7 @@ export function ServiceAreaDivider() {
             <p className="text-sm leading-relaxed text-npf-muted sm:text-base dark:text-zinc-400">
               Approximate service region across{' '}
               <strong className="font-medium text-npf-charcoal dark:text-zinc-100">{serviceAreasSentence()}</strong>.
-              Radar nodes on the map mark where we typically operate — hover a node for operational stats, then
-              read what homeowners say below.
+              Radar nodes on the map mark where we typically operate — read what homeowners say below.
             </p>
           </div>
 

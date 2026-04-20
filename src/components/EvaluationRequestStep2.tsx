@@ -406,7 +406,7 @@ export function EvaluationRequestStep2({
                       : undefined
                   }
                   autoComplete="off"
-                  placeholder="e.g. 123 Example St, Red Deer, AB — or Red Deer, Lacombe, Olds…"
+                  placeholder="e.g. 123 Example St, Red Deer, AB — or Red Deer, Lacombe, Ponoka…"
                   className={
                     'w-full rounded-md border-2 border-npf-navy bg-white px-4 py-3 text-sm text-npf-navy shadow-inner placeholder:text-npf-navy/35 ' +
                     'transition-[box-shadow,border-color] duration-200 ease-out focus:border-npf-navy focus:outline-none focus:ring-2 focus:ring-npf-navy/20 dark:border-zinc-500 dark:bg-zinc-900/90 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-zinc-400 dark:focus:ring-zinc-600/30 sm:text-[15px]'

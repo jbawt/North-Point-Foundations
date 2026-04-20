@@ -24,12 +24,11 @@ const SHOWCASE_SECTIONS: ShowcaseSection[] = [
     id: 'exterior-waterproofing',
     title: 'Exterior Waterproofing',
     technicalDescription:
-      'Below-grade envelope assembly: membrane continuity, drainage plane, and bulk-water management tied to positive exterior discharge. Engineered for freeze–thaw cycling and capillary break at the wall–soil interface.',
+      'Below-grade envelope assembly: membrane continuity at the wall–soil interface. Engineered for freeze–thaw cycling and capillary break where the wall meets soil.',
     specs: [
-      { label: 'Membrane', value: '60-mil reinforced HDPE' },
-      { label: 'Drainage', value: 'Geocomposite board + filter fabric' },
+      { label: 'Membrane', value: 'Blue skin WP 200' },
       { label: 'Warranty', value: '25-Year Transferable' },
-      { label: 'Design load', value: 'Hydrostatic relief + perimeter intercept' },
+      { label: 'Design load', value: 'Below-grade envelope continuity' },
     ],
   },
   {
@@ -48,23 +47,23 @@ const SHOWCASE_SECTIONS: ShowcaseSection[] = [
     id: 'weeping-tile',
     title: 'Weeping Tile Install',
     technicalDescription:
-      'Footing-level perimeter collector with continuous slope, cleanouts, and discharge to sump or daylight. Relieves hydrostatic head while preserving long-term service access.',
+      'Footing-level perimeter collector with continuous slope and discharge to sump or daylight. Relieves hydrostatic head; cleanouts when specified.',
     specs: [
       { label: 'Pipe', value: '4″ perforated HDPE — socked' },
       { label: 'Slope', value: '≥ 1/8″ per ft to discharge' },
-      { label: 'Bedding', value: 'Clear stone envelope — min. 6″ cover' },
-      { label: 'Access', value: 'Inline cleanouts @ ≤ 50 ft' },
+      { label: 'Bedding', value: '8–12″ clear stone bed' },
+      { label: 'Access', value: 'Inline cleanouts optional' },
     ],
   },
   {
     id: 'sump-systems',
     title: 'Sump Pump Systems',
     technicalDescription:
-      'Primary + contingency pumping with check-valve isolation, freeze-conscious discharge routing, and basin geometry matched to inflow peaks and slab structure.',
+      'Primary + contingency pumping with check-valve isolation and basin geometry matched to inflow peaks and slab structure.',
     specs: [
       { label: 'Basin', value: '18″ × 24″ structural poly' },
       { label: 'Primary pump', value: '1/3 HP — 48 GPM @ 10′ head' },
-      { label: 'Discharge', value: '1½″ PVC — freeze-guard exit' },
+      { label: 'Discharge', value: '1½″ PVC' },
       { label: 'Backup', value: 'DC + charger (optional stack)' },
     ],
   },
@@ -72,12 +71,11 @@ const SHOWCASE_SECTIONS: ShowcaseSection[] = [
     id: 'window-wells',
     title: 'Window Well Repair',
     technicalDescription:
-      'Rebuild of well structure, drainage interface, and wall joint continuity. Restores a drained, sealed reveal at below-grade openings.',
+      'Rebuild of well structure, drainage interface, and wall joint continuity. Restores a drained reveal at below-grade openings.',
     specs: [
-      { label: 'Shell', value: 'Galvanized steel / composite well' },
+      { label: 'Shell', value: 'Galvanized steel' },
       { label: 'Drain tie', value: '4″ routed to weeping tile' },
       { label: 'Backfill', value: 'Clear stone — min. 12″ lift' },
-      { label: 'Sealant', value: 'UV-stable flexible joint membrane' },
     ],
   },
   {

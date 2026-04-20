@@ -69,20 +69,7 @@ function useNarrowViewport() {
   );
 }
 
-function formatStatsBlock(node: ServiceRadarNode): string {
-  const { stats } = node;
-  const resp = String(stats.responseHrs).padStart(2, '0');
-  return [
-    `LOCALITY    ${node.name}`,
-    `PROJECTS    ${stats.projectsYtd}`,
-    `AVG_RADIUS  ${stats.avgRadiusKm} km`,
-    `RESPONSE    ${resp} h`,
-    `STATUS      ${stats.status}`,
-  ].join('\n');
-}
-
 function RadarNodeMarker({ node, index }: { node: ServiceRadarNode; index: number }) {
-  const [hover, setHover] = useState(false);
   const scale = node.pulseScale ?? 1;
   const duration = `${(2.55 / scale).toFixed(2)}s`;
   const maxScale = `${(3.15 * scale).toFixed(2)}`;
@@ -101,44 +88,17 @@ function RadarNodeMarker({ node, index }: { node: ServiceRadarNode; index: numbe
 
   return (
     <Marker longitude={node.coords[0]} latitude={node.coords[1]} anchor="center">
-      <div className="pointer-events-auto relative flex h-0 w-0 items-center justify-center">
-        <button
-          type="button"
-          className="relative flex h-0 w-0 cursor-default items-center justify-center border-0 bg-transparent p-0 outline-none"
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-          onFocus={() => setHover(true)}
-          onBlur={() => setHover(false)}
-          aria-label={`${node.name} service radar node`}
-        >
-          <span className="npf-radar-ping-disk" style={ringStyle} />
-          <span className="npf-radar-ping-disk npf-radar-ping-disk--echo" style={echoStyle} />
-          <motion.span
-            className="absolute z-[1] block h-3 w-3 rounded-full bg-[#BE1E2D] shadow-[0_0_14px_rgba(190,30,45,0.95),0_0_28px_rgba(255,100,110,0.35)]"
-            animate={{ scale: [1, 1.1, 1], opacity: [1, 0.88, 1] }}
-            transition={{ duration: 2.1 / scale, repeat: Infinity, ease: 'easeInOut' }}
-          />
-        </button>
-
-        {hover ? (
-          <div
-            className="pointer-events-none absolute left-1/2 top-5 z-[80] w-[15.5rem] -translate-x-1/2 rounded-lg border border-[#BE1E2D]/25 bg-white/95 px-3 py-2.5 text-left shadow-[0_12px_40px_-12px_rgba(0,0,0,0.35)] backdrop-blur-md dark:border-white/15 dark:bg-zinc-950/95"
-            role="status"
-          >
-            <p
-              className="mb-1.5 text-[9px] font-semibold uppercase tracking-[0.2em] text-npf-muted"
-              style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace" }}
-            >
-              Operational stats
-            </p>
-            <pre
-              className="m-0 whitespace-pre text-[10px] leading-snug text-npf-charcoal dark:text-zinc-100"
-              style={{ fontFamily: "'JetBrains Mono', ui-monospace, monospace" }}
-            >
-              {formatStatsBlock(node)}
-            </pre>
-          </div>
-        ) : null}
+      <div
+        className="pointer-events-none relative flex h-0 w-0 items-center justify-center"
+        aria-hidden
+      >
+        <span className="npf-radar-ping-disk" style={ringStyle} />
+        <span className="npf-radar-ping-disk npf-radar-ping-disk--echo" style={echoStyle} />
+        <motion.span
+          className="absolute z-[1] block h-3 w-3 rounded-full bg-[#BE1E2D] shadow-[0_0_14px_rgba(190,30,45,0.95),0_0_28px_rgba(255,100,110,0.35)]"
+          animate={{ scale: [1, 1.1, 1], opacity: [1, 0.88, 1] }}
+          transition={{ duration: 2.1 / scale, repeat: Infinity, ease: 'easeInOut' }}
+        />
       </div>
     </Marker>
   );

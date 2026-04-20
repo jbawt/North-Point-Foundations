@@ -1,4 +1,4 @@
-/** Map nodes + mock operational stats for the service-area radar UI. */
+/** Map nodes for the service-area radar UI (per-node stats are optional / unused in the map UI). */
 
 export type ServiceRadarOperationalStats = {
   projectsYtd: number;
@@ -46,12 +46,6 @@ export const SERVICE_RADAR_NODES: ServiceRadarNode[] = [
     name: 'Innisfail',
     coords: [-113.944, 52.028],
     stats: { projectsYtd: 14, avgRadiusKm: 52, responseHrs: 9, status: 'STANDBY' },
-  },
-  {
-    id: 'olds',
-    name: 'Olds',
-    coords: [-114.101, 51.7928],
-    stats: { projectsYtd: 17, avgRadiusKm: 55, responseHrs: 10, status: 'ACTIVE' },
   },
   {
     id: 'ponoka',

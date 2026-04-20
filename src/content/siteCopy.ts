@@ -9,7 +9,6 @@ const SERVICE_AREAS = [
   'Blackfalds',
   'Sylvan Lake',
   'Innisfail',
-  'Olds',
   'Ponoka',
   'surrounding areas',
 ] as const;
@@ -49,10 +48,10 @@ export const SITE = {
       name: 'Exterior foundation waterproofing',
       blurb: 'Seal the exterior and direct water away before it causes damage.',
       detail:
-        'Membranes, drainage board, and grading so water sheds away from the wall — a solid fix when you are seeing damp walls, efflorescence, or seepage after rain or snowmelt.',
+        'Blue skin WP 200 and exterior detailing so the wall is protected at the soil line — a solid fix when you are seeing damp walls, efflorescence, or seepage after rain or snowmelt.',
       icon: 'waterproofing',
       highlights: [
-        'Exterior membranes and drainage board tied into grade and discharge',
+        'Blue skin WP 200 membrane system at the exterior wall',
         'Addresses bulk water and capillary moisture before it reaches your interior finish',
         'Strong option when seepage tracks with rain, snowmelt, or spring runoff',
         'Often paired with excavation when exterior access along the wall is practical',
@@ -75,12 +74,12 @@ export const SITE = {
       name: 'Weeping tile installation',
       blurb: 'A drainage system that captures groundwater and routes it safely.',
       detail:
-        'Perimeter drain relieves pressure and routes water to your sump or a daylight exit, with cleanouts where they help long-term maintenance.',
+        'Perimeter drain relieves pressure and routes water to your sump or a daylight exit, with 8–12″ of rock and optional cleanouts where you want them.',
       icon: 'weeping-tile',
       highlights: [
         'Footing-level perimeter drain to relieve hydrostatic pressure',
-        'Routing to sump or daylight with slope and access for future service',
-        'New runs, targeted extensions, or replacement scoped to your layout',
+        '8–12″ clear stone bed; inline cleanouts optional',
+        'Routing to sump or daylight with slope for reliable discharge',
         'Helps when the basement stays damp after heavy rain or snowmelt',
       ],
     },
@@ -88,11 +87,11 @@ export const SITE = {
       name: 'Sump pump systems',
       blurb: 'Reliable pumping to keep basements drier during heavy rain.',
       detail:
-        'Basin size, discharge routing, and backup options matched to your layout — including check valves and freeze-savvy exterior lines when you need them.',
+        'Basin size, discharge routing, and backup options matched to your layout — including check valves and solid PVC discharge where the job calls for it.',
       icon: 'sump-pump',
       highlights: [
         'Basin size and pit depth matched to inflow and your floor structure',
-        'Discharge line routing with check valve and freeze-conscious exits',
+        'Discharge line routing with check valve and 1½″ PVC as specified',
         'Primary and backup options discussed for storms and power loss',
         'Keeps the low point moving water during peak spring and summer events',
       ],
@@ -101,11 +100,11 @@ export const SITE = {
       name: 'Window well repair',
       blurb: 'Rebuild and waterproof window wells to help prevent leaks.',
       detail:
-        'Rebuild or replace wells, improve drainage and gravel, and seal the wall joint — the usual fixes when rust, pooling, or flashing failures are letting water in.',
+        'Rebuild or replace galvanized steel wells, improve drainage and gravel, and detail the wall joint — the usual fixes when rust, pooling, or flashing failures are letting water in.',
       icon: 'window-well',
       highlights: [
-        'Rebuild or replace rusted, bent, or failed window well shells',
-        'Drainage rock, drain ties, and wall joint sealing where leaks track',
+        'Rebuild or replace rusted, bent, or failed galvanized steel window wells',
+        'Drainage rock and drain ties to weeping tile where the layout allows',
         'Addresses pooling, debris buildup, and failed flashing at the opening',
         'Restores a clean barrier at egress and standard basement windows',
       ],
