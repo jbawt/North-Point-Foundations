@@ -344,14 +344,14 @@ function ServiceShowcaseSection({
       id={section.id}
       data-showcase-index={slideIndex}
       className={
-        'relative shrink-0 snap-end snap-always overflow-hidden scroll-mt-0 border-b border-npf-border dark:border-zinc-800 ' +
-        'flex min-h-full w-full flex-col px-5 py-14 sm:px-8 md:h-full md:min-h-0 md:px-10 md:py-0 lg:px-14'
+        'relative shrink-0 snap-end snap-always overflow-x-clip scroll-mt-0 border-b border-npf-border dark:border-zinc-800 ' +
+        'flex min-h-full w-full flex-col px-5 py-14 sm:px-8 md:px-10 md:py-0 lg:px-14'
       }
     >
       <SlideMapBackdrop />
-      <div className="relative z-10 flex min-h-0 w-full flex-1 flex-col justify-center gap-10 md:gap-0">
+      <div className="relative z-10 flex w-full flex-1 flex-col justify-center gap-10 md:gap-0">
         <div className="mx-auto w-full max-w-7xl">
-          <div className="flex min-h-0 min-w-0 max-w-3xl flex-col justify-center space-y-6 max-md:overflow-visible md:overflow-y-auto md:overscroll-y-contain md:space-y-8 md:pr-4 lg:max-w-4xl">
+          <div className="flex min-w-0 max-w-3xl flex-col justify-center space-y-6 md:space-y-8 lg:max-w-4xl">
             <div className="space-y-2">
               <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#BE1E2D] sm:text-xs">
                 {`NPF // SVC_${String(index + 1).padStart(2, '0')}`}
@@ -410,12 +410,12 @@ function DeckOutroSlide() {
       data-showcase-index={END_DECK_SLIDE_INDEX}
       aria-labelledby="deck-outro-heading"
       className={
-        'relative shrink-0 snap-end snap-always overflow-hidden scroll-mt-0 border-b border-npf-border dark:border-zinc-800 ' +
-        'flex min-h-full w-full flex-col px-5 py-14 sm:px-8 md:h-full md:min-h-0 md:px-10 md:py-0 lg:px-14'
+        'relative shrink-0 snap-end snap-always overflow-x-clip scroll-mt-0 border-b border-npf-border dark:border-zinc-800 ' +
+        'flex min-h-full w-full flex-col px-5 py-14 sm:px-8 md:px-10 md:py-0 lg:px-14'
       }
     >
       <SlideMapBackdrop />
-      <div className="relative z-10 flex min-h-0 w-full flex-1 flex-col justify-center">
+      <div className="relative z-10 flex w-full flex-1 flex-col justify-center">
         <div className="mx-auto w-full max-w-2xl text-center md:text-left">
           <p
             id="deck-outro-heading"
