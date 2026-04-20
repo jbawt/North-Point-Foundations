@@ -1,8 +1,24 @@
+import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Footer } from '../components/Footer.tsx';
 import { NavBar } from '../components/NavBar.tsx';
 import { ScrollToTop } from '../components/ScrollToTop.tsx';
 import { StickyContactRail } from '../components/StickyContactRail.tsx';
+
+function RouteFallback() {
+  return (
+    <div
+      className="flex min-h-[50dvh] w-full flex-1 items-center justify-center bg-white dark:bg-zinc-950"
+      aria-busy="true"
+    >
+      <span className="sr-only">Loading page</span>
+      <div
+        className="h-9 w-9 animate-pulse rounded-full bg-npf-border dark:bg-zinc-800"
+        aria-hidden
+      />
+    </div>
+  );
+}
 
 export function MainLayout() {
   return (
@@ -10,7 +26,9 @@ export function MainLayout() {
       <ScrollToTop />
       <NavBar />
       <main className="flex min-h-0 w-full flex-1 flex-col">
-        <Outlet />
+        <Suspense fallback={<RouteFallback />}>
+          <Outlet />
+        </Suspense>
       </main>
       <Footer />
       <StickyContactRail />

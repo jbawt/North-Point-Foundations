@@ -93,6 +93,8 @@ export function NavBar() {
             <img
               alt={SITE.name}
               className="h-14 w-auto max-w-[min(54vw,13rem)] object-contain object-left sm:h-20 sm:max-w-none lg:h-24 xl:h-28"
+              decoding="async"
+              fetchPriority="high"
               height={120}
               src={brandLogo}
               width={300}

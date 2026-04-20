@@ -7,7 +7,7 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FaChevronDown } from 'react-icons/fa6';
 import { SITE } from '../content/siteCopy.ts';
-import { ServiceAreaRadarMap } from './ServiceAreaRadarMap.tsx';
+import { ServiceAreaRadarMap } from './ServiceAreaRadarMap.lazy.tsx';
 
 type SpecRow = { label: string; value: string };
 

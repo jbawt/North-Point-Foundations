@@ -1,7 +1,7 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ServiceAreaRadarMap } from '../components/ServiceAreaRadarMap.tsx';
+import { ServiceAreaRadarMap } from '../components/ServiceAreaRadarMap.lazy.tsx';
 import { SITE, serviceAreasSentence } from '../content/siteCopy.ts';
 
 /** Aligns with deck / nav clearance patterns elsewhere in the app. */

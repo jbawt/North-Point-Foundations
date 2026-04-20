@@ -1,11 +1,15 @@
+import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { MainLayout } from '../layouts/MainLayout.tsx';
-import { AboutPage } from '../pages/AboutPage.tsx';
-import { ContactPage } from '../pages/ContactPage.tsx';
 import { HomePage } from '../pages/HomePage.tsx';
-import { NotFoundPage } from '../pages/NotFoundPage.tsx';
-import { QuoteThankYouPage } from '../pages/QuoteThankYouPage.tsx';
-import { ServicesPage } from '../pages/ServicesPage.tsx';
+
+const AboutPage = lazy(() => import('../pages/AboutPage.tsx').then((m) => ({ default: m.AboutPage })));
+const ContactPage = lazy(() => import('../pages/ContactPage.tsx').then((m) => ({ default: m.ContactPage })));
+const NotFoundPage = lazy(() => import('../pages/NotFoundPage.tsx').then((m) => ({ default: m.NotFoundPage })));
+const QuoteThankYouPage = lazy(() =>
+  import('../pages/QuoteThankYouPage.tsx').then((m) => ({ default: m.QuoteThankYouPage })),
+);
+const ServicesPage = lazy(() => import('../pages/ServicesPage.tsx').then((m) => ({ default: m.ServicesPage })));
 
 const routes = [
   {

@@ -39,5 +39,16 @@ export default defineConfig({
     cssMinify: 'esbuild',
     /** mapbox-gl is ~1.7MB minified; the default 500 kB warning is noisy without lazy-loading maps. */
     chunkSizeWarningLimit: 2000,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('mapbox-gl') || id.includes('react-map-gl')) return 'mapbox';
+            if (id.includes('framer-motion')) return 'framer';
+            if (id.includes('gsap')) return 'gsap';
+          }
+        },
+      },
+    },
   },
 });

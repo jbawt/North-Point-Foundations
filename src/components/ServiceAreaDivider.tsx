@@ -1,7 +1,7 @@
 import { motion, useReducedMotion } from 'framer-motion';
 import { useId } from 'react';
 import { SITE, serviceAreasSentence } from '../content/siteCopy.ts';
-import { ServiceAreaRadarMap } from './ServiceAreaRadarMap.tsx';
+import { ServiceAreaRadarMap } from './ServiceAreaRadarMap.lazy.tsx';
 
 const VIEWPORT = { once: true, amount: 0.25 } as const;
 

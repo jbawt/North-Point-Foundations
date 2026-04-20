@@ -27,7 +27,9 @@ export function Footer() {
               <img
                 alt={SITE.name}
                 className="h-14 w-auto max-w-[14rem] object-contain object-left brightness-0 invert sm:h-16 md:h-[4.5rem]"
+                decoding="async"
                 height={120}
+                loading="lazy"
                 src={brandLogo}
                 width={300}
               />

@@ -5,7 +5,7 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { Marker, type MapRef } from 'react-map-gl/mapbox';
 import { useForm } from 'react-hook-form';
 import { SERVICE_RADAR_MAP_VIEW } from '../content/serviceAreaRadarNodes.ts';
-import { ServiceAreaRadarMap } from './ServiceAreaRadarMap.tsx';
+import { ServiceAreaRadarMap } from './ServiceAreaRadarMap.lazy.tsx';
 import { EvaluationRequestProgress } from './EvaluationRequestProgress.tsx';
 
 const NPF_NAVY = '#1a365d';
