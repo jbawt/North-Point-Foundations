@@ -27,15 +27,6 @@ export async function sendQuoteRequestViaNetlify(payload: QuoteRequestEmailPaylo
   const timelineLabel = TIMELINE_LABELS[payload.finalStep.workTimeline];
   const { fullName, email, phone, projectSummary } = payload.finalStep;
 
-  const message = [
-    `Problem: ${categoryLabel}`,
-    `Property: ${payload.propertyAddress}`,
-    `Timeline: ${timelineLabel}`,
-    '',
-    'Project details:',
-    projectSummary,
-  ].join('\n');
-
   const action =
     import.meta.env.VITE_NETLIFY_FORM_ACTION?.trim() ||
     (import.meta.env.BASE_URL === '/' ? '/' : import.meta.env.BASE_URL);
@@ -51,8 +42,7 @@ export async function sendQuoteRequestViaNetlify(payload: QuoteRequestEmailPaylo
     problem_category: categoryLabel,
     problem_category_id: payload.evaluationCategoryId,
     work_timeline: timelineLabel,
-    project_summary: projectSummary,
-    message,
+    project_summary: projectSummary
   });
 
   const res = await fetch(action, {
