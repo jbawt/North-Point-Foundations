@@ -19,7 +19,7 @@ type Props = {
 };
 
 const baseHeadingClass =
-  'mx-auto max-w-4xl text-center text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl';
+  'mx-auto max-w-4xl text-center text-3xl font-bold leading-[1.08] tracking-tight text-white sm:text-4xl sm:leading-[1.1] md:text-5xl lg:text-6xl xl:text-7xl';
 
 export const HeroTypingHeadline = forwardRef<HTMLHeadingElement, Props>(function HeroTypingHeadline(
   { reduceMotion, startDelayMs = 420, className = '' },
@@ -132,7 +132,7 @@ export const HeroTypingHeadline = forwardRef<HTMLHeadingElement, Props>(function
     <h1
       ref={ref}
       aria-label={`${LINE1} ${LINE2} ${LINE3}`}
-      className={`mx-auto min-h-[1.15em] max-w-4xl text-center text-4xl font-bold leading-[1.1] tracking-tight text-white sm:min-h-[1.1em] sm:text-5xl md:text-6xl lg:text-7xl ${className}`.trim()}
+      className={`mx-auto min-h-[1.12em] max-w-4xl text-center text-3xl font-bold leading-[1.08] tracking-tight text-white sm:min-h-[1.1em] sm:text-4xl sm:leading-[1.1] md:text-5xl lg:text-6xl xl:text-7xl ${className}`.trim()}
     >
       <span className="block w-full text-center">{display}</span>
     </h1>

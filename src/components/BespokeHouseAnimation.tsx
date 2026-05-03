@@ -99,7 +99,7 @@ export function BespokeHouseAnimation() {
       <motion.button
         type="button"
         aria-label="House outline animation — click for a quick pulse"
-        className="relative z-[1] mx-auto block max-w-[15rem] cursor-pointer border-0 bg-transparent p-0 sm:max-w-[18rem] md:max-w-[21rem] lg:max-w-[24rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-npf-charcoal"
+        className="relative z-[1] mx-auto block max-w-[12rem] cursor-pointer border-0 bg-transparent p-0 sm:max-w-[16rem] md:max-w-[20rem] lg:max-w-[22rem] xl:max-w-[24rem] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/45 focus-visible:ring-offset-2 focus-visible:ring-offset-npf-charcoal"
         onClick={activate}
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.98 }}

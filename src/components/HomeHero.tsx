@@ -148,7 +148,7 @@ export function HomeHero() {
   return (
     <section
       ref={rootRef}
-      className="relative isolate flex min-h-[min(85vh,48rem)] w-full flex-col justify-start overflow-x-clip overflow-y-visible bg-npf-charcoal pb-20 pt-3 sm:min-h-[min(87vh,52rem)] sm:pb-24 sm:pt-4 md:pb-28 md:pt-5"
+      className="relative isolate flex min-h-0 w-full flex-col justify-start overflow-x-clip overflow-y-visible bg-npf-charcoal pb-14 pt-2 sm:min-h-[min(87vh,52rem)] sm:pb-24 sm:pt-4 md:pb-28 md:pt-5"
     >
       <div
         ref={parallaxRef}
@@ -183,13 +183,13 @@ export function HomeHero() {
         }
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-[48rem] px-6 pb-6 pt-1 sm:max-w-[52rem] sm:px-8 sm:pb-8 sm:pt-2 md:max-w-[56rem] md:pb-10 md:pt-3 lg:max-w-3xl xl:max-w-4xl">
+      <div className="relative z-10 mx-auto w-full max-w-[48rem] px-6 pb-4 pt-1 sm:max-w-[52rem] sm:px-8 sm:pb-8 sm:pt-2 md:max-w-[56rem] md:pb-10 md:pt-3 lg:max-w-3xl xl:max-w-4xl">
         <div className="relative z-20 flex w-full flex-col items-center px-2 text-center">
-          <div className="mb-4 sm:mb-5 md:mb-6">
+          <div className="mb-2 sm:mb-5 md:mb-6">
             <Suspense
               fallback={
                 <div
-                  className="mx-auto flex min-h-[10.5rem] max-w-[24rem] justify-center sm:min-h-[12rem] md:min-h-[13rem]"
+                  className="mx-auto flex min-h-[8.25rem] max-w-[12rem] justify-center sm:min-h-[12rem] sm:max-w-[24rem] md:min-h-[13rem]"
                   aria-hidden
                 />
               }
@@ -201,7 +201,7 @@ export function HomeHero() {
           <p
             ref={eyebrowRef}
             className={
-              'mx-auto mb-4 max-w-xl text-xs font-semibold uppercase leading-relaxed tracking-[0.18em] text-npf-red sm:mb-5 sm:text-sm md:mb-6 ' +
+              'mx-auto mb-3 max-w-xl text-xs font-semibold uppercase leading-relaxed tracking-[0.18em] text-npf-red sm:mb-5 sm:text-sm md:mb-6 ' +
               (motionPrep ? 'opacity-0' : '')
             }
           >
@@ -216,7 +216,7 @@ export function HomeHero() {
           <p
             ref={subRef}
             className={
-              'mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/78 sm:mt-8 sm:text-lg ' +
+              'mx-auto mt-4 max-w-2xl text-sm leading-snug text-white/78 sm:mt-8 sm:text-lg sm:leading-relaxed ' +
               (motionPrep ? 'opacity-0' : '')
             }
           >
@@ -225,7 +225,7 @@ export function HomeHero() {
           <div
             ref={ctaRef}
             className={
-              'relative z-20 mx-auto mt-8 flex w-full max-w-[21rem] flex-col items-stretch gap-2 sm:mt-10 sm:max-w-[24rem] sm:gap-2.5 ' +
+              'relative z-20 mx-auto mt-5 flex w-full max-w-[21rem] flex-col items-stretch gap-2 sm:mt-10 sm:max-w-[24rem] sm:gap-2.5 ' +
               (motionPrep ? 'opacity-0' : '')
             }
           >
