@@ -1,3 +1,4 @@
+import { Phone } from 'lucide-react';
 import { lazy, Suspense, useLayoutEffect, useMemo, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { SITE } from '../content/siteCopy.ts';
@@ -224,22 +225,31 @@ export function HomeHero() {
           <div
             ref={ctaRef}
             className={
-              'relative z-20 mt-8 flex flex-col items-center gap-3 sm:mt-10 sm:flex-row sm:justify-center sm:gap-4 ' +
+              'relative z-20 mx-auto mt-8 flex w-full max-w-[21rem] flex-col items-stretch gap-2 sm:mt-10 sm:max-w-[24rem] sm:gap-2.5 ' +
               (motionPrep ? 'opacity-0' : '')
             }
           >
-            <Link
-              className="npf-sleek-lift-subtle inline-flex min-h-12 items-center justify-center rounded-lg bg-npf-red px-8 py-3 text-center text-sm font-semibold text-white shadow-lg shadow-npf-red/30 hover:bg-npf-red-dark hover:shadow-[0_20px_44px_-16px_rgba(188,44,38,0.6)] active:translate-y-0"
-              to="/contact"
+            <div className="flex w-full flex-col items-stretch gap-2 sm:flex-row sm:gap-2.5">
+              <Link
+                className="npf-sleek-lift-subtle inline-flex min-h-11 items-center justify-center rounded-lg bg-npf-red px-4 py-2.5 text-center text-sm font-semibold text-white shadow-lg shadow-npf-red/30 hover:bg-npf-red-dark hover:shadow-[0_20px_44px_-16px_rgba(188,44,38,0.6)] active:translate-y-0 sm:flex-1 sm:basis-0 sm:min-w-0"
+                to="/contact"
+              >
+                Get a quote
+              </Link>
+              <Link
+                className="npf-sleek-lift-subtle inline-flex min-h-11 items-center justify-center rounded-lg border border-white/22 bg-white/5 px-4 py-2.5 text-center text-sm font-semibold text-white backdrop-blur-sm hover:border-white/45 hover:bg-white/14 hover:shadow-[0_16px_40px_-18px_rgba(0,0,0,0.35)] active:translate-y-0 sm:flex-1 sm:basis-0 sm:min-w-0"
+                to="/services"
+              >
+                View services
+              </Link>
+            </div>
+            <a
+              href={SITE.quotePhoneTel}
+              className="npf-sleek-lift-subtle inline-flex min-h-11 w-full min-w-0 items-center justify-center gap-1.5 rounded-lg border-2 border-[#BE1E2D] bg-[#BE1E2D] px-4 py-2.5 text-center text-sm font-semibold text-white shadow-lg shadow-npf-red/30 hover:bg-npf-red-dark hover:shadow-[0_20px_44px_-16px_rgba(188,44,38,0.6)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#BE1E2D]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-npf-charcoal active:translate-y-0"
             >
-              Get a quote
-            </Link>
-            <Link
-              className="npf-sleek-lift-subtle inline-flex min-h-12 items-center justify-center rounded-lg border border-white/22 bg-white/5 px-8 py-3 text-center text-sm font-semibold text-white backdrop-blur-sm hover:border-white/45 hover:bg-white/14 hover:shadow-[0_16px_40px_-18px_rgba(0,0,0,0.35)] active:translate-y-0"
-              to="/services"
-            >
-              View services
-            </Link>
+              <Phone className="h-4 w-4 shrink-0 opacity-95" aria-hidden />
+              <span>Call {SITE.quotePhoneDisplay}</span>
+            </a>
           </div>
         </div>
       </div>
