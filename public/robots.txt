@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# After deploy: `npm run build` with VITE_SITE_URL set appends Sitemap and writes dist/sitemap.xml

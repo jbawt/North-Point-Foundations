@@ -1,6 +1,11 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
+  /**
+   * Public production site origin, no path or trailing slash (e.g. `https://yoursite.com`).
+   * Used for canonical URLs, Open Graph, JSON-LD, and post-build `sitemap.xml` / `robots.txt`.
+   */
+  readonly VITE_SITE_URL: string | undefined;
   readonly VITE_MAPBOX_ACCESS_TOKEN: string | undefined;
   /**
    * Optional Mapbox style URL. The app appends `optimize=true` for style-optimized vector tiles
