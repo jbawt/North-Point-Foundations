@@ -23,10 +23,10 @@ function serviceAreasSentenceFrom(areas: readonly string[]): string {
 export const SITE = {
   name: 'North Point Foundations',
   /** Optional `tel:` link (e.g. Contact page “call us”); primary quote flow is `/contact`. */
-  quotePhoneTel: 'tel:+15555550100',
+  quotePhoneTel: 'tel:+14035986760',
   /** Sticky rail & footer — replace with your real profile URLs. */
-  facebookUrl: 'https://www.facebook.com/',
-  instagramUrl: 'https://www.instagram.com/',
+  facebookUrl: 'https://www.facebook.com/profile.php?id=61582757648955',
+  instagramUrl: 'https://www.instagram.com/northpointfoundations/',
   /** Home page testimonial carousel — set `true` when you have reviews to show. */
   showTestimonialsOnHome: false,
   /** Short line for header / meta */
