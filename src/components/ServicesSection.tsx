@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import {
   REPAIR_PLAN_ANNOTATIONS,
@@ -120,6 +121,13 @@ function ServiceCard({ service }: { service: ServiceDetail }) {
 
 export function ServicesSection() {
   const reduceMotion = usePrefersReducedMotion();
+  /** Ref + `useInView` is more reliable on mobile than `whileInView` on nested SVG paths (IO + WebKit). */
+  const blueprintSvgRef = useRef<SVGSVGElement>(null);
+  const blueprintInView = useInView(blueprintSvgRef, {
+    once: true,
+    amount: 'some',
+    margin: '0px 0px 25% 0px',
+  });
 
   const pathTarget = { pathLength: 1 as const };
   const pathInitial = reduceMotion ? pathTarget : { pathLength: 0 as const };
@@ -190,8 +198,12 @@ export function ServicesSection() {
               aria-hidden
             />
 
-            <div className="relative z-10 flex h-full min-h-[14rem] w-full items-center justify-center px-3 py-3 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02] sm:min-h-0 sm:px-5 sm:py-5 lg:px-6 lg:py-6 motion-reduce:transition-none motion-reduce:group-hover:scale-100">
+            <div
+              className="relative z-10 flex h-full min-h-[14rem] w-full items-center justify-center px-3 py-3 transition-[transform,filter] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.02] sm:min-h-0 sm:px-5 sm:py-5 lg:px-6 lg:py-6 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+              style={{ filter: STROKE_GLOW }}
+            >
               <svg
+                ref={blueprintSvgRef}
                 className="h-full w-full max-h-[min(100%,720px)] max-w-full transition-[filter] duration-500 group-hover:drop-shadow-[0_0_14px_rgba(190,30,45,0.35)] motion-reduce:transition-none motion-reduce:group-hover:drop-shadow-none"
                 viewBox={REPAIR_PLAN_VIEWBOX}
                 preserveAspectRatio="xMidYMid meet"
@@ -199,7 +211,6 @@ export function ServicesSection() {
                 xmlns="http://www.w3.org/2000/svg"
                 role="img"
                 aria-label="Residential floor plan schematic with repair scope callouts"
-                style={{ filter: STROKE_GLOW }}
               >
                 <title>Floor plan schematic — repair scope</title>
 
@@ -207,14 +218,13 @@ export function ServicesSection() {
                   d={REPAIR_PLAN_OUTLINE_D}
                   fill="none"
                   stroke={NORTH_POINT_RED}
-                  strokeWidth={2.35}
+                  strokeWidth={2.85}
+                  vectorEffect="nonScalingStroke"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   initial={pathInitial}
-                  animate={reduceMotion ? pathTarget : undefined}
-                  whileInView={reduceMotion ? undefined : pathTarget}
+                  animate={reduceMotion ? pathTarget : blueprintInView ? pathTarget : pathInitial}
                   transition={pathTransition}
-                  viewport={VIEWPORT}
                 />
 
                 {REPAIR_PLAN_MARKERS.map((m, i) => (
@@ -226,9 +236,14 @@ export function ServicesSection() {
                     strokeWidth={0.95}
                     className="fill-blue-700 stroke-blue-200 dark:fill-sky-400 dark:stroke-sky-100"
                     initial={{ opacity: reduceMotion ? 1 : 0, scale: reduceMotion ? 1 : 0.6 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    animate={
+                      reduceMotion
+                        ? { opacity: 1, scale: 1 }
+                        : blueprintInView
+                          ? { opacity: 1, scale: 1 }
+                          : { opacity: 0, scale: 0.6 }
+                    }
                     transition={blueprintOverlayTransition(0.05 + i * 0.035)}
-                    viewport={VIEWPORT}
                   />
                 ))}
 
@@ -242,9 +257,10 @@ export function ServicesSection() {
                     fontFamily="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
                     className="select-none fill-[#1e293b] [text-rendering:geometricPrecision] dark:fill-zinc-100"
                     initial={{ opacity: reduceMotion ? 1 : 0 }}
-                    whileInView={{ opacity: 1 }}
+                    animate={
+                      reduceMotion ? { opacity: 1 } : blueprintInView ? { opacity: 1 } : { opacity: 0 }
+                    }
                     transition={blueprintOverlayTransition(0.08 + i * 0.04)}
-                    viewport={VIEWPORT}
                   >
                     {ann.lines.map((line, li) => (
                       <tspan key={li} x={ann.x} dy={li === 0 ? 0 : 13}>
