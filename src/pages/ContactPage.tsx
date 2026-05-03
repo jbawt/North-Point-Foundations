@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { DirectCallPrompt } from '../components/DirectCallPrompt.tsx';
 import { EvaluationRequestWizard } from '../components/EvaluationRequestWizard.tsx';
 import { SITE } from '../content/siteCopy.ts';
 
@@ -60,6 +61,7 @@ export function ContactPage() {
       </section>
 
       <EvaluationRequestWizard />
+      <DirectCallPrompt />
     </div>
   );
 }

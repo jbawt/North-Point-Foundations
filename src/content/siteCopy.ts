@@ -24,6 +24,8 @@ export const SITE = {
   name: 'North Point Foundations',
   /** Optional `tel:` link (e.g. Contact page “call us”); primary quote flow is `/contact`. */
   quotePhoneTel: 'tel:+14035986760',
+  /** Human-readable number for buttons and labels (keep in sync with `quotePhoneTel`). */
+  quotePhoneDisplay: '+1 403-598-6760',
   /** Sticky rail & footer — replace with your real profile URLs. */
   facebookUrl: 'https://www.facebook.com/profile.php?id=61582757648955',
   instagramUrl: 'https://www.instagram.com/northpointfoundations/',
