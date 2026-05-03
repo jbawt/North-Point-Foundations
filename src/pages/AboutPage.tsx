@@ -19,6 +19,9 @@ const SEGMENT_DIVIDE = `${SEGMENT} border-t border-npf-border/60`;
 
 const GALLERY_PLACEHOLDER_COUNT = 12;
 
+/** Flip to `true` when real gallery photos are ready to show the right-hand panel. */
+const SHOW_ABOUT_PAGE_GALLERY = false;
+
 const PANEL_EASE =
   'transition-[max-width,max-height,flex-grow,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]';
 
@@ -40,7 +43,8 @@ const expandBtnClass =
 export function AboutPage() {
   const [aboutExpanded, setAboutExpanded] = useState(false);
   const [galleryExpanded, setGalleryExpanded] = useState(false);
-  const anyExpanded = aboutExpanded || galleryExpanded;
+  const galleryActive = SHOW_ABOUT_PAGE_GALLERY && galleryExpanded;
+  const anyExpanded = aboutExpanded || galleryActive;
 
   useEffect(() => {
     if (!anyExpanded) return;
@@ -109,10 +113,10 @@ export function AboutPage() {
           className={
             `relative flex min-h-0 w-full flex-col overflow-hidden py-4 pb-[max(1rem,env(safe-area-inset-bottom))] lg:shrink-0 ${SIDEBAR_MAX_H_LG} ${PANEL_EASE} ` +
             'pl-[max(1.25rem,env(safe-area-inset-left))] pr-3 max-lg:pr-[max(1.25rem,env(safe-area-inset-right))] sm:py-5 lg:py-6 lg:pr-4 ' +
-            (galleryExpanded ? 'max-lg:hidden ' : '') +
+            (galleryActive ? 'max-lg:hidden ' : '') +
             (aboutExpanded
               ? `max-lg:flex-1 max-lg:min-h-0 max-lg:basis-0 max-lg:overflow-hidden ${MOBILE_EXPANDED_PANEL_H} `
-              : !galleryExpanded
+              : !galleryActive
                 ? `${MOBILE_COLLAPSED_PANEL_MAX} max-lg:shrink-0 `
                 : '') +
             (anyExpanded ? (aboutExpanded ? 'z-[25]' : 'z-[20]') : 'z-10') +
@@ -265,6 +269,7 @@ export function AboutPage() {
           />
         ) : null}
 
+        {SHOW_ABOUT_PAGE_GALLERY ? (
         <aside
           aria-labelledby="about-gallery-heading"
           className={
@@ -383,6 +388,7 @@ export function AboutPage() {
             </div>
           </div>
         </aside>
+        ) : null}
       </div>
     </section>
   );
