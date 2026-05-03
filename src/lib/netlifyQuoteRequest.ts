@@ -19,8 +19,8 @@ const FORM_NAME = 'quote-request';
  * In the app, the contact wizard redirects there after a successful POST. You can also set the same
  * path under Netlify → Forms → quote-request → Success page if you use classic HTML submissions.
  *
- * Optional: set `VITE_NETLIFY_FORM_ACTION` to your Netlify form URL when the UI is not on Netlify
- * (e.g. GitHub Pages + forms on Netlify). If omitted, posts to `import.meta.env.BASE_URL`.
+ * Optional: set `VITE_NETLIFY_FORM_ACTION` to override the form POST URL. If omitted, posts to
+ * `import.meta.env.BASE_URL` (typical for the site and forms on the same Netlify site).
  */
 export async function sendQuoteRequestViaNetlify(payload: QuoteRequestEmailPayload): Promise<void> {
   const categoryLabel = getEvaluationCategoryLabel(payload.evaluationCategoryId);

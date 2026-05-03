@@ -1,12 +1,17 @@
-# If you connect this repo to Netlify, these headers fix PageSpeed “cache lifetimes” for hashed assets.
-# GitHub Pages does not read netlify.toml.
+# Netlify: https://docs.netlify.com/
 
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Client-side routes (React Router) — serve the SPA shell for non-file paths.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Long cache for Vite fingerprinted assets (PageSpeed cache lifetimes).
 [[headers]]
   for = "/assets/*"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-[[headers]]
-  for = "/*/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"

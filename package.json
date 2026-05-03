@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build && node scripts/generate-seo-files.mjs",
-    "build:gh-pages": "tsc && vite build && node scripts/gh-pages-hydrate.mjs",
     "optimize-logo": "node scripts/optimize-logo.mjs",
     "preview": "vite preview"
   },

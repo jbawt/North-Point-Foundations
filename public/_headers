@@ -1,10 +1,5 @@
-# Long cache for Vite fingerprinted assets (PageSpeed cache lifetimes).
-# Netlify and Cloudflare Pages apply this when you deploy ./dist.
-# GitHub Pages ignores this file.
+# Optional: Netlify (and similar) can use this for cache headers on static deploys.
+# `netlify.toml` in the repo root is the primary place to configure Netlify.
 
 /assets/*
-  Cache-Control: public, max-age=31536000, immutable
-
-# GitHub project pages: https://USER.github.io/REPO/assets/...
-/*/assets/*
   Cache-Control: public, max-age=31536000, immutable

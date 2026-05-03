@@ -14,8 +14,8 @@ interface ImportMetaEnv {
    */
   readonly VITE_MAPBOX_STYLE_URL: string | undefined;
   /**
-   * Optional Netlify form POST URL (e.g. `https://your-site.netlify.app/`). Use when hosting on
-   * GitHub Pages but submissions go to Netlify. If omitted, POST uses `import.meta.env.BASE_URL`.
+   * Optional override for the Netlify Forms POST URL. If omitted, the app posts to
+   * `import.meta.env.BASE_URL` (same origin on Netlify).
    */
   readonly VITE_NETLIFY_FORM_ACTION: string | undefined;
 }

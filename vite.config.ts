@@ -3,20 +3,11 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-/**
- * GitHub project pages: `https://<user>.github.io/<repo>/`
- * Set `GITHUB_PAGES_BASE` to `/<repo>/` for those builds; omit or use `/` for
- * `username.github.io` repos or hosts at the domain root (e.g. Netlify).
- */
-/** Treat blank like unset — `??` alone misses `GITHUB_PAGES_BASE=""` in CI. */
-const rawBase = process.env.GITHUB_PAGES_BASE?.trim();
-const pagesBase = rawBase && rawBase !== '' ? rawBase : '/';
-const base = pagesBase.endsWith('/') ? pagesBase : `${pagesBase}/`;
+/** Netlify and local dev: app is served at the site root. */
+const base = '/' as const;
 
 function thankYouFormAction(): string {
-  if (base === '/') return '/thank-you';
-  const prefix = base.replace(/\/$/, '');
-  return `${prefix}/thank-you`;
+  return '/thank-you';
 }
 
 /** PageSpeed “Render blocking requests”: avoid synchronous stylesheet links in `<head>`. */

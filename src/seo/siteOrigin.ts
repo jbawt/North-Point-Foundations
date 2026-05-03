@@ -15,7 +15,7 @@ export function getRouterBasename(): string {
 }
 
 /**
- * Normalizes pathname for meta lookup (strip GitHub Pages-style basename).
+ * Normalizes pathname for meta lookup (strip Vite router basename if non-root).
  */
 export function normalizeDocPath(pathname: string): string {
   const base = getRouterBasename();
@@ -28,7 +28,7 @@ export function normalizeDocPath(pathname: string): string {
 }
 
 /**
- * Absolute URL for a site path (leading slash). Respects Vite `base` / GitHub Pages subdirectory.
+ * Absolute URL for a site path (leading slash). Respects Vite `base` (use `/` on Netlify at domain root).
  */
 export function absoluteUrlForPath(path: string): string {
   const origin = getSiteOrigin();

@@ -9,8 +9,8 @@ import {
 type Mode = 'pending' | 'stale-manual' | 'generic';
 
 /**
- * Root route error UI: after a GitHub Pages deploy, lazy chunks can 404 while an old main bundle
- * is still cached; recover with one automatic reload, then offer a manual retry.
+ * Root route error UI: after a deploy, lazy chunks can 404 while an old main bundle is still
+ * cached; recover with one automatic reload, then offer a manual retry.
  */
 export function RootRouteError() {
   const error = useRouteError();
