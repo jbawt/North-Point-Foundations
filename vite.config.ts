@@ -32,10 +32,10 @@ export default defineConfig({
       name: 'npf-index-html-base-hints',
       transformIndexHtml(html) {
         const action = thankYouFormAction();
-        let out = html.replaceAll('action="/thank-you"', `action="${action}"`).replaceAll(
-          'href="/favicon_io/',
-          `href="${base}favicon_io/`,
-        );
+        let out = html
+          .replaceAll('action="/thank-you"', `action="${action}"`)
+          .replaceAll('href="/favicon.svg"', `href="${base}favicon.svg"`)
+          .replaceAll('href="/favicon_io/', `href="${base}favicon_io/`);
         out = nonBlockingStylesheetLinks(out);
         return out;
       },
