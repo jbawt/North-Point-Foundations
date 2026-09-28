@@ -3,6 +3,13 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ServiceAreaRadarMap } from '../components/ServiceAreaRadarMap.lazy.tsx';
 import { SITE, serviceAreasSentence } from '../content/siteCopy.ts';
+import galleryC9S from '../assets/gallery_images/c9S-xtp6.jpg';
+import galleryH5B from '../assets/gallery_images/H5BzWPNu.jpg';
+import galleryMWv from '../assets/gallery_images/mWvWH7FM.jpg';
+import galleryOgL from '../assets/gallery_images/OgLdjkg-.jpg';
+import galleryPL from '../assets/gallery_images/pL_RqJV1.jpg';
+import galleryRhL from '../assets/gallery_images/rhLnr2Q3.jpg';
+import galleryZXw from '../assets/gallery_images/zXwcV2At.jpg';
 
 /** Aligns with deck / nav clearance patterns elsewhere in the app. */
 const VIEWPORT_MAIN =
@@ -17,10 +24,17 @@ const SHEET =
 const SEGMENT = 'p-5 sm:p-6';
 const SEGMENT_DIVIDE = `${SEGMENT} border-t border-npf-border/60`;
 
-const GALLERY_PLACEHOLDER_COUNT = 12;
+const GALLERY_IMAGES = [
+  { src: galleryMWv, alt: 'Blueskin waterproofing membrane and weeping tile in an excavated foundation trench' },
+  { src: galleryOgL, alt: 'Crew member working in a deep excavation beside a basement window' },
+  { src: galleryC9S, alt: 'Black waterproofing coating on an excavated residential foundation wall' },
+  { src: galleryH5B, alt: 'Blueskin membrane applied along an excavated foundation with ladder in trench' },
+  { src: galleryPL, alt: 'Interior basement wall with steel I-beam reinforcement and waterproofing stripe' },
+  { src: galleryRhL, alt: 'Blueskin foundation waterproofing membrane below wood siding' },
+  { src: galleryZXw, alt: 'Localized Blueskin membrane patch and drainage pipe at foundation wall' },
+] as const;
 
-/** Flip to `true` when real gallery photos are ready to show the right-hand panel. */
-const SHOW_ABOUT_PAGE_GALLERY = false;
+const SHOW_ABOUT_PAGE_GALLERY = true;
 
 const PANEL_EASE =
   'transition-[max-width,max-height,flex-grow,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]';
@@ -332,7 +346,7 @@ export function AboutPage() {
                   (galleryExpanded ? 'text-base sm:text-[1.05rem]' : 'text-sm')
                 }
               >
-                Project photos and site work — placeholders until your gallery media is ready.
+                Real project photos from foundation repair, waterproofing, and excavation jobs across {SITE.region}.
               </p>
             </div>
             <div
@@ -341,7 +355,7 @@ export function AboutPage() {
             >
               <div className="shrink-0 px-5 pb-2 pt-4 sm:px-6 sm:pb-2 sm:pt-5">
                 <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-npf-charcoal/70 dark:text-zinc-400 sm:text-[11px]">
-                  Placeholders — scroll
+                  {GALLERY_IMAGES.length} photos — scroll
                 </p>
               </div>
               <div
@@ -359,28 +373,17 @@ export function AboutPage() {
                   }
                   role="list"
                 >
-                  {Array.from({ length: GALLERY_PLACEHOLDER_COUNT }, (_, i) => i + 1).map((n) => (
-                    <li key={n}>
-                      <div
-                        className={
-                          'flex aspect-[4/3] w-full flex-col items-center justify-center gap-2 rounded-lg border border-dashed border-npf-border/90 ' +
-                          'bg-[linear-gradient(145deg,color-mix(in_srgb,var(--color-npf-surface)_88%,white),color-mix(in_srgb,var(--color-npf-border)_12%,white))] px-3 py-4 text-center'
-                        }
-                      >
-                        <span
-                          className="font-mono text-[9px] font-semibold uppercase tracking-[0.24em] text-npf-muted sm:text-[10px]"
-                          aria-hidden
-                        >
-                          IMG_{String(n).padStart(2, '0')}
-                        </span>
-                        <span
-                          className={
-                            'text-npf-muted ' + (galleryExpanded ? 'text-sm sm:text-base' : 'text-xs')
-                          }
-                        >
-                          Photo placeholder
-                        </span>
-                      </div>
+                  {GALLERY_IMAGES.map(({ src, alt }, i) => (
+                    <li key={src}>
+                      <figure className="overflow-hidden rounded-lg border border-npf-border/80 bg-npf-surface dark:border-zinc-700 dark:bg-zinc-800">
+                        <img
+                          alt={alt}
+                          className="aspect-[4/3] w-full object-cover"
+                          decoding="async"
+                          loading={i < 2 ? 'eager' : 'lazy'}
+                          src={src}
+                        />
+                      </figure>
                     </li>
                   ))}
                 </ul>
