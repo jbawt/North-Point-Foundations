@@ -78,8 +78,19 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-8 text-center text-xs text-white/50 sm:text-left">
-          © {year} {SITE.name}. All rights reserved.
+        <div className="mt-12 border-t border-white/10 pt-8 text-center text-xs text-white/50 sm:flex sm:items-center sm:justify-between sm:text-left">
+          <p>© {year} {SITE.name}. All rights reserved.</p>
+          <p className="mt-2 sm:mt-0">
+            Powered by{' '}
+            <a
+              className="text-white/70 transition hover:text-white focus:outline-none focus-visible:underline"
+              href="https://websidy.ca"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Websidy
+            </a>
+          </p>
         </div>
       </div>
     </footer>
